@@ -1,0 +1,8 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  height: calc(100vh -88px);
+  box-sizing: border-box;
+  padding: 40px 0 10px 0;
+}

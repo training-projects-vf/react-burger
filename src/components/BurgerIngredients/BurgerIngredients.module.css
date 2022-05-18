@@ -6,3 +6,11 @@
   box-sizing: border-box;
   padding: 40px 0 10px 0;
 }
+
+.section_ingredients {
+  overflow-y: scroll;
+}
+
+.div_tabs {
+  display: flex;
+}

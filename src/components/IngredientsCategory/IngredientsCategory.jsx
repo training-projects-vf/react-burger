@@ -1,5 +1,7 @@
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import style from './IngredientsCategory.module.css';
+import PropTypes from 'prop-types';
+import { ingredientType } from '../../utils/propTypes';
 
 export function IngredientsCategory(props) {
   const { ingredients } = props;
@@ -29,4 +31,8 @@ export function IngredientsCategory(props) {
       </div>
     </div>
   )
+}
+
+IngredientsCategory.propTypes = {
+  ingredients: PropTypes.arrayOf(ingredientType).isRequired,
 }

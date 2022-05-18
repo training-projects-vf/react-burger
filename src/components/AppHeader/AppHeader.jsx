@@ -15,7 +15,7 @@ export class AppHeader extends React.Component {
     }
   }
 
-  clickHandler = (key) => {
+  handleLinkClick = (key) => {
     const state = { ...this.state.isActive }
 
     for (let element in state) {
@@ -39,21 +39,21 @@ export class AppHeader extends React.Component {
 
     return (
       <header className={styles.header}>
-        <div className={styles.navpanel}>
+        <nav className={styles.navpanel}>
           <div className={styles.container_left}>
             <NavLink
               icon={<BurgerIcon type={isConstructorActive ? 'primary' : 'secondary'} />}
               link='#'
               caption='Конструктор'
               isActive={isConstructorActive}
-              onClick={() => this.clickHandler('constructor')}
+              onClick={() => this.handleLinkClick('constructor')}
             />
             <NavLink
               icon={<ListIcon type={isListActive ? 'primary' : 'secondary'} />}
               link='#'
               caption='Лента заказов'
               isActive={isListActive}
-              onClick={() => this.clickHandler('list')}
+              onClick={() => this.handleLinkClick('list')}
             />
           </div>
 
@@ -65,10 +65,10 @@ export class AppHeader extends React.Component {
               link='#'
               caption='Личный кабинет'
               isActive={isCabinetActive}
-              onClick={() => this.clickHandler('cabinet')}
+              onClick={() => this.handleLinkClick('cabinet')}
             />
           </div>
-        </div>
+        </nav>
       </header>
     )
   }

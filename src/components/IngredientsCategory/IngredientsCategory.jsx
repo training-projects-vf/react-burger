@@ -15,7 +15,7 @@ export function IngredientsCategory(props) {
         {
           categoryIngredientsList.map((item) => {
             return (
-              <div className={style.container_ingredient} key={item._id}>
+              <div className={style.container_ingredient} key={item._id} onClick={props.openPopup}>
                 <img src={item.image} alt="ingredient" />
                 <Counter count={1} size="default" />
                 <div className={style.container_price}>

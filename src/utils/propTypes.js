@@ -18,3 +18,11 @@ export const ingredientType = PropTypes.shape({
   image_mobile: PropTypes.string.isRequired,
   image_large: PropTypes.string.isRequired,
 }).isRequired
+
+export const navLinkType = ({
+  icon: PropTypes.object.isRequired,
+  link: PropTypes.string.isRequired,
+  caption: PropTypes.string.isRequired,
+  isActive: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired,
+})

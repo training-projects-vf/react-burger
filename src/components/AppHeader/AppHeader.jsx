@@ -1,76 +1,58 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from './AppHeader.module.css'
 import { BurgerIcon, ListIcon, Logo, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { NavLink } from "../NavLink/NavLink";
 
-export class AppHeader extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      isActive: {
-        constructor: true,
-        list: false,
-        cabinet: false,
-      }
-    }
-  }
 
-  handleLinkClick = (key) => {
-    const state = { ...this.state.isActive }
+export function AppHeader() {
+  const [isActive, setIsActive] = useState({
+    constructor: true,
+    list: false,
+    cabinet: false,
+  })
+
+  const handleLinkClick = (key) => {
+    const state = { ...isActive }
 
     for (let element in state) {
       element === key ? state[element] = true : state[element] = false;
     }
 
-    this.setState({
-      ...this.state,
-      isActive: {
-        ...state,
-      }
-    })
+    setIsActive({ ...state })
   }
 
-  render() {
-    const {
-      constructor: isConstructorActive,
-      list: isListActive,
-      cabinet: isCabinetActive
-    } = this.state.isActive;
+  return (
+    <header className={styles.header}>
+      <nav className={styles.navpanel}>
+        <div className={styles.container_left}>
+          <NavLink
+            icon={<BurgerIcon type={isActive.constructor ? 'primary' : 'secondary'} />}
+            link='#'
+            caption='Конструктор'
+            isActive={isActive.constructor}
+            onClick={() => handleLinkClick('constructor')}
+          />
+          <NavLink
+            icon={<ListIcon type={isActive.list ? 'primary' : 'secondary'} />}
+            link='#'
+            caption='Лента заказов'
+            isActive={isActive.list}
+            onClick={() => handleLinkClick('list')}
+          />
+        </div>
 
-    return (
-      <header className={styles.header}>
-        <nav className={styles.navpanel}>
-          <div className={styles.container_left}>
-            <NavLink
-              icon={<BurgerIcon type={isConstructorActive ? 'primary' : 'secondary'} />}
-              link='#'
-              caption='Конструктор'
-              isActive={isConstructorActive}
-              onClick={() => this.handleLinkClick('constructor')}
-            />
-            <NavLink
-              icon={<ListIcon type={isListActive ? 'primary' : 'secondary'} />}
-              link='#'
-              caption='Лента заказов'
-              isActive={isListActive}
-              onClick={() => this.handleLinkClick('list')}
-            />
-          </div>
+        <Logo />
 
-          <Logo />
-
-          <div className={styles.container_right}>
-            <NavLink
-              icon={<ProfileIcon type={isCabinetActive ? 'primary' : 'secondary'} />}
-              link='#'
-              caption='Личный кабинет'
-              isActive={isCabinetActive}
-              onClick={() => this.handleLinkClick('cabinet')}
-            />
-          </div>
-        </nav>
-      </header>
-    )
-  }
-
+        <div className={styles.container_right}>
+          <NavLink
+            icon={<ProfileIcon type={isActive.cabinet ? 'primary' : 'secondary'} />}
+            link='#'
+            caption='Личный кабинет'
+            isActive={isActive.cabinet}
+            onClick={() => handleLinkClick('cabinet')}
+          />
+        </div>
+      </nav>
+    </header>
+  )
 }

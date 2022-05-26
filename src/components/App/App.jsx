@@ -29,17 +29,19 @@ function App() {
   if (!ingredients.length) { return null }
 
   return (
-    <>
+    <main className={styles.main}>
       <AppHeader />
-      <main className={styles.main}>
+
+      <section className={styles.section_content}>
         <BurgerIngredients
           categories={categories}
           ingredients={ingredients}
-          openPopup={openPopup} />
+          openPopup={openPopup}
+        />
 
         <BurgerConstructor ingredients={ingredients} />
-      </main>
-    </>
+      </section>
+    </main>
   );
 }
 

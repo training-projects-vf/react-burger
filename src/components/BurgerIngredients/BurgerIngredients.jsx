@@ -9,15 +9,7 @@ import { Modal } from '../Modal/Modal';
 function BurgerIngredients(props) {
   const { categories, ingredients } = props;
   const [current, setCurrent] = useState('one');
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  function closePopup() {
-    setIsPopupOpen(false);
-  }
-
-  function openPopup() {
-    setIsPopupOpen(true)
-  }
 
   return (
     <>
@@ -43,18 +35,13 @@ function BurgerIngredients(props) {
                 key={index}
                 category={item}
                 ingredients={ingredients}
-                openPopup={openPopup} />
+              />
             })
           }
         </section>
-
       </section>
-
-      <Modal isOpen={isPopupOpen} />
-
     </>
   )
-
 }
 
 BurgerIngredients.propTypes = ({

@@ -1,35 +1,55 @@
-import { createPortal } from 'react-dom'
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './Modal.module.css'
 import { ModalOverlay } from '../ModalOverlay/ModalOverlay'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 export function Modal(props) {
-  const modalRoot = document.getElementById('modal-root')
-  const [isOpen, setIsOpen] = useState(false)
+
+  const { onClose } = props;
+  const ref = useRef(null)
 
   useEffect(() => {
-    setIsOpen(props.isOpen)
-  }, [props.isOpen])
+    if (ref.current) { ref.current.focus() }
+  })
 
-  function closeModal() {
-    setIsOpen(false)
+  const handleOverlayClick = (e) => {
+    e.stopPropagation();
+    if (e.target.id === 'container' || e.target.id === 'closeIcon') { onClose() }
   }
 
-  if (!isOpen) { return null }
+  const handleIconClick = (e) => {
+    e.stopPropagation();
+    onClose();
+  }
 
-  return createPortal(
+  const handleKeydown = (e) => {
+    if (e.key === 'Tab') { ref.current.focus() }
+    if (e.key === 'Escape') { onClose() };
+  }
+
+  if (!props.isOpen) { return null }
+
+  return (
     <>
-      <ModalOverlay closeModal={closeModal} />
-      <div className={styles.container}>
-        <div className={styles.modal}>
-          <div className={styles.title_container}>
-            <p>Детали ингредиента</p>
-            <CloseIcon type="primary" />
+      <ModalOverlay />
+      <div className={styles.container} id="container" onClick={handleOverlayClick} >
+        <div
+          ref={ref}
+          tabIndex="1"
+          className={styles.content_container}
+          onKeyDown={handleKeydown}
+        >
+          <div className={styles.title_container} >
+            <p className="text text_type_main-large">{props.title}</p>
+            <CloseIcon type="primary" id="closeIcon" onClick={handleIconClick} />
           </div>
+
+          <div>
+            {props.children}
+          </div>
+
         </div>
       </div>
-    </>,
-    modalRoot
+    </>
   )
 }

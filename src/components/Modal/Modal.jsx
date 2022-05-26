@@ -27,8 +27,6 @@ export function Modal(props) {
     if (e.key === 'Escape') { onClose() };
   }
 
-  if (!props.isOpen) { return null }
-
   return (
     <>
       <ModalOverlay />

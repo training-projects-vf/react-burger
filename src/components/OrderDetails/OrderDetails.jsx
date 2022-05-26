@@ -1,5 +1,6 @@
 import { CheckMarkIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { createPortal } from "react-dom"
+import { orderDetailsType } from "../../utils/propTypes";
 import { Modal } from "../Modal/Modal";
 import styles from './OrderDetails.module.css'
 
@@ -26,3 +27,5 @@ export function OrderDetails(props) {
   )
 
 }
+
+OrderDetails.propTypes = orderDetailsType;

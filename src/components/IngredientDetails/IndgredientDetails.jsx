@@ -1,4 +1,5 @@
 import { createPortal } from 'react-dom';
+import { ingredientDetails } from '../../utils/propTypes.js';
 import { Modal } from '../Modal/Modal.jsx'
 import styles from './IngredientDetails.module.css'
 
@@ -6,12 +7,9 @@ export function IngredientDetails(props) {
   const modalRoot = document.getElementById('modal-root')
   const { ingredient } = props;
 
-  console.log('ingredient', ingredient);
-
   return createPortal(
     <Modal
       title="Детали ингредиента"
-      isOpen={props.isOpen}
       onClose={props.onClose}
     >
       <section className={styles.section}>
@@ -42,3 +40,5 @@ export function IngredientDetails(props) {
     modalRoot
   )
 }
+
+IngredientDetails.propTypes = ingredientDetails;

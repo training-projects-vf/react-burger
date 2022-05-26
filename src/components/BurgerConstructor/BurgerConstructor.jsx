@@ -70,10 +70,9 @@ const BurgerConstructor = (props) => {
         </div>
       </section>
 
-      <OrderDetails
-        isOpen={isPopupOpen}
+      {isPopupOpen && <OrderDetails
         onClose={onClose}
-      />
+      />}
     </>
   )
 }

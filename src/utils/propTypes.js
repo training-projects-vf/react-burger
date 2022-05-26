@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import PropTypes, { bool, func } from 'prop-types';
 
 export const categoryType = PropTypes.shape({
   categoryMarker: PropTypes.string.isRequired,
@@ -25,4 +25,13 @@ export const navLinkType = ({
   caption: PropTypes.string.isRequired,
   isActive: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
+})
+
+export const orderDetailsType = ({
+  onClose: func.isRequired,
+})
+
+export const ingredientDetails = ({
+  onClose: func.isRequired,
+  ingredient: ingredientType,
 })

@@ -1,4 +1,3 @@
-import React from "react";
 import styles from './NavLink.module.css';
 import { navLinkType } from "../../utils/propTypes";
 

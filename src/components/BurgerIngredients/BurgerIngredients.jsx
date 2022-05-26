@@ -1,15 +1,24 @@
-import { useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import styles from './BurgerIngredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientsCategory } from '../IngredientsCategory/IngredientsCategory.jsx';
 import PropTypes from 'prop-types';
 import { ingredientType, categoryType } from '../../utils/propTypes.js';
-import { Modal } from '../Modal/Modal';
 
 function BurgerIngredients(props) {
   const { categories, ingredients } = props;
   const [current, setCurrent] = useState('one');
+  const categoryRefs = useRef([])
 
+  useEffect(() => {
+    categoryRefs.current = categoryRefs.current.slice(0, categories.length)
+  }, [categories])
+
+  function handleTabClick(category) {
+    setCurrent(category);
+    const i = categories.findIndex((item) => item.categoryMarker === category);
+    categoryRefs.current[i].scrollIntoView({ bevahior: 'smooth' });
+  }
 
   return (
     <>
@@ -17,13 +26,13 @@ function BurgerIngredients(props) {
         <p className="text text_type_main-large">Соберите бургер</p>
 
         <div className={styles.div_tabs}>
-          <Tab value="one" active={current === 'one'} onClick={setCurrent}>
+          <Tab value="bun" active={current === 'bun'} onClick={handleTabClick}>
             Булки
           </Tab>
-          <Tab value="two" active={current === 'two'} onClick={setCurrent}>
+          <Tab value="sauce" active={current === 'sauce'} onClick={handleTabClick}>
             Coусы
           </Tab>
-          <Tab value="three" active={current === 'three'} onClick={setCurrent}>
+          <Tab value="main" active={current === 'main'} onClick={handleTabClick}>
             Начинки
           </Tab>
         </div>
@@ -33,6 +42,7 @@ function BurgerIngredients(props) {
             categories.map((item, index) => {
               return <IngredientsCategory
                 key={index}
+                ref={el => categoryRefs.current[index] = el}
                 category={item}
                 ingredients={ingredients}
               />

@@ -3,16 +3,17 @@ import styles from './BurgerIngredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientsCategory } from '../IngredientsCategory/IngredientsCategory.jsx';
 import PropTypes from 'prop-types';
-import { ingredientType, categoryType } from '../../utils/propTypes.js';
+import { ingredientType } from '../../utils/propTypes.js';
+import { categories } from '../../utils/categories.js';
 
 function BurgerIngredients(props) {
-  const { categories, ingredients } = props;
+  const { ingredients } = props;
   const [current, setCurrent] = useState('one');
   const categoryRefs = useRef([])
 
   useEffect(() => {
     categoryRefs.current = categoryRefs.current.slice(0, categories.length)
-  }, [categories])
+  }, [])
 
   function handleTabClick(category) {
     setCurrent(category);
@@ -40,11 +41,12 @@ function BurgerIngredients(props) {
         <section className={`custom-scroll ${styles.section_ingredients}`}>
           {
             categories.map((item, index) => {
+              const categoryIngredients = ingredients.filter((ingredient) => ingredient.type === item.categoryMarker)
               return <IngredientsCategory
                 key={index}
                 ref={el => categoryRefs.current[index] = el}
                 category={item}
-                ingredients={ingredients}
+                categoryIngredients={categoryIngredients}
               />
             })
           }
@@ -55,7 +57,6 @@ function BurgerIngredients(props) {
 }
 
 BurgerIngredients.propTypes = ({
-  categories: PropTypes.arrayOf(categoryType).isRequired,
   ingredients: PropTypes.arrayOf(ingredientType).isRequired,
 });
 

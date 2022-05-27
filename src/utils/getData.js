@@ -10,6 +10,8 @@ export default function getData() {
       }
       return Promise.reject(`${res.status}: ${res.statusText}`)
     })
-    .catch((err) => Promise.reject(err))
+    .catch((err) => {
+      Promise.reject(err);
+    })
 
 }

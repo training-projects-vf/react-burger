@@ -9,7 +9,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { OrderDetails } from '../OrderDetails/OrderDetails';
 import { useState } from 'react';
-
+import { Modal } from '../Modal/Modal';
 
 const BurgerConstructor = (props) => {
   const { ingredients } = props;
@@ -70,9 +70,10 @@ const BurgerConstructor = (props) => {
         </div>
       </section>
 
-      {isPopupOpen && <OrderDetails
-        onClose={onClose}
-      />}
+      {isPopupOpen &&
+        <Modal title="" onClose={onClose} >
+          <OrderDetails />
+        </Modal>}
     </>
   )
 }

@@ -9,9 +9,5 @@ export default function getData() {
         return res.json()
       }
       return Promise.reject(`${res.status}: ${res.statusText}`)
-    })
-    .catch((err) => {
-      Promise.reject(err);
-    })
-
+    });
 }

@@ -8,7 +8,7 @@ import { categories } from '../../utils/categories.js';
 
 function BurgerIngredients(props) {
   const { ingredients } = props;
-  const [current, setCurrent] = useState('one');
+  const [current, setCurrent] = useState('bun');
   const categoryRefs = useRef([])
 
   useEffect(() => {

@@ -29,9 +29,14 @@ export const navLinkType = ({
 
 export const modalType = ({
   title: string.isRequired,
-  onClose: func.isRequired,
+  onClose: func,
 })
 
 export const ingredientDetails = ({
   ingredient: ingredientType,
+})
+
+export const nutritionValue = ({
+  title: string.isRequired,
+  value: number.isRequired,
 })

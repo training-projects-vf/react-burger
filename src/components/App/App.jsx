@@ -14,15 +14,14 @@ function App() {
 
   useEffect(() => {
     getData()
-      .then((data) => { setIngredients(data.data) })
+      .then((data) => {
+        setIngredients(data.data);
+        setIsError(false);
+      })
       .catch(() => {
         setIsError(true)
       });
   }, [])
-
-  function onClose() {
-    setIsError(false)
-  }
 
   if (ingredients.length === 0 && !isError) {
     return null
@@ -30,7 +29,7 @@ function App() {
 
   if (isError) {
     return (
-      <Modal title="" onClose={onClose} >
+      <Modal title="" >
         <Error />
       </Modal>
     )

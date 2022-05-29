@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './BurgerConstructor.module.css';
 import PropTypes from 'prop-types';
 import { ingredientType } from '../../utils/propTypes';
@@ -8,14 +7,24 @@ import {
   DragIcon,
   CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { OrderDetails } from '../OrderDetails/OrderDetails';
+import { useState } from 'react';
+import { Modal } from '../Modal/Modal';
 
+const BurgerConstructor = (props) => {
+  const { ingredients } = props;
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-class BurgerConstructor extends React.Component {
+  function onClose() {
+    setIsPopupOpen(false);
+  }
 
-  render() {
-    const { ingredients } = this.props;
+  function onClick(e) {
+    setIsPopupOpen(true)
+  }
 
-    return (
+  return (
+    <>
       <section className={styles.section}>
         <div className={styles.container_first_last}>
           <ConstructorElement type="top"
@@ -57,11 +66,16 @@ class BurgerConstructor extends React.Component {
             610
             <CurrencyIcon type="primary" />
           </p>
-          <Button type="primary" size="large">Оформить заказ</Button>
+          <Button type="primary" size="large" onClick={onClick}>Оформить заказ</Button>
         </div>
       </section>
-    )
-  }
+
+      {isPopupOpen &&
+        <Modal title="" onClose={onClose} >
+          <OrderDetails />
+        </Modal>}
+    </>
+  )
 }
 
 BurgerConstructor.propTypes = {

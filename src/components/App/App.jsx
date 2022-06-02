@@ -23,11 +23,7 @@ function App() {
       });
   }, [])
 
-  if (ingredients.length === 0 && !isError) {
-    return null
-  }
-
-  if (isError) {
+  if (ingredients.length === 0 || isError) {
     return (
       <Modal title="" >
         <Error />

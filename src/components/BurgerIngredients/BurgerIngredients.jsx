@@ -1,13 +1,14 @@
 import { useEffect, useState, useRef } from 'react';
+import { useSelector } from 'react-redux';
+
+import { categories } from '../../utils/categories.js';
 import styles from './BurgerIngredients.module.css';
+
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientsCategory } from '../IngredientsCategory/IngredientsCategory.jsx';
-import PropTypes from 'prop-types';
-import { ingredientType } from '../../utils/propTypes.js';
-import { categories } from '../../utils/categories.js';
 
-function BurgerIngredients(props) {
-  const { ingredients } = props;
+export function BurgerIngredients() {
+  const { ingredients } = useSelector(store => store.ingredients);
   const [current, setCurrent] = useState('bun');
   const categoryRefs = useRef([])
 
@@ -55,9 +56,3 @@ function BurgerIngredients(props) {
     </>
   )
 }
-
-BurgerIngredients.propTypes = ({
-  ingredients: PropTypes.arrayOf(ingredientType).isRequired,
-});
-
-export default BurgerIngredients;

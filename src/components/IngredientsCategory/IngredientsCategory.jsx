@@ -1,10 +1,12 @@
-import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import style from './IngredientsCategory.module.css';
+import { useState, forwardRef } from "react";
 import PropTypes from 'prop-types';
+
+import style from './IngredientsCategory.module.css';
+
 import { ingredientType } from '../../utils/propTypes';
 import { IngredientDetails } from "../IngredientDetails/IndgredientDetails";
+import { Ingredient } from "../Ingredient/Ingredient";
 import { Modal } from "../Modal/Modal";
-import { useState, forwardRef } from "react";
 
 export const IngredientsCategory = forwardRef((props, ref) => {
   const { categoryIngredients } = props;
@@ -16,26 +18,9 @@ export const IngredientsCategory = forwardRef((props, ref) => {
     setIsPopupOpen(false);
   }
 
-  function onClick(item) {
+  function handleClick(item) {
     setClickedIngredient(item);
     setIsPopupOpen(true);
-  }
-
-  const Ingredient = (properties) => {
-    const { item } = properties;
-    return (
-      <>
-        <div className={style.container_ingredient} onClick={(e) => onClick(item)} >
-          <img src={item.image} alt="ingredient" />
-          <Counter count={1} size="default" />
-          <div className={style.container_price}>
-            <p className="text text_type_digits-default">{item.price}</p>
-            <CurrencyIcon type="primary" />
-          </div>
-          <p className={`text text_type_main-default ${style.name}`}>{item.name}</p>
-        </div>
-      </>
-    )
   }
 
   return (
@@ -50,7 +35,10 @@ export const IngredientsCategory = forwardRef((props, ref) => {
           {
             categoryIngredients.map((item) => {
               return (
-                <Ingredient item={item} key={item._id} />
+                <Ingredient
+                  item={item}
+                  key={item._id}
+                  handleClick={handleClick} />
               )
             })
           }

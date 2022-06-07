@@ -1,3 +1,4 @@
 export const config = {
-  dataURL: 'https://norma.nomoreparties.space/api/ingredients',
+  ingredientsURL: 'https://norma.nomoreparties.space/api/ingredients',
+  orderURL: 'https://norma.nomoreparties.space/api/orders',
 }

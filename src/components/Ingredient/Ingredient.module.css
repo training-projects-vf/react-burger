@@ -1,0 +1,19 @@
+.container_ingredient {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 272px;
+}
+
+.container_price {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+  margin: 4px 0;
+}
+
+.name {
+  text-align: center;
+}

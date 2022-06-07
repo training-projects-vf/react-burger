@@ -1,7 +1,7 @@
 import { config } from '../settings/config.js';
 
-export default function getData() {
-  const url = new URL(config.dataURL);
+export function getIngredientsApi() {
+  const url = new URL(config.ingredientsURL);
 
   return fetch(url)
     .then((res) => {

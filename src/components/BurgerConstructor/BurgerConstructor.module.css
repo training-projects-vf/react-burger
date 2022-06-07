@@ -1,7 +1,7 @@
 .section {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: stretch;
   gap: 16px;
   width: 600px;
   height: calc(100vh - 88px);
@@ -27,7 +27,7 @@
   box-sizing: border-box;
 }
 
-.container_first_last {
+.container_bun {
   composes: container;
   padding-left: 24px;
   margin-right: 16px;

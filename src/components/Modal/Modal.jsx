@@ -21,7 +21,7 @@ export function Modal(props) {
   }, [])
 
   const handleOverlayClick = (e) => {
-    if (e.target.id === 'container' || e.target.id === 'closeIcon') { onClose() }
+    if (!!onClose && (e.target.id === 'container' || e.target.id === 'closeIcon')) { onClose() }
   }
 
   const handleIconClick = (e) => {
@@ -29,7 +29,7 @@ export function Modal(props) {
   }
 
   const handleKeydown = (e) => {
-    if (e.key === 'Escape') { onClose() };
+    if (!!onClose && e.key === 'Escape') { onClose() };
   }
 
   return createPortal(
@@ -44,7 +44,7 @@ export function Modal(props) {
         >
           <div className={styles.title_container} >
             <p className="text text_type_main-large">{title}</p>
-            {props.onClose && <CloseIcon type="primary" id="closeIcon" onClick={handleIconClick} />}
+            {onClose && <CloseIcon type="primary" id="closeIcon" onClick={handleIconClick} />}
           </div>
 
           <div>

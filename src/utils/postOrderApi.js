@@ -1,8 +1,8 @@
-import { config } from "../settings/config";
+import { baseURL, pathOrder } from "../settings/config";
+import { checkReponse } from "./checkResponse";
 
 export function postOrderApi(ingredientIds) {
-  const { orderURL } = config;
-  const url = new URL(orderURL);
+  const url = new URL(pathOrder, baseURL);
   const headers = new Headers();
   headers.append('Content-Type', 'application/json');
 
@@ -17,10 +17,9 @@ export function postOrderApi(ingredientIds) {
   }
 
   return fetch(url, options)
-    .then((res) => {
-      if (res.ok) {
-        return res.json()
-      }
-      return Promise.reject(`${res.status}: ${res.statusText}`)
-    })
+    .then(checkReponse)
+    .then((data) => {
+      if (data?.success) return data;
+      return Promise.reject(data);
+    });
 }

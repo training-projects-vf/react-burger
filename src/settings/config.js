@@ -1,4 +1,3 @@
-export const config = {
-  ingredientsURL: 'https://norma.nomoreparties.space/api/ingredients',
-  orderURL: 'https://norma.nomoreparties.space/api/orders',
-}
+export const baseURL = 'https://norma.nomoreparties.space';
+export const pathIngredients = '/api/ingredients';
+export const pathOrder = '/api/orders';

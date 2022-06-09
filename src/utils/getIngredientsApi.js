@@ -1,13 +1,13 @@
-import { config } from '../settings/config.js';
+import { baseURL, pathIngredients } from '../settings/config.js';
+import { checkReponse } from './checkResponse.js';
 
 export function getIngredientsApi() {
-  const url = new URL(config.ingredientsURL);
+  const url = new URL(pathIngredients, baseURL);
 
   return fetch(url)
-    .then((res) => {
-      if (res.ok) {
-        return res.json()
-      }
-      return Promise.reject(`${res.status}: ${res.statusText}`)
+    .then(checkReponse)
+    .then((data) => {
+      if (data?.success) return data;
+      return Promise.reject(data);
     });
 }

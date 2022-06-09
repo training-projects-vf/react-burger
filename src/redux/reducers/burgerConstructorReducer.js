@@ -6,6 +6,7 @@ import {
   PLACE_ORDER_FAILED,
   RESET_ORDER_DATA,
   MOVE_FILLINGS,
+  PLACE_ORDER_REQUEST,
 } from '../actions/burgerConstructorActions';
 
 const initialState = {
@@ -128,12 +129,23 @@ export const burgerConstructorReducer = (state = initialState, action) => {
       }
     }
 
+    case PLACE_ORDER_REQUEST: {
+      return {
+        ...state,
+        orderData: {
+          ...state.orderData,
+          isRequest: true,
+        }
+      }
+    }
+
     case PLACE_ORDER_SUCCESS: {
       return {
         ...state,
         orderData: {
           ...action.payload,
           error: {
+            isRequest: false,
             isError: false,
           }
         }
@@ -145,6 +157,7 @@ export const burgerConstructorReducer = (state = initialState, action) => {
         ...state,
         orderData: {
           error: {
+            isRequest: false,
             isError: true,
             errorMessage: 'У нас с сервером что-то плохое случилось...'
           }

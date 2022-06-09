@@ -13,10 +13,11 @@ import { Modal } from '../Modal/Modal';
 import { Error } from '../Error/Error';
 import { TopBunBibb, FillingBibb, BottomBunBibb } from '../ConstructorBibb/ConstructorBibb';
 import { Filling } from '../Filling/Filling';
+import { Preloader } from '../Preloader/Preloader'
 
 export const BurgerConstructor = () => {
   const dispatch = useDispatch();
-  const { success: isOrderAccepted } = useSelector(store => store.burger.orderData)
+  const { isRequest, success: isOrderAccepted } = useSelector(store => store.burger.orderData)
   const { isError, errorMessage } = useSelector(store => store.burger.orderData.error)
   const { bun, fillings, burgerCost, ingredientIds } = useSelector(store => store.burger);
   const { ingredients } = useSelector(store => store.ingredients);
@@ -121,6 +122,11 @@ export const BurgerConstructor = () => {
           </Button>
         </div>
       </section>
+
+      {isRequest &&
+        <Modal title="">
+          <Preloader message="PROCESSING YOU ORDER..." />
+        </Modal>}
 
       {isOrderAccepted &&
         <Modal title="" onClose={onCloseInfo} >

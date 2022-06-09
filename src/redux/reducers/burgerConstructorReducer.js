@@ -5,6 +5,7 @@ import {
   PLACE_ORDER_SUCCESS,
   PLACE_ORDER_FAILED,
   RESET_ORDER_DATA,
+  MOVE_FILLINGS,
 } from '../actions/burgerConstructorActions';
 
 const initialState = {
@@ -14,6 +15,9 @@ const initialState = {
   counter: [],
   orderData: {
     success: null,
+    error: {
+      isError: null,
+    },
     order: {
       number: null,
     }
@@ -115,28 +119,50 @@ export const burgerConstructorReducer = (state = initialState, action) => {
       return {
         ...state,
         orderData: {
+          ...state.orderData,
           success: null,
+          error: {
+            isError: null,
+          }
         }
       }
     }
 
     case PLACE_ORDER_SUCCESS: {
-      console.log('success', action.payload);
       return {
         ...state,
         orderData: {
           ...action.payload,
+          error: {
+            isError: false,
+          }
         }
       }
     }
 
     case PLACE_ORDER_FAILED: {
-      console.log('failed')
       return {
         ...state,
         orderData: {
-          isError: true,
+          error: {
+            isError: true,
+            errorMessage: 'У нас с сервером что-то плохое случилось...'
+          }
         }
+      }
+    }
+
+    case MOVE_FILLINGS: {
+      const { dragIndex, hoverIndex } = action.payload;
+      const draggedFilling = state.fillings[dragIndex]
+      const newFillings = [...state.fillings]
+
+      newFillings.splice(dragIndex, 1);
+      newFillings.splice(hoverIndex, 0, draggedFilling);
+
+      return {
+        ...state,
+        fillings: newFillings,
       }
     }
 

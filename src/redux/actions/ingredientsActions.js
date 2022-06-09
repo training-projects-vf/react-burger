@@ -3,6 +3,8 @@ import { getIngredientsApi } from "../../utils/getIngredientsApi";
 export const INGREDIENTS_REQUEST = 'INGREDIENTS_REQUEST';
 export const INGREDIENTS_REQUEST_SUCCESS = 'INGREDIENTS_REQUEST_SUCCESS';
 export const INGREDIENTS_REQUEST_FAILED = 'INGREDIENTS_REQUEST_FAILED';
+export const SCRUTINIZE_INGREDIENT_REQUEST = 'SCRUTINIZE_INGREDIENT';
+export const SCRUTINIZE_INGREDIENT_CLOSE = 'SCRUTINIZE_INGREDIENT_CLOSE';
 
 export function getIngredients() {
   return function (dispatch) {
@@ -16,7 +18,6 @@ export function getIngredients() {
         });
       })
       .catch(() => {
-        console.log('catch')
         dispatch({ type: INGREDIENTS_REQUEST_FAILED })
       });
   }

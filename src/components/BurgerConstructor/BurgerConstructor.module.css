@@ -7,7 +7,7 @@
   height: calc(100vh - 88px);
   flex: none;
   box-sizing: border-box;
-  padding: 100px 16px 40px 16px;
+  padding: 40px 16px 40px 16px;
 }
 
 .section_list {

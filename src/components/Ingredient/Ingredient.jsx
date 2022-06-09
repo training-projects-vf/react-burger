@@ -10,7 +10,7 @@ export const Ingredient = (props) => {
   const searchRes = counter.find((item) => item._id === ingredient._id);
   const qty = searchRes ? searchRes.qty : null;
 
-  const [, dragRef] = useDrag({
+  const [, draggableIngredientRef] = useDrag({
     type: 'ingredient',
     item: { id: ingredient._id },
   })
@@ -19,7 +19,7 @@ export const Ingredient = (props) => {
     <div
       className={styles.container_ingredient}
       onClick={(e) => handleClick(ingredient)}
-      ref={dragRef}
+      ref={draggableIngredientRef}
     >
       <img src={ingredient.image} alt="ingredient" />
 

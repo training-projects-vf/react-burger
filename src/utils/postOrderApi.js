@@ -5,7 +5,6 @@ export function postOrderApi(ingredientIds) {
   const url = new URL(orderURL);
   const headers = new Headers();
   headers.append('Content-Type', 'application/json');
-  console.log(headers)
 
   const body = JSON.stringify({
     ingredients: ingredientIds

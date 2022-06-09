@@ -2,18 +2,20 @@ import {
   INGREDIENTS_REQUEST,
   INGREDIENTS_REQUEST_SUCCESS,
   INGREDIENTS_REQUEST_FAILED,
-} from "../actions/getIngredientsActions"
+  SCRUTINIZE_INGREDIENT_REQUEST,
+  SCRUTINIZE_INGREDIENT_CLOSE,
+} from "../actions/ingredientsActions"
 
 const initialState = {
   ingredientsRequest: false,
-  ingredientsRequestSuccess: false,
+  isSuccess: false,
   ingredientsRequestFailed: false,
   isError: false,
   errorMessage: null,
   ingredients: [],
 }
 
-export const getIngredientsReducer = (state = initialState, action) => {
+export const ingredientsReducer = (state = initialState, action) => {
   switch (action.type) {
 
     case INGREDIENTS_REQUEST: {
@@ -29,7 +31,7 @@ export const getIngredientsReducer = (state = initialState, action) => {
       return ({
         ...state,
         ingredientsRequest: false,
-        ingredientsRequestSuccess: true,
+        isSuccess: true,
         isError: false,
         errorMessage: null,
         ingredients: action.ingredients,
@@ -41,9 +43,26 @@ export const getIngredientsReducer = (state = initialState, action) => {
         ...state,
         ingredientsRequest: false,
         isError: true,
-        errorMessage: `Сбой в галактической квантовой сети...\nПовторите заказ позже.`
+        errorMessage: `Сбой в галактической квантовой сети...\nза что мы платим этим айтишникам... ?`
       })
     }
+
+    case SCRUTINIZE_INGREDIENT_REQUEST: {
+      return {
+        ...state,
+        ingredient: action.payload,
+        isIngredientPopupOpen: true,
+      }
+    }
+
+    case SCRUTINIZE_INGREDIENT_CLOSE: {
+      return {
+        ...state,
+        ingredient: {},
+        isIngredientPopupOpen: false,
+      }
+    }
+
 
     default: {
       return {

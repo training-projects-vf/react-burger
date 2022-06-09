@@ -5,7 +5,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import styles from './App.module.css'
 
-import { getIngredients } from '../../redux/actions/getIngredientsActions';
+import { getIngredients } from '../../redux/actions/ingredientsActions';
 
 import { AppHeader } from '../AppHeader/AppHeader';
 import { BurgerConstructor } from '../BurgerConstructor/BurgerConstructor';
@@ -15,7 +15,7 @@ import { Error } from '../Error/Error';
 
 function App() {
   const dispatch = useDispatch();
-  const { isError, ingredientsRequestSuccess } = useSelector((store) => store.ingredients);
+  const { isError, errorMessage, isSuccess } = useSelector((store) => store.ingredients);
 
   useEffect(() => {
     dispatch(getIngredients())
@@ -25,13 +25,7 @@ function App() {
     <main className={styles.main}>
       <AppHeader />
 
-      {isError &&
-        <Modal title="" >
-          <Error />
-        </Modal>
-      }
-
-      {ingredientsRequestSuccess &&
+      {isSuccess &&
 
         <DndProvider backend={HTML5Backend} >
           <section className={styles.section_content}>
@@ -39,7 +33,12 @@ function App() {
             <BurgerConstructor />
           </section>
         </DndProvider>
+      }
 
+      {isError &&
+        <Modal title="" >
+          <Error errorMessage={errorMessage} />
+        </Modal>
       }
 
     </main>

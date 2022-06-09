@@ -6,6 +6,7 @@ export const REMOVE_INGREDIENT = 'REMOVE_INGREDIENT';
 export const PLACE_ORDER_SUCCESS = 'PLACE_ORDER_SUCCESS';
 export const PLACE_ORDER_FAILED = 'PLACE_ORDER_FAILED';
 export const RESET_ORDER_DATA = 'RESET_ORDER_DATA';
+export const MOVE_FILLINGS = 'MOVE_CARDS';
 
 export function addIngredient(ingredient) {
   const { _id, type, name, price, image } = ingredient;

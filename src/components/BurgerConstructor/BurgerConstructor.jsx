@@ -4,19 +4,20 @@ import { useDrop } from 'react-dnd';
 import {
   Button,
   ConstructorElement,
-  DragIcon,
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './BurgerConstructor.module.css';
-import { addIngredient, removeIngredient, placeOrder } from '../../redux/actions/burgerConstructorActions';
+import { addIngredient, placeOrder, RESET_ORDER_DATA, MOVE_FILLINGS } from '../../redux/actions/burgerConstructorActions';
 import { OrderDetails } from '../OrderDetails/OrderDetails';
 import { Modal } from '../Modal/Modal';
+import { Error } from '../Error/Error';
 import { TopBunBibb, FillingBibb, BottomBunBibb } from '../ConstructorBibb/ConstructorBibb';
+import { Filling } from '../Filling/Filling';
 
 export const BurgerConstructor = () => {
   const dispatch = useDispatch();
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const { success: isOrderAccepted, name: burgerName } = useSelector(store => store.burger.orderData)
+  const { success: isOrderAccepted } = useSelector(store => store.burger.orderData)
+  const { isError, errorMessage } = useSelector(store => store.burger.orderData.error)
   const { bun, fillings, burgerCost, ingredientIds } = useSelector(store => store.burger);
   const { ingredients } = useSelector(store => store.ingredients);
   const [isBunBibb, setBunBibb] = useState(true);
@@ -31,10 +32,6 @@ export const BurgerConstructor = () => {
   })
 
   useEffect(() => {
-    setIsPopupOpen(isOrderAccepted ? true : false)
-  }, [isOrderAccepted])
-
-  useEffect(() => {
     setFillingBibb(fillings.length === 0 ? true : false)
   }, [fillings])
 
@@ -42,20 +39,20 @@ export const BurgerConstructor = () => {
     setBunBibb(bun.length === 0 ? true : false)
   }, [bun])
 
-  function handleClose(index) {
-    dispatch(removeIngredient(index));
-  }
-
   function handleButtonClick() {
     dispatch(placeOrder(ingredientIds))
   }
 
-  function onClose() {
-    setIsPopupOpen(false);
+  function onCloseInfo() {
+    dispatch({ type: RESET_ORDER_DATA })
   }
 
-  function onClick(e) {
-    setIsPopupOpen(true)
+  function onCloseError() {
+    dispatch({ type: RESET_ORDER_DATA })
+  }
+
+  function moveCard(dragIndex, hoverIndex) {
+    dispatch({ type: MOVE_FILLINGS, payload: { dragIndex, hoverIndex } })
   }
 
   return (
@@ -79,20 +76,20 @@ export const BurgerConstructor = () => {
           ?
           <FillingBibb />
           :
-          <div className={`${styles.section_list} custom-scroll`}>
+          <div
+            className={`${styles.section_list} custom-scroll`}
+          >
             {fillings.map((filling, index) => {
               return (
-                <div className={styles.container} key={filling.uuid}>
-                  <DragIcon />
-                  <ConstructorElement
-                    text={filling.name}
-                    price={filling.price}
-                    thumbnail={filling.image}
-                    handleClose={() => handleClose(index)}
-                  />
-                </div>
+                <Filling
+                  key={filling.uuid}
+                  index={index}
+                  filling={filling}
+                  moveCard={moveCard}
+                />
               )
-            })}
+            }
+            )}
           </div>
         }
 
@@ -125,10 +122,16 @@ export const BurgerConstructor = () => {
         </div>
       </section>
 
-      {isPopupOpen &&
-        <Modal title="" onClose={onClose} >
+      {isOrderAccepted &&
+        <Modal title="" onClose={onCloseInfo} >
           <OrderDetails />
         </Modal>}
+
+      {isError &&
+        <Modal title="" onClose={onCloseError}>
+          <Error errorMessage={errorMessage} />
+        </Modal>
+      }
 
     </>
   )

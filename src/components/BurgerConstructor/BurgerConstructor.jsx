@@ -44,11 +44,7 @@ export const BurgerConstructor = () => {
     dispatch(placeOrder(ingredientIds))
   }
 
-  function onCloseInfo() {
-    dispatch({ type: RESET_ORDER_DATA })
-  }
-
-  function onCloseError() {
+  function onCloseModal() {
     dispatch({ type: RESET_ORDER_DATA })
   }
 
@@ -129,12 +125,12 @@ export const BurgerConstructor = () => {
         </Modal>}
 
       {isOrderAccepted &&
-        <Modal title="" onClose={onCloseInfo} >
+        <Modal title="" onClose={onCloseModal} >
           <OrderDetails />
         </Modal>}
 
       {isError &&
-        <Modal title="" onClose={onCloseError}>
+        <Modal title="" onClose={onCloseModal}>
           <Error errorMessage={errorMessage} />
         </Modal>
       }

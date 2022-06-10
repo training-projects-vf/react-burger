@@ -1,68 +1,58 @@
-import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import style from './IngredientsCategory.module.css';
+import { forwardRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import PropTypes from 'prop-types';
+
+import style from './IngredientsCategory.module.css';
+
 import { ingredientType } from '../../utils/propTypes';
 import { IngredientDetails } from "../IngredientDetails/IndgredientDetails";
+import { Ingredient } from "../Ingredient/Ingredient";
 import { Modal } from "../Modal/Modal";
-import { useState, forwardRef } from "react";
+import { SCRUTINIZE_INGREDIENT_REQUEST, SCRUTINIZE_INGREDIENT_CLOSE } from "../../redux/actions/ingredientsActions";
 
 export const IngredientsCategory = forwardRef((props, ref) => {
   const { categoryIngredients } = props;
   const { ruCategoryName } = props.category;
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [clickedIngredient, setClickedIngredient] = useState({});
+  const { isIngredientPopupOpen } = useSelector(store => store.ingredients)
+  const dispatch = useDispatch();
 
   function onClose() {
-    setIsPopupOpen(false);
+    dispatch({ type: SCRUTINIZE_INGREDIENT_CLOSE })
   }
 
-  function onClick(item) {
-    setClickedIngredient(item);
-    setIsPopupOpen(true);
-  }
-
-  const Ingredient = (properties) => {
-    const { item } = properties;
-    return (
-      <>
-        <div className={style.container_ingredient} onClick={(e) => onClick(item)} >
-          <img src={item.image} alt="ingredient" />
-          <Counter count={1} size="default" />
-          <div className={style.container_price}>
-            <p className="text text_type_digits-default">{item.price}</p>
-            <CurrencyIcon type="primary" />
-          </div>
-          <p className={`text text_type_main-default ${style.name}`}>{item.name}</p>
-        </div>
-      </>
-    )
+  function handleClick(item) {
+    dispatch({ type: SCRUTINIZE_INGREDIENT_REQUEST, payload: item })
   }
 
   return (
     <>
-      <div className={style.container_category}>
+      <div
+        className={style.container_category}
+      >
         <p
           ref={ref}
-          className={`text text_type_main-medium ${style.title}`}>
+          className={`text text_type_main-medium ${style.title}`}
+        >
           {ruCategoryName}
         </p>
         <div className={style.container_ingredients}>
           {
             categoryIngredients.map((item) => {
               return (
-                <Ingredient item={item} key={item._id} />
+                <Ingredient
+                  item={item}
+                  key={item._id}
+                  handleClick={handleClick} />
               )
             })
           }
         </div>
 
-        {isPopupOpen && <Modal
+        {isIngredientPopupOpen && <Modal
           title="Детали ингредиента"
           onClose={onClose}
         >
-
-          <IngredientDetails ingredient={clickedIngredient} />
-
+          <IngredientDetails />
         </Modal>
         }
 

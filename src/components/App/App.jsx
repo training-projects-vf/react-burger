@@ -1,44 +1,46 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import styles from './App.module.css'
+
+import { getIngredients } from '../../redux/actions/ingredientsActions';
+
 import { AppHeader } from '../AppHeader/AppHeader';
-import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
-import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
-import getData from '../../utils/getData';
+import { BurgerConstructor } from '../BurgerConstructor/BurgerConstructor';
+import { BurgerIngredients } from '../BurgerIngredients/BurgerIngredients';
 import { Modal } from '../Modal/Modal';
 import { Error } from '../Error/Error';
 
 function App() {
-  const [ingredients, setIngredients] = useState([]);
-  const [isError, setIsError] = useState(false)
+  const dispatch = useDispatch();
+  const { isError, errorMessage, isSuccess } = useSelector((store) => store.ingredients);
 
   useEffect(() => {
-    getData()
-      .then((data) => {
-        setIngredients(data.data);
-        setIsError(false);
-      })
-      .catch(() => {
-        setIsError(true)
-      });
+    dispatch(getIngredients())
   }, [])
-
-  if (ingredients.length === 0 || isError) {
-    return (
-      <Modal title="" >
-        <Error />
-      </Modal>
-    )
-  }
 
   return (
     <main className={styles.main}>
       <AppHeader />
 
-      <section className={styles.section_content}>
-        <BurgerIngredients ingredients={ingredients} />
-        <BurgerConstructor ingredients={ingredients} />
-      </section>
+      {isSuccess &&
+
+        <DndProvider backend={HTML5Backend} >
+          <section className={styles.section_content}>
+            <BurgerIngredients />
+            <BurgerConstructor />
+          </section>
+        </DndProvider>
+      }
+
+      {isError &&
+        <Modal title="" >
+          <Error errorMessage={errorMessage} />
+        </Modal>
+      }
+
     </main>
   );
 }

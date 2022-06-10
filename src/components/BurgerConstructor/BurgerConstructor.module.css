@@ -1,13 +1,13 @@
 .section {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: stretch;
   gap: 16px;
   width: 600px;
   height: calc(100vh - 88px);
   flex: none;
   box-sizing: border-box;
-  padding: 100px 16px 40px 16px;
+  padding: 40px 16px 40px 16px;
 }
 
 .section_list {
@@ -27,7 +27,7 @@
   box-sizing: border-box;
 }
 
-.container_first_last {
+.container_bun {
   composes: container;
   padding-left: 24px;
   margin-right: 16px;

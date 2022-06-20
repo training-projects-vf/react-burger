@@ -120,17 +120,17 @@ export const BurgerConstructor = () => {
       </section>
 
       {isRequest &&
-        <Modal title="">
+        <Modal title="" closeIcon={false}>
           <Preloader message="PROCESSING YOU ORDER..." />
         </Modal>}
 
       {isOrderAccepted &&
-        <Modal title="" onClose={onCloseModal} >
+        <Modal title="" onClose={onCloseModal} closeIcon={true}>
           <OrderDetails />
         </Modal>}
 
       {isError &&
-        <Modal title="" onClose={onCloseModal}>
+        <Modal title="" onClose={onCloseModal} closeIcon={false}>
           <Error errorMessage={errorMessage} />
         </Modal>
       }

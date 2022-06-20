@@ -1,8 +1,11 @@
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import NutritionValue from '../NutritionValue/NutritionValue.jsx';
 import styles from './IngredientDetails.module.css'
 
 export function IngredientDetails() {
+  const { id } = useParams();
+
   const {
     name,
     calories,
@@ -10,7 +13,11 @@ export function IngredientDetails() {
     fat,
     carbohydrates,
     image_large
-  } = useSelector(store => store.ingredients.ingredient);
+  } = useSelector(store => store.ingredients.ingredients
+    .find((ingredient) => ingredient._id === id)
+  );
+
+  if (!id) { return null };
 
   return (
     <section className={styles.section}>

@@ -1,10 +1,10 @@
 import { useState } from "react";
-import styles from './AppHeader.module.css'
+import styles from './Header.module.css'
 import { BurgerIcon, ListIcon, Logo, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { NavLink } from "../NavLink/NavLink";
 
 
-export function AppHeader() {
+export function Header() {
   const [isActive, setIsActive] = useState({
     constructor: true,
     list: false,
@@ -27,7 +27,7 @@ export function AppHeader() {
         <div className={styles.container_left}>
           <NavLink
             icon={<BurgerIcon type={isActive.constructor ? 'primary' : 'secondary'} />}
-            link='#'
+            link='/'
             caption='Конструктор'
             isActive={isActive.constructor}
             onClick={() => handleLinkClick('constructor')}

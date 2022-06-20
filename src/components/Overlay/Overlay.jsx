@@ -1,4 +1,4 @@
-import styles from './ModalOverlay.module.css'
+import styles from './Overlay.module.css'
 
 export function ModalOverlay() {
 

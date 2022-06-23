@@ -30,7 +30,6 @@ export const navLinkType = ({
 export const modalType = ({
   title: string.isRequired,
   onClose: func,
-  closeIcon: bool.isRequired,
 })
 
 export const ingredientDetails = ({

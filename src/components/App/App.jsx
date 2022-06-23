@@ -18,6 +18,7 @@ import { Profile } from '../Profile/Profile';
 import { NotFound404 } from '../NotFound404/NotFound404';
 import { IngredientDetails } from '../IngredientDetails/IndgredientDetails';
 import { Registration } from '../Registration/Registration';
+import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
 
 function App() {
   const dispatch = useDispatch();
@@ -65,12 +66,14 @@ function App() {
           <Route path='login' element={<Login />} />
           <Route path='forgot-password' element={<ForgotPassword />} />
           <Route path='reset-password' element={<ResetPassword />} />
-          <Route path='profile' element={<Profile />} />
+          <Route path='ingredients/:id' element={isSuccess && <IngredientDetails />} />
           <Route path='registration' element={<Registration />} />
 
-          {isSuccess && (
-            <Route path='ingredients/:id' element={<IngredientDetails />} />)
-          }
+          <Route path='profile' element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          } />
 
           <Route path='*' element={<NotFound404 />} />
         </Route>
@@ -99,7 +102,11 @@ function App() {
 
             {isError &&
               <Modal title="" closeIcon={false} >
-                <Error errorMessage={errorMessage} />
+                <Error
+                  errorMessage={errorMessage}
+                  errorMessage2={'сейчас не получится оформить заказ через терминал'}
+                  errorMessage3={'сделайте заказ на кассе'}
+                />
               </Modal>
             }
 

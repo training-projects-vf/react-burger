@@ -2,6 +2,7 @@ import { useState } from "react";
 import styles from './Header.module.css'
 import { BurgerIcon, ListIcon, Logo, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { NavLink } from "../NavLink/NavLink";
+import { useSelector } from "react-redux";
 
 
 export function Header() {
@@ -10,6 +11,8 @@ export function Header() {
     list: false,
     cabinet: false,
   })
+
+  const userName = useSelector(store => store.auth.user?.name)
 
   const handleLinkClick = (key) => {
     const state = { ...isActive }
@@ -46,8 +49,8 @@ export function Header() {
         <div className={styles.container_right}>
           <NavLink
             icon={<ProfileIcon type={isActive.cabinet ? 'primary' : 'secondary'} />}
-            link='#'
-            caption='Личный кабинет'
+            link='/profile'
+            caption={userName ? userName : 'Личный кабинет'}
             isActive={isActive.cabinet}
             onClick={() => handleLinkClick('cabinet')}
           />

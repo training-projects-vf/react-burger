@@ -5,15 +5,21 @@ import {
   REG_ERROR_RESET,
   LOGIN_REQUEST_SUBMIT,
   LOGIN_REQUEST_SUCCESS,
+  LOGIN_REQUEST_REJECTED,
+  LOGIN_REJECTION_RESET,
   LOGOUT,
   GET_USER_INFO,
   RESET_USER_INFO,
+  SET_LOGGEDIN,
+  UPDATE_USER_INFO,
 } from "../actions/authActions";
 
 const initialState = {
   regRequest: false,
   isRegError: false,
   loginReguest: false,
+  isLoggedIn: false,
+  loginRejectionMessage: null,
   user: {},
 }
 
@@ -27,7 +33,6 @@ export const authReducer = (state = initialState, action) => {
     }
 
     case REG_REQUEST_SUCCESS: {
-      console.log('action', action);
       return ({
         ...state,
         regRequest: false,
@@ -63,20 +68,49 @@ export const authReducer = (state = initialState, action) => {
       return ({
         ...state,
         loginReguest: false,
+        isLoggedIn: true,
         user: action.user,
       })
     }
 
-    case LOGOUT: {
-      console.log('reducer LOGOUT');
+    case SET_LOGGEDIN: {
       return ({
         ...state,
+        isLoggedIn: true,
+      })
+    }
+
+    case LOGIN_REQUEST_REJECTED: {
+      return ({
+        ...state,
+        loginReguest: false,
+        loginRejectionMessage: action.payload,
+      })
+    }
+
+    case LOGIN_REJECTION_RESET: {
+      return ({
+        ...state,
+        loginRejectionMessage: null,
+      })
+    }
+
+    case LOGOUT: {
+      return ({
+        ...state,
+        isLoggedIn: false,
         user: {},
       })
     }
 
     case GET_USER_INFO: {
-      console.log('reducer SAVE_USER_INFO')
+      return ({
+        ...state,
+        user: action.user,
+      })
+    }
+
+    case UPDATE_USER_INFO: {
       return ({
         ...state,
         user: action.user,
@@ -86,6 +120,7 @@ export const authReducer = (state = initialState, action) => {
     case RESET_USER_INFO: {
       return ({
         ...state,
+        isLoggedIn: false,
         user: {},
       })
 

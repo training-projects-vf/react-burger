@@ -19,6 +19,9 @@ import { NotFound404 } from '../NotFound404/NotFound404';
 import { IngredientDetails } from '../IngredientDetails/IndgredientDetails';
 import { Registration } from '../Registration/Registration';
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
+import { checkAutorization } from '../../redux/actions/authActions';
+import { Orders } from '../Orders/Orders';
+import { ProfileMenu } from '../ProfileMenu/ProfileMenu';
 
 function App() {
   const dispatch = useDispatch();
@@ -28,6 +31,7 @@ function App() {
   let background = location.state && location.state.background;
 
   useEffect(() => {
+    dispatch(checkAutorization())
     dispatch(getIngredients())
   }, [])
 
@@ -69,11 +73,29 @@ function App() {
           <Route path='ingredients/:id' element={isSuccess && <IngredientDetails />} />
           <Route path='registration' element={<Registration />} />
 
-          <Route path='profile' element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
-          } />
+          <Route path='profile/*'
+            element={
+              <ProtectedRoute>
+                <ProfileMenu />
+              </ProtectedRoute>
+            }
+          >
+
+            <Route index element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            } />
+
+            <Route path='orders'
+              element={
+                <ProtectedRoute>
+                  <Orders />
+                </ProtectedRoute>
+              }
+            />
+          </Route>
+
 
           <Route path='*' element={<NotFound404 />} />
         </Route>

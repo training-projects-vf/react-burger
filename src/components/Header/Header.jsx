@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from './Header.module.css'
 import { BurgerIcon, ListIcon, Logo, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { NavLink } from "../NavLink/NavLink";
+import { HeaderItem } from "../HeaderItem/HeaderItem";
 import { useSelector } from "react-redux";
 
 
@@ -28,16 +28,16 @@ export function Header() {
     <header className={styles.header}>
       <nav className={styles.navpanel}>
         <div className={styles.container_left}>
-          <NavLink
+          <HeaderItem
             icon={<BurgerIcon type={isActive.constructor ? 'primary' : 'secondary'} />}
             link='/'
             caption='Конструктор'
             isActive={isActive.constructor}
             onClick={() => handleLinkClick('constructor')}
           />
-          <NavLink
+          <HeaderItem
             icon={<ListIcon type={isActive.list ? 'primary' : 'secondary'} />}
-            link='#'
+            link='/profile/orders'
             caption='Лента заказов'
             isActive={isActive.list}
             onClick={() => handleLinkClick('list')}
@@ -47,7 +47,7 @@ export function Header() {
         <Logo />
 
         <div className={styles.container_right}>
-          <NavLink
+          <HeaderItem
             icon={<ProfileIcon type={isActive.cabinet ? 'primary' : 'secondary'} />}
             link='/profile'
             caption={userName ? userName : 'Личный кабинет'}

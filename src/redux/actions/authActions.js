@@ -2,7 +2,9 @@ import { authLogin } from "../../utils/auth/authLogin";
 import { authLogout } from "../../utils/auth/authLogout";
 import { authReg } from "../../utils/auth/authReg";
 import { authGetUser } from "../../utils/auth/authGetUser";
-import { setTokens } from "../../utils/setTokens";
+import { authSetTokens } from "../../utils/auth/authSetTokens";
+import { authRefreshToken } from "../../utils/auth/authRefreshToken";
+import { authUpdateUserInfo } from "../../utils/auth/authUpdateUserInfo";
 
 export const REG_REQUEST_SUBMIT = 'REG_REQUEST';
 export const REG_REQUEST_SUCCESS = 'REG_REQUEST_SUCCESS';
@@ -10,8 +12,12 @@ export const REG_REQUEST_ERROR = 'REG_REQUEST_FAIL';
 export const REG_ERROR_RESET = 'REG_ERROR_RESET';
 export const LOGIN_REQUEST_SUBMIT = 'LOGIN_REQUEST_SUBMIT';
 export const LOGIN_REQUEST_SUCCESS = 'LOGIN_REQUEST_SUCCESS';
+export const SET_LOGGEDIN = 'SET_LOGGEDIN';
+export const LOGIN_REQUEST_REJECTED = 'LOGIN_REQUEST_REJECTED';
+export const LOGIN_REJECTION_RESET = 'LOGIN_REJECTION_RESET';
 export const GET_USER_INFO = 'GET_USER_INFO';
 export const RESET_USER_INFO = 'RESET_USER_INFO';
+export const UPDATE_USER_INFO = 'UPDATE_USER_INFO';
 export const LOGOUT = 'LOGOUT_SUBMIT';
 
 export function register(regData) {
@@ -20,7 +26,7 @@ export function register(regData) {
     authReg(regData)
       .then((regResponse) => {
         console.log('regResponse', regResponse)
-        setTokens(regResponse)
+        authSetTokens(regResponse)
         dispatch({ type: REG_REQUEST_SUCCESS, user: regResponse.user })
       })
       .catch((err) => {
@@ -35,11 +41,10 @@ export function login(loginData) {
     dispatch({ type: LOGIN_REQUEST_SUBMIT })
     authLogin(loginData)
       .then((loginResponse) => {
-        console.log('loginResponse', loginResponse)
-        setTokens(loginResponse)
-        authGetUser()
+        authSetTokens(loginResponse)
         dispatch({ type: LOGIN_REQUEST_SUCCESS, user: loginResponse.user })
       })
+      .catch((err) => dispatch({ type: LOGIN_REQUEST_REJECTED, payload: err.message }))
   }
 }
 
@@ -53,10 +58,27 @@ export function logout() {
   }
 }
 
-export function getUser() {
+export function checkAutorization() {
   return function (dispatch) {
-    authGetUser()
-      .then((user) => dispatch({ type: GET_USER_INFO, user }))
-      .catch(() => dispatch({ type: RESET_USER_INFO }))
+    if (localStorage.getItem('refreshToken')) {
+      authRefreshToken()
+        .then((res) => authSetTokens(res))
+        .then(() => {
+          authGetUser()
+            .then((data) => {
+              dispatch({ type: GET_USER_INFO, user: data.user })
+              dispatch({ type: SET_LOGGEDIN })
+            })
+            .catch(() => dispatch({ type: RESET_USER_INFO }))
+        })
+        .catch((err) => console.log('err in refreshToken', err));
+    }
+  }
+}
+
+export function updateUserInfo(userInfo) {
+  return function (dispatch) {
+    authUpdateUserInfo(userInfo)
+      .then((data) => dispatch({ type: UPDATE_USER_INFO, user: data.user }))
   }
 }

@@ -19,6 +19,7 @@ export function initPasswordReset(email) {
   return fetch(url, options)
     .then(checkReponse)
     .then((data) => {
+      console.log('initPasswordReset', data);
       if (data?.success) return data;
       return Promise.reject(data);
     })

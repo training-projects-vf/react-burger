@@ -18,3 +18,7 @@
 .caption_active {
   color: #F2F2F3;
 }
+
+.navlink {
+  text-decoration: none;
+}

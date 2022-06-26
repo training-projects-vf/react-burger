@@ -1,5 +1,5 @@
-import { baseURL, pathAuthToken } from "../settings/config";
-import { checkReponse } from "./checkResponse";
+import { baseURL, pathAuthToken } from "../../settings/config";
+import { checkReponse } from "../checkResponse";
 
 export function authRefreshToken() {
   const refreshToken = localStorage.getItem('refreshToken');
@@ -7,9 +7,9 @@ export function authRefreshToken() {
   const headers = new Headers();
   headers.append('Content-type', 'Application/json');
 
-  const body = {
+  const body = JSON.stringify({
     token: refreshToken,
-  }
+  })
 
   const options = {
     method: 'POST',

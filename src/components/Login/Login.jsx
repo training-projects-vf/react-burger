@@ -3,27 +3,26 @@ import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burg
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { login } from '../../redux/actions/authActions'
+import { login, LOGIN_REJECTION_RESET } from '../../redux/actions/authActions'
+import { Modal } from '../Modal/Modal'
+import { Error } from '../Error/Error'
 import styles from './Login.module.css'
 
 export function Login() {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const { loginRequest } = useSelector(store => store.auth)
-  const [password, setPassword] = useState('')
+  const { loginRequest, isLoggedIn } = useSelector(store => store.auth);
+  const { loginRejectionMessage } = useSelector(store => store.auth);
+  const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
 
-  const { name } = useSelector(store => store.auth.user)
-
   useEffect(() => {
-    if (name) {
-      console.log('login, useEffect, location', location)
-      const from = location.state?.from?.pathname || { from: { pathname: '/' } }
-      console.log('from', from)
+    if (isLoggedIn) {
+      const from = location.state?.from?.pathname || { pathname: '/' }
       navigate(from);
     }
-  }, [name])
+  }, [isLoggedIn])
 
   const onPasswordChange = e => {
     setPassword(e.target.value)
@@ -34,32 +33,46 @@ export function Login() {
   }
 
   function onButtonClick(e) {
-    console.log('Login onButtonClick, location.state', location.state);
     e.preventDefault();
     dispatch(login({ email, password }))
   }
 
-  return (
-    <form className={styles.form}>
-      <p className="text text_type_main-medium">Вход</p>
-      <Input value={email} onChange={onEmailChange} placeholder={'E-mail'} name={'email'}
-        autocomplete="email" />
-      <PasswordInput onChange={onPasswordChange} value={password} name={'password'}
-        autocomplete="current-password" />
-      <Button type="primary" size="medium" onClick={onButtonClick} disabled={loginRequest}>
-        Войти
-      </Button>
-      <section className={styles.options}>
-        <p className={`text text_type_main-default ${styles.color}`}>
-          Вы новый пользователь?
-          <Link to='/registration' className={styles.link}>  Зарегистрироваться</Link>
-        </p>
+  function onClose() {
+    dispatch({ type: LOGIN_REJECTION_RESET })
+  }
 
-        <p className={`text text_type_main-default ${styles.color}`}>
-          Забыли пароль?
-          <Link to='/forgot-password' className={styles.link}>  Восстановить пароль</Link>
-        </p>
-      </section>
-    </form>
+  return (
+    <>
+
+      <form className={styles.form}>
+        <p className="text text_type_main-medium">Вход</p>
+        <Input value={email} onChange={onEmailChange} placeholder={'E-mail'} name={'email'}
+          autocomplete="email" />
+        <PasswordInput onChange={onPasswordChange} value={password} name={'password'}
+          autocomplete="current-password" />
+        <Button type="primary" size="medium" onClick={onButtonClick} disabled={loginRequest}>
+          Войти
+        </Button>
+        <section className={styles.options}>
+          <p className={`text text_type_main-default ${styles.color}`}>
+            Вы новый пользователь?
+            <Link to='/registration' className={styles.link}>  Зарегистрироваться</Link>
+          </p>
+
+          <p className={`text text_type_main-default ${styles.color}`}>
+            Забыли пароль?
+            <Link to='/forgot-password' className={styles.link}>  Восстановить пароль</Link>
+          </p>
+        </section>
+      </form>
+
+      {loginRejectionMessage && (
+        <Modal title='' onClose={onClose} closeIcon={true} >
+          <Error
+            errorMessage={loginRejectionMessage}
+          />
+        </Modal>
+      )}
+    </>
   )
 }

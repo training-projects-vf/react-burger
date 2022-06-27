@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import {
@@ -7,22 +6,27 @@ import {
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './BurgerConstructor.module.css';
-import { addIngredient, placeOrder, RESET_ORDER_DATA, MOVE_FILLINGS } from '../../redux/actions/burgerConstructorActions';
+import { addIngredient, placeOrder, RESET_ORDER_DATA, MOVE_FILLINGS, RESET_BURGER } from '../../redux/actions/burgerConstructorActions';
 import { OrderDetails } from '../OrderDetails/OrderDetails';
 import { Modal } from '../Modal/Modal';
 import { Error } from '../Error/Error';
 import { TopBunBibb, FillingBibb, BottomBunBibb } from '../ConstructorBibb/ConstructorBibb';
 import { Filling } from '../Filling/Filling';
-import { Preloader } from '../Preloader/Preloader'
+import { Preloader } from '../Preloader/Preloader';
+import { useNavigate } from 'react-router-dom';
 
 export const BurgerConstructor = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { isRequest, success: isOrderAccepted } = useSelector(store => store.burger.orderData)
   const { isError, errorMessage } = useSelector(store => store.burger.orderData.error)
   const { bun, fillings, burgerCost, ingredientIds } = useSelector(store => store.burger);
   const { ingredients } = useSelector(store => store.ingredients);
-  const [isBunBibb, setBunBibb] = useState(true);
-  const [isFillingBibb, setFillingBibb] = useState(true);
+  const { isLoggedIn } = useSelector(store => store.auth);
+
+  const isBunBibb = bun.length === 0;
+  const isFillingBibb = fillings.length === 0;
+  const allowOrder = bun.length !== 0 || fillings.length !== 0 ? true : false
 
   const [, dropTarget] = useDrop({
     accept: 'ingredient',
@@ -32,20 +36,16 @@ export const BurgerConstructor = () => {
     }
   })
 
-  useEffect(() => {
-    setFillingBibb(fillings.length === 0 ? true : false)
-  }, [fillings])
-
-  useEffect(() => {
-    setBunBibb(bun.length === 0 ? true : false)
-  }, [bun])
-
   function handleButtonClick() {
+    if (!isLoggedIn) {
+      return navigate('/login')
+    }
     dispatch(placeOrder(ingredientIds))
   }
 
   function onCloseModal() {
     dispatch({ type: RESET_ORDER_DATA })
+    dispatch({ type: RESET_BURGER })
   }
 
   function moveCard(dragIndex, hoverIndex) {
@@ -113,6 +113,7 @@ export const BurgerConstructor = () => {
           <Button
             type="primary"
             size="large"
+            disabled={!allowOrder}
             onClick={handleButtonClick}>
             Оформить заказ
           </Button>
@@ -120,17 +121,17 @@ export const BurgerConstructor = () => {
       </section>
 
       {isRequest &&
-        <Modal title="">
+        <Modal title="" closeIcon={false}>
           <Preloader message="PROCESSING YOU ORDER..." />
         </Modal>}
 
       {isOrderAccepted &&
-        <Modal title="" onClose={onCloseModal} >
+        <Modal title="" onClose={onCloseModal} closeIcon={true}>
           <OrderDetails />
         </Modal>}
 
       {isError &&
-        <Modal title="" onClose={onCloseModal}>
+        <Modal title="" onClose={onCloseModal} closeIcon={false}>
           <Error errorMessage={errorMessage} />
         </Modal>
       }

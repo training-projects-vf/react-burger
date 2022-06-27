@@ -1,15 +1,19 @@
 import { useState } from "react";
-import styles from './AppHeader.module.css'
+import styles from './Header.module.css'
 import { BurgerIcon, ListIcon, Logo, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { NavLink } from "../NavLink/NavLink";
+import { HeaderItem } from "../HeaderItem/HeaderItem";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 
-export function AppHeader() {
+export function Header() {
   const [isActive, setIsActive] = useState({
     constructor: true,
     list: false,
     cabinet: false,
   })
+
+  const userName = useSelector(store => store.auth.user?.name)
 
   const handleLinkClick = (key) => {
     const state = { ...isActive }
@@ -25,29 +29,31 @@ export function AppHeader() {
     <header className={styles.header}>
       <nav className={styles.navpanel}>
         <div className={styles.container_left}>
-          <NavLink
+          <HeaderItem
             icon={<BurgerIcon type={isActive.constructor ? 'primary' : 'secondary'} />}
-            link='#'
+            link='/'
             caption='Конструктор'
             isActive={isActive.constructor}
             onClick={() => handleLinkClick('constructor')}
           />
-          <NavLink
+          <HeaderItem
             icon={<ListIcon type={isActive.list ? 'primary' : 'secondary'} />}
-            link='#'
+            link='/profile/orders'
             caption='Лента заказов'
             isActive={isActive.list}
             onClick={() => handleLinkClick('list')}
           />
         </div>
 
-        <Logo />
+        <Link to='/'>
+          <Logo />
+        </Link>
 
         <div className={styles.container_right}>
-          <NavLink
+          <HeaderItem
             icon={<ProfileIcon type={isActive.cabinet ? 'primary' : 'secondary'} />}
-            link='#'
-            caption='Личный кабинет'
+            link='/profile'
+            caption={userName ? userName : 'Личный кабинет'}
             isActive={isActive.cabinet}
             onClick={() => handleLinkClick('cabinet')}
           />

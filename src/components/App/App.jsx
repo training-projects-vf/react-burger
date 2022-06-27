@@ -1,47 +1,141 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Routes, Route, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import styles from './App.module.css'
-
 import { getIngredients } from '../../redux/actions/ingredientsActions';
-
-import { AppHeader } from '../AppHeader/AppHeader';
+import { Header } from '../Header/Header';
 import { BurgerConstructor } from '../BurgerConstructor/BurgerConstructor';
 import { BurgerIngredients } from '../BurgerIngredients/BurgerIngredients';
 import { Modal } from '../Modal/Modal';
 import { Error } from '../Error/Error';
+import { Login } from '../../pages/Login/Login';
+import { ForgotPassword } from '../../pages/ForgotPassword/ForgotPassword';
+import { ResetPassword } from '../../pages/ResetPassword/ResetPassword';
+import { Profile } from '../../pages/Profile/Profile';
+import { NotFound404 } from '../../pages/NotFound404/NotFound404';
+import { IngredientDetails } from '../IngredientDetails/IndgredientDetails';
+import { Registration } from '../../pages/Registration/Registration';
+import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
+import { checkAutorization } from '../../redux/actions/authActions';
+import { Orders } from '../Orders/Orders';
+import { ProfileMenu } from '../ProfileMenu/ProfileMenu';
+import styles from './App.module.css'
 
 function App() {
   const dispatch = useDispatch();
+  let navigate = useNavigate();
+  let location = useLocation();
   const { isError, errorMessage, isSuccess } = useSelector((store) => store.ingredients);
+  let background = location.state && location.state.background;
 
   useEffect(() => {
+    dispatch(checkAutorization())
     dispatch(getIngredients())
   }, [])
 
   return (
-    <main className={styles.main}>
-      <AppHeader />
+    <>
+      <Routes location={background || location} >
 
-      {isSuccess &&
+        <Route path='/*' element={
+          <>
+            <main className={styles.main}>
+              <Header />
+              <Outlet />
 
-        <DndProvider backend={HTML5Backend} >
-          <section className={styles.section_content}>
-            <BurgerIngredients />
-            <BurgerConstructor />
-          </section>
-        </DndProvider>
+              {isError &&
+                <Modal title="" closeIcon={false} >
+                  <Error errorMessage={errorMessage} />
+                </Modal>
+              }
+            </main>
+          </>
+        }>
+
+          <Route index element={
+            <>
+              {isSuccess &&
+                <DndProvider backend={HTML5Backend} >
+                  <section className={styles.section_content}>
+                    <BurgerIngredients />
+                    <BurgerConstructor />
+                  </section>
+                </DndProvider>
+              }
+            </>
+          } />
+
+          <Route path='login' element={<Login />} />
+          <Route path='forgot-password' element={<ForgotPassword />} />
+          <Route path='reset-password' element={<ResetPassword />} />
+          <Route path='ingredients/:id' element={isSuccess && <IngredientDetails />} />
+          <Route path='registration' element={<Registration />} />
+
+          <Route path='profile/*'
+            element={
+              <ProtectedRoute>
+                <ProfileMenu />
+              </ProtectedRoute>
+            }
+          >
+
+            <Route index element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            } />
+
+            <Route path='orders'
+              element={
+                <ProtectedRoute>
+                  <Orders />
+                </ProtectedRoute>
+              }
+            />
+          </Route>
+
+          <Route path='*' element={<NotFound404 />} />
+        </Route>
+      </Routes>
+
+      {background &&
+        <>
+          <Routes>
+            <Route path='/*' element={<Header />} />
+
+            {isSuccess && (
+              <Route
+                path='ingredients/:id'
+                element={
+                  <>
+                    <Modal
+                      title="Детали ингредиента"
+                      onClose={() => navigate(-1)}
+                      closeIcon={false}
+                    >
+                      <IngredientDetails />
+                    </Modal>
+                  </>
+                } />
+            )}
+
+            {isError &&
+              <Modal title="" closeIcon={false} >
+                <Error
+                  errorMessage={errorMessage}
+                  errorMessage2={'сейчас не получится оформить заказ через терминал'}
+                  errorMessage3={'сделайте заказ на кассе'}
+                />
+              </Modal>
+            }
+
+            <Route path='*' element={<NotFound404 />} />
+          </Routes>
+        </>
       }
-
-      {isError &&
-        <Modal title="" >
-          <Error errorMessage={errorMessage} />
-        </Modal>
-      }
-
-    </main>
+    </>
   );
 }
 

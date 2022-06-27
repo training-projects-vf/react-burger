@@ -2,8 +2,6 @@ import {
   INGREDIENTS_REQUEST,
   INGREDIENTS_REQUEST_SUCCESS,
   INGREDIENTS_REQUEST_FAILED,
-  SCRUTINIZE_INGREDIENT_REQUEST,
-  SCRUTINIZE_INGREDIENT_CLOSE,
 } from "../actions/ingredientsActions"
 
 const initialState = {
@@ -30,11 +28,11 @@ export const ingredientsReducer = (state = initialState, action) => {
     case INGREDIENTS_REQUEST_SUCCESS: {
       return ({
         ...state,
-        ingredientsRequest: false,
+        ingredients: action.ingredients,
         isSuccess: true,
+        ingredientsRequest: false,
         isError: false,
         errorMessage: null,
-        ingredients: action.ingredients,
       })
     }
 
@@ -46,23 +44,6 @@ export const ingredientsReducer = (state = initialState, action) => {
         errorMessage: `Сбой в галактической квантовой сети...\nза что мы платим этим айтишникам... ?`
       })
     }
-
-    case SCRUTINIZE_INGREDIENT_REQUEST: {
-      return {
-        ...state,
-        ingredient: action.payload,
-        isIngredientPopupOpen: true,
-      }
-    }
-
-    case SCRUTINIZE_INGREDIENT_CLOSE: {
-      return {
-        ...state,
-        ingredient: {},
-        isIngredientPopupOpen: false,
-      }
-    }
-
 
     default: {
       return state;

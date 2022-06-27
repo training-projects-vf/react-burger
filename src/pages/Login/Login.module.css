@@ -1,0 +1,29 @@
+form {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: center;
+  width: 480px;
+  gap: 24px;
+}
+
+button {
+  margin-bottom: 56px;
+}
+
+.color {
+  color: #8585AD;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
+.link {
+  text-decoration: none;
+  color: #4C4CFF;
+}

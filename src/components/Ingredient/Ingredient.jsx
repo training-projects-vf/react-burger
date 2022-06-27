@@ -5,7 +5,7 @@ import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-c
 
 export const Ingredient = (props) => {
   const { counter } = useSelector(store => store.burger);
-  const { item: ingredient, handleClick } = props;
+  const { item: ingredient } = props;
 
   const searchRes = counter.find((item) => item._id === ingredient._id);
   const qty = searchRes ? searchRes.qty : null;
@@ -18,7 +18,6 @@ export const Ingredient = (props) => {
   return (
     <div
       className={styles.container_ingredient}
-      onClick={(e) => handleClick(ingredient)}
       ref={draggableIngredientRef}
     >
       <img src={ingredient.image} alt="ingredient" />

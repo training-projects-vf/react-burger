@@ -2,6 +2,7 @@
 import {
   ADD_INGREDIENT,
   REMOVE_INGREDIENT,
+  RESET_BURGER,
   PLACE_ORDER_SUCCESS,
   PLACE_ORDER_FAILED,
   RESET_ORDER_DATA,
@@ -113,6 +114,12 @@ export const burgerConstructorReducer = (state = initialState, action) => {
         ...state,
         counter,
         burgerCost
+      }
+    }
+
+    case RESET_BURGER: {
+      return {
+        ...initialState,
       }
     }
 

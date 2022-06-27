@@ -1,0 +1,10 @@
+.section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 88px);
+}
+
+.number_glow {
+  text-shadow: 0 0 16px rgba(255, 51, 51, 0.25), 0 0 8px rgba(255, 51, 51, 0.25), 0 4px 32px rgba(255, 51, 51, 0.25);
+}

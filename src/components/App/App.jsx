@@ -4,24 +4,24 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Routes, Route, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import styles from './App.module.css'
 import { getIngredients } from '../../redux/actions/ingredientsActions';
 import { Header } from '../Header/Header';
 import { BurgerConstructor } from '../BurgerConstructor/BurgerConstructor';
 import { BurgerIngredients } from '../BurgerIngredients/BurgerIngredients';
 import { Modal } from '../Modal/Modal';
 import { Error } from '../Error/Error';
-import { Login } from '../Login/Login';
-import { ForgotPassword } from '../ForgotPassword/ForgotPassword';
-import { ResetPassword } from '../ResetPassword/ResetPassword';
-import { Profile } from '../Profile/Profile';
-import { NotFound404 } from '../NotFound404/NotFound404';
+import { Login } from '../../pages/Login/Login';
+import { ForgotPassword } from '../../pages/ForgotPassword/ForgotPassword';
+import { ResetPassword } from '../../pages/ResetPassword/ResetPassword';
+import { Profile } from '../../pages/Profile/Profile';
+import { NotFound404 } from '../../pages/NotFound404/NotFound404';
 import { IngredientDetails } from '../IngredientDetails/IndgredientDetails';
-import { Registration } from '../Registration/Registration';
+import { Registration } from '../../pages/Registration/Registration';
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
 import { checkAutorization } from '../../redux/actions/authActions';
 import { Orders } from '../Orders/Orders';
 import { ProfileMenu } from '../ProfileMenu/ProfileMenu';
+import styles from './App.module.css'
 
 function App() {
   const dispatch = useDispatch();
@@ -95,7 +95,6 @@ function App() {
               }
             />
           </Route>
-
 
           <Route path='*' element={<NotFound404 />} />
         </Route>

@@ -3,6 +3,7 @@ import styles from './Header.module.css'
 import { BurgerIcon, ListIcon, Logo, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { HeaderItem } from "../HeaderItem/HeaderItem";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 
 export function Header() {
@@ -44,7 +45,9 @@ export function Header() {
           />
         </div>
 
-        <Logo />
+        <Link to='/'>
+          <Logo />
+        </Link>
 
         <div className={styles.container_right}>
           <HeaderItem

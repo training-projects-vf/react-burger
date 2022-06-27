@@ -34,7 +34,7 @@ export function Profile() {
     setNewPassword(e.target.value)
   }
 
-  const onSaveClick = e => {
+  const onSubmit = e => {
     e.preventDefault();
     const userInfo = {
       name: newName,
@@ -51,7 +51,7 @@ export function Profile() {
   }
 
   return (
-    <form className={styles.form_profile}>
+    <form onSubmit={onSubmit} className={styles.form_profile}>
       <Input value={newName} placeholder={'Имя'} name={'name'} onChange={handleNameChange} icon={'EditIcon'}
         autocomplete="name">
         <EditIcon />
@@ -71,9 +71,8 @@ export function Profile() {
       </Input>
       {showButtons && (
         <section className={styles.button_section}>
-          <Button onClick={onCancelClick}>Отмена</Button>
-          {/* <p className={`text text_type_main-default ${styles.cancel_button}`}>Отмена</p> */}
-          <Button onClick={onSaveClick}>Сохранить</Button>
+          <Button type='reset' onClick={onCancelClick}>Отмена</Button>
+          <Button>Сохранить</Button>
         </section>
       )}
 

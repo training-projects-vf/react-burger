@@ -37,7 +37,6 @@ export const BurgerConstructor = () => {
   })
 
   function handleButtonClick() {
-    console.log('navigate', isLoggedIn)
     if (!isLoggedIn) {
       return navigate('/login')
     }

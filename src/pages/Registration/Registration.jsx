@@ -3,8 +3,8 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
 import { register } from '../../redux/actions/authActions';
-import { Error } from '../Error/Error';
-import { Modal } from '../Modal/Modal';
+import { Error } from '../../components/Error/Error';
+import { Modal } from '../../components/Modal/Modal';
 import styles from './Registration.module.css'
 import { REG_ERROR_RESET } from '../../redux/actions/authActions';
 
@@ -27,7 +27,7 @@ export function Registration() {
     setEmail(e.target.value)
   }
 
-  const onButtonClick = e => {
+  const onSubmit = e => {
     e.preventDefault()
     dispatch(register({ name, email, password }))
   }
@@ -39,7 +39,7 @@ export function Registration() {
   return (
     <>
 
-      <form className={styles.form}>
+      <form onSubmit={onSubmit} className={styles.form}>
         <p className="text text_type_main-medium">Регистрация</p>
         <Input value={name} onChange={onNameChange} placeholder={'Имя'} name={'email'}
           autocomplete="name" />
@@ -47,8 +47,7 @@ export function Registration() {
           autocomplete="email" />
         <PasswordInput onChange={onPasswordChange} value={password} name={'password'}
           autocomplete="new-password" />
-        <Button type="primary" size="medium" onClick={onButtonClick}
-          disabled={regRequest} >
+        <Button type="primary" size="medium" disabled={regRequest} >
           Зарегистрироваться
         </Button>
         <section className={styles.options}>

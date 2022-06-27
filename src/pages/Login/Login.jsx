@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { login, LOGIN_REJECTION_RESET } from '../../redux/actions/authActions'
-import { Modal } from '../Modal/Modal'
-import { Error } from '../Error/Error'
+import { Modal } from '../../components/Modal/Modal'
+import { Error } from '../../components/Error/Error'
 import styles from './Login.module.css'
 
 export function Login() {
@@ -32,7 +32,7 @@ export function Login() {
     setEmail(e.target.value)
   }
 
-  function onButtonClick(e) {
+  function onSubmit(e) {
     e.preventDefault();
     dispatch(login({ email, password }))
   }
@@ -44,13 +44,13 @@ export function Login() {
   return (
     <>
 
-      <form className={styles.form}>
+      <form onSubmit={onSubmit} className={styles.form}>
         <p className="text text_type_main-medium">Вход</p>
         <Input value={email} onChange={onEmailChange} placeholder={'E-mail'} name={'email'}
           autocomplete="email" />
         <PasswordInput onChange={onPasswordChange} value={password} name={'password'}
           autocomplete="current-password" />
-        <Button type="primary" size="medium" onClick={onButtonClick} disabled={loginRequest}>
+        <Button type="primary" size="medium" disabled={loginRequest}>
           Войти
         </Button>
         <section className={styles.options}>

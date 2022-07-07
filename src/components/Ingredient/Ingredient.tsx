@@ -2,12 +2,17 @@ import { useSelector } from "react-redux";
 import { useDrag } from "react-dnd";
 import styles from './Ingredient.module.css';
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { TIngredient } from "../../types/ingredient";
 
-export const Ingredient = (props) => {
-  const { counter } = useSelector(store => store.burger);
+interface IProps {
+item: TIngredient;
+}
+
+export const Ingredient = (props: IProps) => {
+  const { counter } = useSelector((store: any) => store.burger);
   const { item: ingredient } = props;
 
-  const searchRes = counter.find((item) => item._id === ingredient._id);
+  const searchRes = counter.find((item: TIngredient) => item._id === ingredient._id);
   const qty = searchRes ? searchRes.qty : null;
 
   const [, draggableIngredientRef] = useDrag({

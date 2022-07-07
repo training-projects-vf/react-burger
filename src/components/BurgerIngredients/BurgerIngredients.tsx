@@ -1,34 +1,44 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
-
-import { categories } from '../../utils/categories.js';
+import { categories } from '../../settings/categories';
 import styles from './BurgerIngredients.module.css';
-
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { IngredientsCategory } from '../IngredientsCategory/IngredientsCategory.jsx';
+import { IngredientsCategory } from '../IngredientsCategory/IngredientsCategory';
+import { TCategory } from '../../types/categories';
+import { TIngredient } from '../../types/ingredient';
 
 export function BurgerIngredients() {
-  const { ingredients } = useSelector(store => store.ingredients);
-  const [current, setCurrent] = useState('bun');
-  const categoryRefs = useRef([]);
-  const tabs = useRef(null);
+  const { ingredients } = useSelector((store: any) => store.ingredients);
+  const [current, setCurrent] = useState<string>('bun');
+  const tabs = useRef<any>(null);
+
+  type TCategoryRef = HTMLParagraphElement;
+  const categoryRefs = useRef<Array<TCategoryRef>>([]);
+
 
   useEffect(() => {
     categoryRefs.current = categoryRefs.current.slice(0, categories.length);
   }, [])
 
 
-  function handleTabClick(category) {
+  function handleTabClick(category: string) {
     setCurrent(category);
-    const i = categories.findIndex((item) => item.categoryMarker === category);
-    categoryRefs.current[i].scrollIntoView({ bevahior: 'smooth' });
+    const i = categories.findIndex((item: TCategory) => item.categoryMarker === category);
+    categoryRefs.current[i].scrollIntoView({ behavior: 'smooth' });
   }
 
   function handleScroll() {
     const { y: tabsY } = tabs.current.getBoundingClientRect()
     const qty = categoryRefs.current.length;
-    let min = {};
+    type TMin = {
+      value: number;
+      index: number;
+    }
+    let min: TMin = {
+      value: 0,
+      index: 0,
+    };
 
     for (let i = 0; i < qty; i++) {
       const { y: titleY } = categoryRefs.current[i].getBoundingClientRect();
@@ -74,11 +84,12 @@ export function BurgerIngredients() {
 
           {
             categories.map((category, index) => {
-              const categoryIngredients = ingredients.filter((ingredient) => ingredient.type === category.categoryMarker)
+              const categoryIngredients = ingredients
+              .filter((ingredient: TIngredient) => ingredient.type === category.categoryMarker)
               return <IngredientsCategory
-                id={category}
+                // id={category}
                 key={index}
-                ref={el => categoryRefs.current[index] = el}
+                ref={(el) => categoryRefs.current[index] = el}
                 category={category}
                 categoryIngredients={categoryIngredients}
               />

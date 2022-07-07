@@ -1,8 +1,13 @@
-import { nutritionValue } from '../../utils/propTypes';
+// import { nutritionValue } from '../../utils/propTypes';
 import styles from './NutritionValue.module.css'
 
-function NutritionValue(props) {
-  const { title, value } = props;
+interface IProps {
+  title: string;
+  value: number;
+}
+
+function NutritionValue({title, value}: IProps) {
+  // const { title, value } = props;
 
   return (
     <div className={styles.value}>
@@ -12,6 +17,6 @@ function NutritionValue(props) {
   )
 }
 
-NutritionValue.propTypes = nutritionValue;
+// NutritionValue.propTypes = nutritionValue;
 
 export default NutritionValue;

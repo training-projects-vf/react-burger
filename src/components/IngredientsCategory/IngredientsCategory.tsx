@@ -1,11 +1,16 @@
 import { forwardRef } from "react";
-import PropTypes from 'prop-types';
 import styles from './IngredientsCategory.module.css';
-import { ingredientType } from '../../utils/propTypes';
 import { Ingredient } from "../Ingredient/Ingredient";
 import { Link, useLocation } from "react-router-dom";
+import { TIngredient } from "../../types/ingredient";
+import { TCategory } from "../../types/categories";
 
-export const IngredientsCategory = forwardRef((props, ref) => {
+interface IProps {
+  categoryIngredients: Array<TIngredient>;
+  category: TCategory;
+}
+
+export const IngredientsCategory = forwardRef<HTMLParagraphElement, IProps>((props, ref) => {
   const { categoryIngredients } = props;
   const { ruCategoryName } = props.category;
   const location = useLocation();
@@ -46,7 +51,3 @@ export const IngredientsCategory = forwardRef((props, ref) => {
     </>
   )
 });
-
-IngredientsCategory.propTypes = {
-  categoryIngredients: PropTypes.arrayOf(ingredientType).isRequired,
-}

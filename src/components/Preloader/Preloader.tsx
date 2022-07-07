@@ -1,6 +1,6 @@
 import styles from "./Preloader.module.css";
 
-export const Preloader = ({ message }) => {
+export const Preloader = ({ message }: { message: string }) => {
   return (
     <div className={styles.section}>
       <p className={`text text_type_digits-medium ${styles.number_glow} mb-8`}>{message}</p>

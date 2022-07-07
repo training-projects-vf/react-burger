@@ -1,8 +1,8 @@
 import { baseURL, pathOrder } from "../settings/config";
 import { checkReponse } from "./checkResponse";
 
-export function postOrderApi(ingredientIds) {
-  const url = new URL(pathOrder, baseURL);
+export function postOrderApi(ingredientIds: Array<string>) {
+  const url: string = new URL(pathOrder, baseURL).toString();
   const headers = new Headers();
   headers.append('Content-Type', 'application/json');
 
@@ -18,7 +18,7 @@ export function postOrderApi(ingredientIds) {
 
   return fetch(url, options)
     .then(checkReponse)
-    .then((data) => {
+    .then((data: any) => {
       if (data?.success) return data;
       return Promise.reject(data);
     });

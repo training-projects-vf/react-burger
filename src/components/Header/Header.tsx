@@ -7,19 +7,27 @@ import { Link } from "react-router-dom";
 
 
 export function Header() {
-  const [isActive, setIsActive] = useState({
+  interface IActive {
+    constructor: boolean;
+    list: boolean;
+    cabinet: boolean;
+  }
+
+  const [isActive, setIsActive] = useState<IActive>({
     constructor: true,
     list: false,
     cabinet: false,
   })
 
-  const userName = useSelector(store => store.auth.user?.name)
+  const userName = useSelector((store: any) => store.auth.user?.name)
 
-  const handleLinkClick = (key) => {
+  const handleLinkClick = (key: string) => {
     const state = { ...isActive }
+    console.log('state', state)
 
     for (let element in state) {
-      element === key ? state[element] = true : state[element] = false;
+      // ниже 2 способа решения проблемы "Element implicitly has an 'any' type because expression of type 'string' can't be used to index"
+      element === key ? state[element as keyof IActive] = true : state[element as keyof typeof state] = false;
     }
 
     setIsActive({ ...state })

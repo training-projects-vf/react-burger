@@ -1,7 +1,8 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import NutritionValue from '../NutritionValue/NutritionValue.jsx';
+import NutritionValue from '../NutritionValue/NutritionValue';
 import styles from './IngredientDetails.module.css'
+import { TIngredient } from '../../types/ingredient.js';
 
 export function IngredientDetails() {
   const { id } = useParams();
@@ -13,8 +14,8 @@ export function IngredientDetails() {
     fat,
     carbohydrates,
     image_large
-  } = useSelector(store => store.ingredients.ingredients
-    .find((ingredient) => ingredient._id === id)
+  } = useSelector((store: any) => store.ingredients.ingredients
+    .find((ingredient: TIngredient) => ingredient._id === id)
   );
 
   if (!id) { return null };

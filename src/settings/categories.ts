@@ -1,4 +1,6 @@
-export const categories = [
+import { TCategory } from "../types/categories"
+
+export const categories: Array<TCategory> = [
   {
     categoryMarker: 'bun',
     ruCategoryName: 'Булки',

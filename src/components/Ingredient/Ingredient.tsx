@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { useDrag } from "react-dnd";
 import styles from './Ingredient.module.css';
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { TIngredient } from "../../types/ingredient";
+import { TIngredient } from "../../types/types";
 
 interface IProps {
 item: TIngredient;

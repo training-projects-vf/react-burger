@@ -2,17 +2,22 @@
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './Modal.module.css'
 import { ModalOverlay } from '../Overlay/Overlay'
-import React, { ReactNode, useEffect, useRef } from 'react'
+import {
+  BaseSyntheticEvent,
+  useEffect,
+  useRef
+} from 'react'
 import { createPortal } from 'react-dom';
 
 interface IProps {
-  onClose?: () => never;
+  onClose?: () => void;
+  closeIcon: boolean;
   title: string;
-  children?: ReactNode;
+  children?: JSX.Element;
 }
 
 export function Modal(props: IProps) {
-  const { onClose, title, children } = props;
+  const { onClose, title, children, closeIcon } = props;
   const ref = useRef(null);
   const modalRoot = document.getElementById('modal-root') as HTMLElement;
 
@@ -24,7 +29,7 @@ export function Modal(props: IProps) {
     }
   }, [])
 
-  const handleOverlayClick = (e) => {
+  const handleOverlayClick = (e: BaseSyntheticEvent) => {
     if (!!onClose && (e.target.id === 'container' || e.target.id === 'closeIcon')) {
       onClose();
     }
@@ -36,7 +41,7 @@ export function Modal(props: IProps) {
     }
   }
 
-  const handleKeydown = (e: KeyboardEvent) => {
+  const handleKeydown = (e: KeyboardEvent ) => {
     if (!!onClose && e.key === 'Escape') {
       onClose()
     };
@@ -50,14 +55,12 @@ export function Modal(props: IProps) {
           ref={ref}
           tabIndex={1}
           className={styles.content_container}
-          onKeyDown={handleKeydown}
         >
           <div className={styles.title_container} >
             <p className="text text_type_main-large">{title}</p>
-            {onClose && (
+            {closeIcon && (
               <CloseIcon
                 type="primary"
-                // id="closeIcon"
                 onClick={handleIconClick}
               />
               )}

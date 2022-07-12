@@ -1,4 +1,3 @@
-// import { nutritionValue } from '../../utils/propTypes';
 import styles from './NutritionValue.module.css'
 
 interface IProps {
@@ -7,7 +6,6 @@ interface IProps {
 }
 
 function NutritionValue({title, value}: IProps) {
-  // const { title, value } = props;
 
   return (
     <div className={styles.value}>
@@ -16,7 +14,5 @@ function NutritionValue({title, value}: IProps) {
     </div>
   )
 }
-
-// NutritionValue.propTypes = nutritionValue;
 
 export default NutritionValue;

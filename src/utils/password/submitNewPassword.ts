@@ -1,8 +1,8 @@
 import { baseURL, pathSubmitNewPassword } from "../../settings/config";
 import { checkReponse } from "../checkResponse";
 
-export function submitNewPassword(password) {
-  const url = new URL(pathSubmitNewPassword, baseURL);
+export function submitNewPassword(password: string) {
+  const url = new URL(pathSubmitNewPassword, baseURL).toString();
   const headers = new Headers();
   headers.append('Content-Type', 'application/json');
   const token = localStorage.getItem('refreshToken');
@@ -18,8 +18,13 @@ export function submitNewPassword(password) {
     body,
   }
 
+  type TResponse = {
+    success: boolean;
+    message: string;
+  }
+
   return fetch(url, options)
-    .then(checkReponse)
+    .then((res) => checkReponse<TResponse>(res))
     .then((data) => {
       console.log('submitNewPassword', data);
       if (data?.success) return data;

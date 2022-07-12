@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useEffect, useState } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { ChangeEvent, SyntheticEvent, useEffect, useState } from 'react'
+import { Link, Location, useLocation, useNavigate } from 'react-router-dom'
 import { submitNewPassword } from '../../utils/password/submitNewPassword';
 import styles from './ResetPassword.module.css'
 
@@ -9,25 +9,33 @@ export function ResetPassword() {
   const [code, setCode] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const navigate = useNavigate();
-  const location = useLocation();
+
+  interface IExtendedLocation extends Location {
+    state: {
+      pathname?: string;
+    }
+  }
+
+  const location = useLocation() as IExtendedLocation;
 
   useEffect(() => {
-    const from = location.state?.pathname || location.state;
+
+    const from = location.state.pathname || location.state;
     if (from !== '/forgot-password') {
       navigate('/login', { replace: true })
     }
   }, [])
 
 
-  const onCodeChange = e => {
+  const onCodeChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCode(e.target.value)
   }
 
-  const onPasswordChange = e => {
+  const onPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setNewPassword(e.target.value)
   }
 
-  const onSubmit = e => {
+  const onSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     submitNewPassword(newPassword)
   }
@@ -36,9 +44,12 @@ export function ResetPassword() {
     <form onSubmit={onSubmit} className={styles.form}>
       <p className="text text_type_main-medium">Восстановление пароля</p>
       <Input onChange={onPasswordChange} value={newPassword} name={'password'}
-        placeholder={'Введите новый пароль'} autocomplete="new-password" />
+        placeholder={'Введите новый пароль'}
+        // autocomplete="new-password"
+      />
       <Input value={code} onChange={onCodeChange} placeholder={'Введите код из письма'} name={'code'}
-        autocomplete="one-time-code" />
+        // autocomplete="one-time-code"
+      />
 
       <Button type="primary" size="medium" >
         Сохранить

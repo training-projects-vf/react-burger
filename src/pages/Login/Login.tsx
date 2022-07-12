@@ -1,40 +1,48 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useEffect, useState } from 'react'
+import { ChangeEvent, SyntheticEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, Location, useLocation, useNavigate } from 'react-router-dom'
 import { login, LOGIN_REJECTION_RESET } from '../../redux/actions/authActions'
 import { Modal } from '../../components/Modal/Modal'
 import { Error } from '../../components/Error/Error'
 import styles from './Login.module.css'
+import { AnyAction } from 'redux'
 
 export function Login() {
+  interface ILocationState extends Location {
+    state: {
+      from?: {
+        pathname?: string;
+      }
+    }
+  }
+  const location = useLocation() as ILocationState;
   const dispatch = useDispatch();
-  const location = useLocation();
   const navigate = useNavigate();
-  const { loginRequest, isLoggedIn } = useSelector(store => store.auth);
-  const { loginRejectionMessage } = useSelector(store => store.auth);
+  const { loginRequest, isLoggedIn } = useSelector((store: any) => store.auth);
+  const { loginRejectionMessage } = useSelector((store: any) => store.auth);
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
 
   useEffect(() => {
     if (isLoggedIn) {
-      const from = location.state?.from?.pathname || { pathname: '/' }
+      const from = location.state?.from?.pathname || '/'
       navigate(from);
     }
   }, [isLoggedIn])
 
-  const onPasswordChange = e => {
+  const onPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value)
   }
 
-  const onEmailChange = e => {
+  const onEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value)
   }
 
-  function onSubmit(e) {
+  function onSubmit(e: SyntheticEvent) {
     e.preventDefault();
-    dispatch(login({ email, password }))
+    dispatch(login({ email, password }) as unknown as AnyAction)
   }
 
   function onClose() {
@@ -43,13 +51,12 @@ export function Login() {
 
   return (
     <>
-
       <form onSubmit={onSubmit} className={styles.form}>
         <p className="text text_type_main-medium">Вход</p>
-        <Input value={email} onChange={onEmailChange} placeholder={'E-mail'} name={'email'}
-          autocomplete="email" />
-        <PasswordInput onChange={onPasswordChange} value={password} name={'password'}
-          autocomplete="current-password" />
+        <Input value={email} onChange={onEmailChange} placeholder={'E-mail'} name={'email'} />
+
+        <PasswordInput onChange={onPasswordChange} value={password} name={'password'} />
+
         <Button type="primary" size="medium" disabled={loginRequest}>
           Войти
         </Button>

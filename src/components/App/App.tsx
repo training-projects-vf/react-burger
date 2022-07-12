@@ -18,26 +18,28 @@ import { NotFound404 } from '../../pages/NotFound404/NotFound404';
 import { IngredientDetails } from '../IngredientDetails/IndgredientDetails';
 import { Registration } from '../../pages/Registration/Registration';
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
-import { checkAutorization } from '../../redux/actions/authActions';
+import { checkAuthorization } from '../../redux/actions/authActions';
 import { Orders } from '../Orders/Orders';
 import { ProfileMenu } from '../ProfileMenu/ProfileMenu';
 import styles from './App.module.css'
+import { Location } from 'history'
+import { AnyAction } from 'redux';
 
 function App() {
   const dispatch = useDispatch();
   let navigate = useNavigate();
   let location = useLocation();
-  const { isError, errorMessage, isSuccess } = useSelector((store) => store.ingredients);
-  let background = location.state && location.state.background;
+  let state = location.state as { backgroundLocation?: Location };
+  const { isError, errorMessage, isSuccess } = useSelector((store: any) => store.ingredients);
 
   useEffect(() => {
-    dispatch(checkAutorization())
-    dispatch(getIngredients())
+    dispatch(checkAuthorization() as unknown as AnyAction)
+    dispatch(getIngredients() as unknown as AnyAction)
   }, [])
 
   return (
     <>
-      <Routes location={background || location} >
+      <Routes location={state?.backgroundLocation || location} >
 
         <Route path='/*' element={
           <>
@@ -100,7 +102,7 @@ function App() {
         </Route>
       </Routes>
 
-      {background &&
+      {state?.backgroundLocation &&
         <>
           <Routes>
             <Route path='/*' element={<Header />} />
@@ -113,7 +115,7 @@ function App() {
                     <Modal
                       title="Детали ингредиента"
                       onClose={() => navigate(-1)}
-                      closeIcon={false}
+                      closeIcon={true}
                     >
                       <IngredientDetails />
                     </Modal>

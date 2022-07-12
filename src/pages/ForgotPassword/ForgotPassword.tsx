@@ -1,5 +1,5 @@
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useState } from 'react'
+import { ChangeEvent, SyntheticEvent, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import { initPasswordReset } from '../../utils/password/initPasswordReset';
@@ -10,21 +10,20 @@ export function ForgotPassword() {
   const location = useLocation();
   const [email, setEmail] = useState('');
 
-  const onEmailChange = e => {
+  const onEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value)
   }
 
-  const onSubmit = e => {
+  const onSubmit = (e: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
     e.preventDefault()
-    initPasswordReset()
+    initPasswordReset(email)
       .then(() => navigate('/reset-password', { state: location }))
   }
 
   return (
     <form onSubmit={onSubmit} className={styles.form}>
       <p className="text text_type_main-medium">Восстановление пароля</p>
-      <Input value={email} onChange={onEmailChange} placeholder={'Укажите e-mail'} name={'email'}
-        autocomplete="email" />
+      <Input value={email} onChange={onEmailChange} placeholder={'Укажите e-mail'} name={'email'} />
       <Button type="primary" size="medium">
         Восстановить
       </Button>

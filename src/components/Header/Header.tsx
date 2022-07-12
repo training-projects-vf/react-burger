@@ -23,7 +23,6 @@ export function Header() {
 
   const handleLinkClick = (key: string) => {
     const state = { ...isActive }
-    console.log('state', state)
 
     for (let element in state) {
       // ниже 2 способа решения проблемы "Element implicitly has an 'any' type because expression of type 'string' can't be used to index"

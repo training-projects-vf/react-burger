@@ -111,6 +111,14 @@ export const authReducer = (state = initialState, action) => {
     }
 
     case UPDATE_USER_INFO: {
+      const user = {
+        ...action.user,
+      }
+
+      if ('newPassword' in user) {
+        delete user.newPassword;
+      }
+
       return ({
         ...state,
         user: action.user,

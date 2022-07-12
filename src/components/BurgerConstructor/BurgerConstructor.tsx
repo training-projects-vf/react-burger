@@ -14,15 +14,17 @@ import { TopBunBibb, FillingBibb, BottomBunBibb } from '../ConstructorBibb/Const
 import { Filling } from '../Filling/Filling';
 import { Preloader } from '../Preloader/Preloader';
 import { useNavigate } from 'react-router-dom';
+import { TFilling, TIngredient } from '../../types/types';
+import { AnyAction } from 'redux';
 
 export const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isRequest, success: isOrderAccepted } = useSelector(store => store.burger.orderData)
-  const { isError, errorMessage } = useSelector(store => store.burger.orderData.error)
-  const { bun, fillings, burgerCost, ingredientIds } = useSelector(store => store.burger);
-  const { ingredients } = useSelector(store => store.ingredients);
-  const { isLoggedIn } = useSelector(store => store.auth);
+  const { isRequest, success: isOrderAccepted } = useSelector((store: any) => store.burger.orderData)
+  const { isError, errorMessage } = useSelector((store: any) => store.burger.orderData.error)
+  const { bun, fillings, burgerCost, ingredientIds } = useSelector((store: any) => store.burger);
+  const { ingredients } = useSelector((store: any) => store.ingredients);
+  const { isLoggedIn } = useSelector((store: any) => store.auth);
 
   const isBunBibb = bun.length === 0;
   const isFillingBibb = fillings.length === 0;
@@ -30,8 +32,8 @@ export const BurgerConstructor = () => {
 
   const [, dropTarget] = useDrop({
     accept: 'ingredient',
-    drop(itemId) {
-      const item = ingredients.find((ingredient) => ingredient._id === itemId.id)
+    drop(itemId: { id: string }) {
+      const item = ingredients.find((ingredient: TIngredient) => ingredient._id === itemId.id)
       dispatch(addIngredient(item))
     }
   })
@@ -40,7 +42,7 @@ export const BurgerConstructor = () => {
     if (!isLoggedIn) {
       return navigate('/login')
     }
-    dispatch(placeOrder(ingredientIds))
+    dispatch(placeOrder(ingredientIds) as unknown as AnyAction)
   }
 
   function onCloseModal() {
@@ -48,7 +50,7 @@ export const BurgerConstructor = () => {
     dispatch({ type: RESET_BURGER })
   }
 
-  function moveCard(dragIndex, hoverIndex) {
+  function moveCard(dragIndex: number, hoverIndex: number) {
     dispatch({ type: MOVE_FILLINGS, payload: { dragIndex, hoverIndex } })
   }
 
@@ -76,7 +78,7 @@ export const BurgerConstructor = () => {
           <div
             className={`${styles.section_list} custom-scroll`}
           >
-            {fillings.map((filling, index) => {
+            {fillings.map((filling: TFilling, index: number) => {
               return (
                 <Filling
                   key={filling.uuid}

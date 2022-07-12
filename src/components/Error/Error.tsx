@@ -1,6 +1,12 @@
 import styles from './Error.module.css'
 
-export function Error(props) {
+interface IProps {
+  errorMessage: string;
+  errorMessage2?: string;
+  errorMessage3?: string;
+}
+
+export function Error(props: IProps) {
   const { errorMessage, errorMessage2, errorMessage3 } = props;
 
   return (

@@ -1,8 +1,8 @@
 import { pathInitPasswordReset, baseURL } from "../../settings/config";
 import { checkReponse } from "../checkResponse";
 
-export function initPasswordReset(email) {
-  const url = new URL(pathInitPasswordReset, baseURL);
+export function initPasswordReset(email: string) {
+  const url = new URL(pathInitPasswordReset, baseURL).toString();
   const headers = new Headers();
   headers.append('Content-type', 'Application/json');
 
@@ -16,10 +16,14 @@ export function initPasswordReset(email) {
     body,
   }
 
+  type TPasswordResetRes = {
+    success: boolean;
+    message: string;
+  }
+
   return fetch(url, options)
-    .then(checkReponse)
+    .then((res) => checkReponse<TPasswordResetRes>(res))
     .then((data) => {
-      console.log('initPasswordReset', data);
       if (data?.success) return data;
       return Promise.reject(data);
     })

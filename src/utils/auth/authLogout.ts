@@ -1,7 +1,7 @@
 import { baseURL, pathAuthLogout } from "../../settings/config";
 
 export function authLogout() {
-  const url = new URL(pathAuthLogout, baseURL)
+  const url = new URL(pathAuthLogout, baseURL).toString();
   const headers = new Headers();
   headers.append('Content-type', 'Application/json');
 

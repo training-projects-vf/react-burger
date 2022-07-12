@@ -5,17 +5,15 @@ import { categories } from '../../settings/categories';
 import styles from './BurgerIngredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientsCategory } from '../IngredientsCategory/IngredientsCategory';
-import { TCategory } from '../../types/categories';
-import { TIngredient } from '../../types/ingredient';
+import { TCategory, TIngredient } from '../../types/types';
 
 export function BurgerIngredients() {
   const { ingredients } = useSelector((store: any) => store.ingredients);
   const [current, setCurrent] = useState<string>('bun');
-  const tabs = useRef<any>(null);
+  const tabs = useRef<HTMLDivElement>(null!);
 
-  type TCategoryRef = HTMLParagraphElement;
-  const categoryRefs = useRef<Array<TCategoryRef>>([]);
-
+  // type TCategoryRef = HTMLParagraphElement;
+  const categoryRefs = useRef<Array<any>>([]);
 
   useEffect(() => {
     categoryRefs.current = categoryRefs.current.slice(0, categories.length);

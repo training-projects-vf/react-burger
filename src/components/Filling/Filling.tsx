@@ -4,15 +4,26 @@ import { useDispatch } from 'react-redux';
 import { removeIngredient } from '../../redux/actions/burgerConstructorActions';
 import styles from './Filling.module.css';
 import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
+import { TFilling } from '../../types/types';
 
+interface IProps {
+  index: number;
+  moveCard: (dragIndex: number, hoverIndex: number) => void;
+  filling: TFilling;
+}
 
-export const Filling = (props) => {
+export const Filling = (props: IProps) => {
   const { index, moveCard } = props;
   const { uuid, name, price, image } = props.filling;
   const dispatch = useDispatch();
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
 
-  const [, drop] = useDrop({
+  type TItem = {
+    uuid: string;
+    index: number;
+  }
+
+  const [, drop] = useDrop<TItem>({
     accept: 'filling',
     hover(item, monitor) {
       if (!ref.current) {
@@ -33,6 +44,7 @@ export const Filling = (props) => {
       // Determine mouse position
       const clientOffset = monitor.getClientOffset()
       // Get pixels to the top
+      if (!clientOffset) return;
       const hoverClientY = clientOffset.y - hoverBoundingRect.top
       // Only perform the move when the mouse has crossed half of the items height
       // When dragging downwards, only move when the cursor is below 50%
@@ -68,7 +80,7 @@ export const Filling = (props) => {
   // это нужно, т.к. мы тянем "карточку", которую потом дропаем на "карточку"
   drag(drop(ref))
 
-  function handleClose(index) {
+  function handleClose(index: number) {
     dispatch(removeIngredient(index));
   }
 
@@ -78,7 +90,7 @@ export const Filling = (props) => {
       className={styles.container}
       style={{ opacity }}
     >
-      <DragIcon />
+      <DragIcon type='primary' />
       <ConstructorElement
         text={name}
         price={price}

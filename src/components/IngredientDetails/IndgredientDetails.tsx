@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import NutritionValue from '../NutritionValue/NutritionValue';
 import styles from './IngredientDetails.module.css'
-import { TIngredient } from '../../types/ingredient.js';
+import { TIngredient } from '../../types/types';
 
 export function IngredientDetails() {
   const { id } = useParams();

@@ -1,5 +1,7 @@
+import { MouseEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, Outlet, useLocation } from 'react-router-dom'
+import { AnyAction } from 'redux';
 import { logout } from '../../redux/actions/authActions';
 import styles from './ProfileMenu.module.css'
 
@@ -7,10 +9,12 @@ export function ProfileMenu() {
   const dispatch = useDispatch();
   const location = useLocation();
   const { pathname } = location;
+  const [isExitClicked, setIsExitClicked] = useState(false);
 
-  const onExitClick = e => {
+  const onExitClick = (e: MouseEvent) => {
     e.preventDefault()
-    dispatch(logout());
+    setIsExitClicked(true);
+    dispatch(logout() as unknown as AnyAction);
   }
 
   return (
@@ -33,7 +37,7 @@ export function ProfileMenu() {
           </li>
           <li>
             <Link to='#' className={styles.link}>
-              <p className={`text text_type_main-medium ${styles.grey} mb-20`} onClick={onExitClick} >
+              <p className={`text text_type_main-medium ${isExitClicked ? styles.white : styles.grey} mb-20`} onClick={onExitClick} >
                 Выход
               </p>
             </Link>

@@ -1,8 +1,9 @@
 import { pathAuthRegister, baseURL } from "../../settings/config";
+import { TUserRes } from "../../types/types";
 import { checkReponse } from "../checkResponse";
 
-export function authReg({ name, email, password }) {
-  const url = new URL(pathAuthRegister, baseURL);
+export function authReg({ name, email, password }: { [property: string]: string }) {
+  const url = new URL(pathAuthRegister, baseURL).toString();
   const headers = new Headers();
   headers.append('content-type', 'application/json');
   const body = JSON.stringify({
@@ -17,8 +18,13 @@ export function authReg({ name, email, password }) {
     body,
   }
 
+  type TReg = TUserRes & {
+    accessToken: string;
+    refreshToken: string;
+  }
+
   return fetch(url, options)
-    .then(checkReponse)
+    .then((res) => checkReponse<TReg>(res))
     .then((data) => {
       if (data?.success) return data;
       return Promise.reject(data);

@@ -58,7 +58,7 @@ export function logout() {
   }
 }
 
-export function checkAutorization() {
+export function checkAuthorization() {
   return function (dispatch) {
     if (localStorage.getItem('refreshToken')) {
       authRefreshToken()

@@ -1,4 +1,4 @@
-import { TCategory } from "../types/categories"
+import { TCategory } from "../types/types"
 
 export const categories: Array<TCategory> = [
   {

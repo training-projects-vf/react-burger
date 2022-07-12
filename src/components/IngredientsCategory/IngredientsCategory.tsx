@@ -2,8 +2,7 @@ import { forwardRef } from "react";
 import styles from './IngredientsCategory.module.css';
 import { Ingredient } from "../Ingredient/Ingredient";
 import { Link, useLocation } from "react-router-dom";
-import { TIngredient } from "../../types/ingredient";
-import { TCategory } from "../../types/categories";
+import { TIngredient, TCategory } from "../../types/types";
 
 interface IProps {
   categoryIngredients: Array<TIngredient>;
@@ -35,7 +34,7 @@ export const IngredientsCategory = forwardRef<HTMLParagraphElement, IProps>((pro
                   key={id}
                   className={styles.link}
                   to={`/ingredients/${id}`}
-                  state={{ background: location }}
+                  state={{ backgroundLocation: location }}
                 >
 
                   <Ingredient

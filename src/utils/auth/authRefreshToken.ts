@@ -3,7 +3,7 @@ import { checkReponse } from "../checkResponse";
 
 export function authRefreshToken() {
   const refreshToken = localStorage.getItem('refreshToken');
-  const url = new URL(pathAuthToken, baseURL);
+  const url = new URL(pathAuthToken, baseURL).toString();
   const headers = new Headers();
   headers.append('Content-type', 'Application/json');
 
@@ -17,8 +17,13 @@ export function authRefreshToken() {
     body,
   }
 
+  type TRefreshTokenRes = {
+    success: boolean;
+    accessToken: string;
+  }
+
   return fetch(url, options)
-    .then(checkReponse)
+    .then((res) => checkReponse<TRefreshTokenRes>(res))
     .then((data) => {
       if (data?.success) return data;
       return Promise.reject(data);

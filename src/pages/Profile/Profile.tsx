@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Button, EmailInput, Input } from '@ya.praktikum/react-developer-burger-ui-components'
-import { ChangeEvent, SyntheticEvent, useEffect, useState } from 'react'
+import { FormEvent } from 'react';
+import { SyntheticEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AnyAction } from 'redux';
 import { updateUserInfo } from '../../redux/actions/authActions';
@@ -20,19 +21,19 @@ export function Profile() {
     setNewEmail(currentEmail);
   }, [])
 
-  const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleNameChange = (e: FormEvent<HTMLInputElement>) => {
     e.preventDefault()
-    setNewName(e.target.value)
+    setNewName(e.currentTarget.value)
   }
 
-  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleEmailChange = (e: FormEvent<HTMLInputElement>) => {
     e.preventDefault()
-    setNewEmail(e.target.value)
+    setNewEmail(e.currentTarget.value)
   }
 
-  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handlePasswordChange = (e: FormEvent<HTMLInputElement>) => {
     e.preventDefault()
-    setNewPassword(e.target.value)
+    setNewPassword(e.currentTarget.value)
   }
 
   const onSubmit = (e: SyntheticEvent) => {

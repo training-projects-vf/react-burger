@@ -30,7 +30,6 @@ export function register(regData) {
         dispatch({ type: REG_REQUEST_SUCCESS, user: regResponse.user })
       })
       .catch((err) => {
-        console.log('err in authReg', err, err.message)
         dispatch({ type: REG_REQUEST_ERROR, message: err.message })
       })
   }

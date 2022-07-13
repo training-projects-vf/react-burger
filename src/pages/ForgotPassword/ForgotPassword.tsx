@@ -1,5 +1,5 @@
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components'
-import { ChangeEvent, SyntheticEvent, useState } from 'react'
+import { FormEvent, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import { initPasswordReset } from '../../utils/password/initPasswordReset';
@@ -10,11 +10,11 @@ export function ForgotPassword() {
   const location = useLocation();
   const [email, setEmail] = useState('');
 
-  const onEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value)
+  const onEmailChange = (e: FormEvent<HTMLInputElement>) => {
+    setEmail(e.currentTarget.value)
   }
 
-  const onSubmit = (e: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     initPasswordReset(email)
       .then(() => navigate('/reset-password', { state: location }))

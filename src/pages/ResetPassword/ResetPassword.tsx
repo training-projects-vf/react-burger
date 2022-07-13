@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components'
-import { ChangeEvent, SyntheticEvent, useEffect, useState } from 'react'
+import { FormEvent } from 'react';
+import { SyntheticEvent, useEffect, useState } from 'react'
 import { Link, Location, useLocation, useNavigate } from 'react-router-dom'
 import { submitNewPassword } from '../../utils/password/submitNewPassword';
 import styles from './ResetPassword.module.css'
@@ -27,12 +28,12 @@ export function ResetPassword() {
   }, [])
 
 
-  const onCodeChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setCode(e.target.value)
+  const onCodeChange = (e: FormEvent<HTMLInputElement>) => {
+    setCode(e.currentTarget.value)
   }
 
-  const onPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setNewPassword(e.target.value)
+  const onPasswordChange = (e: FormEvent<HTMLInputElement>) => {
+    setNewPassword(e.currentTarget.value)
   }
 
   const onSubmit = (e: SyntheticEvent) => {

@@ -1,5 +1,5 @@
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
-import { ChangeEvent, SyntheticEvent, useState } from 'react'
+import { FormEvent, SyntheticEvent, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
 import { register } from '../../redux/actions/authActions';
@@ -16,16 +16,16 @@ export function Registration() {
   const dispatch = useDispatch();
   const { regRequest, isRegError, regErrorMessage } = useSelector((store: any) => store.auth);
 
-  const onNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value)
+  const onNameChange = (e: FormEvent<HTMLInputElement>) => {
+    setName(e.currentTarget.value)
   }
 
-  const onPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value)
+  const onPasswordChange = (e: FormEvent<HTMLInputElement>) => {
+    setPassword(e.currentTarget.value)
   }
 
-  const onEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value)
+  const onEmailChange = (e: FormEvent<HTMLInputElement>) => {
+    setEmail(e.currentTarget.value)
   }
 
   const onSubmit = (e: SyntheticEvent) => {

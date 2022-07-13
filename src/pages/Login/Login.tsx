@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
-import { ChangeEvent, SyntheticEvent, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, Location, useLocation, useNavigate } from 'react-router-dom'
 import { login, LOGIN_REJECTION_RESET } from '../../redux/actions/authActions'
@@ -8,6 +8,7 @@ import { Modal } from '../../components/Modal/Modal'
 import { Error } from '../../components/Error/Error'
 import styles from './Login.module.css'
 import { AnyAction } from 'redux'
+import { FormEvent } from 'react'
 
 export function Login() {
   interface ILocationState extends Location {
@@ -32,15 +33,15 @@ export function Login() {
     }
   }, [isLoggedIn])
 
-  const onPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value)
+  const onPasswordChange = (e: FormEvent<HTMLInputElement>) => {
+    setPassword(e.currentTarget.value)
   }
 
-  const onEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value)
+  const onEmailChange = (e: FormEvent<HTMLInputElement>) => {
+    setEmail(e.currentTarget.value)
   }
 
-  function onSubmit(e: SyntheticEvent) {
+  function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     dispatch(login({ email, password }) as unknown as AnyAction)
   }

@@ -2,8 +2,9 @@ import { baseURL, pathAuthUser } from "../../settings/config";
 import { TUserRes } from "../../types/types";
 import { checkReponse } from "../checkResponse";
 import { getCookie } from "../getCookie";
+import { TUpdatedUserInfo } from "../../redux/actions/authActions";
 
-export function authUpdateUserInfo(newData: {[property: string]: string}) {
+export function authUpdateUserInfo(newData: TUpdatedUserInfo) {
   const accessToken = getCookie('accessToken');
   const url = new URL(pathAuthUser, baseURL).toString();
   const headers = new Headers();

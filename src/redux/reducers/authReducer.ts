@@ -7,12 +7,13 @@ import {
   LOGIN_REQUEST_SUCCESS,
   LOGIN_REQUEST_REJECTED,
   LOGIN_REJECTION_RESET,
-  LOGOUT,
+  LOGOUT_SUBMIT,
   GET_USER_INFO,
   RESET_USER_INFO,
   SET_LOGGEDIN,
   UPDATE_USER_INFO,
 } from "../actions/authActions";
+import { TAuthActions } from "../actions/authActions";
 
 const initialState = {
   regRequest: false,
@@ -23,7 +24,7 @@ const initialState = {
   user: {},
 }
 
-export const authReducer = (state = initialState, action) => {
+export const authReducer = (state = initialState, action: TAuthActions) => {
   switch (action.type) {
     case REG_REQUEST_SUBMIT: {
       return ({
@@ -95,7 +96,7 @@ export const authReducer = (state = initialState, action) => {
       })
     }
 
-    case LOGOUT: {
+    case LOGOUT_SUBMIT: {
       return ({
         ...state,
         isLoggedIn: false,

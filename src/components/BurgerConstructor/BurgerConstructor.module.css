@@ -23,8 +23,15 @@
   flex: none;
   width: 100%;
   justify-content: flex-end;
-  align-items: center;
+  align-items: stretch;
   box-sizing: border-box;
+}
+
+.container_misc {
+  display: flex;
+  /* padding добавлен для выравнивания, т.к. кнопка дает margin 56px который непонятно как убрать */
+  padding: 0 0 56px 0;
+  align-items: center;
 }
 
 .container_bun {

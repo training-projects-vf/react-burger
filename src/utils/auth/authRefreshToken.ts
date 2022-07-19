@@ -20,6 +20,7 @@ export function authRefreshToken() {
   type TRefreshTokenRes = {
     success: boolean;
     accessToken: string;
+    refreshToken: string;
   }
 
   return fetch(url, options)

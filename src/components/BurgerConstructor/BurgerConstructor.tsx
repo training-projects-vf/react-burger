@@ -108,15 +108,19 @@ export const BurgerConstructor = () => {
         }
 
         <div className={styles.container_price}>
+          <div className={styles.container_misc}>
           <p className="text text_type_digits-medium">
             {burgerCost}
             <CurrencyIcon type="primary" />
           </p>
+          </div>
           <Button
             type="primary"
             size="large"
             disabled={!allowOrder}
-            onClick={handleButtonClick}>
+            onClick={handleButtonClick}
+            // className={styles.button}
+          >
             Оформить заказ
           </Button>
         </div>

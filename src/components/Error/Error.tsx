@@ -1,7 +1,7 @@
 import styles from './Error.module.css'
 
 interface IProps {
-  errorMessage: string;
+  errorMessage: string | undefined;
   errorMessage2?: string;
   errorMessage3?: string;
 }

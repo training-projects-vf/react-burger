@@ -1,19 +1,30 @@
+import { TIngredient } from "../../types/types"
 import {
   INGREDIENTS_REQUEST,
   INGREDIENTS_REQUEST_SUCCESS,
   INGREDIENTS_REQUEST_FAILED,
+  TIngredientsActions,
 } from "../actions/ingredientsActions"
 
-const initialState = {
+type TIngredientsState = {
+  ingredientsRequest: boolean,
+  isSuccess: boolean,
+  ingredientsRequestFailed: boolean,
+  isError: boolean,
+  errorMessage?: string,
+  ingredients: TIngredient[],
+}
+
+const initialState: TIngredientsState = {
   ingredientsRequest: false,
   isSuccess: false,
   ingredientsRequestFailed: false,
   isError: false,
-  errorMessage: null,
+  errorMessage: undefined,
   ingredients: [],
 }
 
-export const ingredientsReducer = (state = initialState, action) => {
+export const ingredientsReducer = (state = initialState, action: TIngredientsActions): TIngredientsState => {
   switch (action.type) {
 
     case INGREDIENTS_REQUEST: {
@@ -21,7 +32,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         ...state,
         ingredientsRequest: true,
         isError: false,
-        errorMessage: null,
+        errorMessage: undefined,
       })
     }
 
@@ -32,7 +43,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         isSuccess: true,
         ingredientsRequest: false,
         isError: false,
-        errorMessage: null,
+        errorMessage: undefined,
       })
     }
 

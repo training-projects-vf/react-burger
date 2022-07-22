@@ -5,7 +5,8 @@ import { authGetUser } from "../../utils/auth/authGetUser";
 import { authSetTokens } from "../../utils/auth/authSetTokens";
 import { authRefreshToken } from "../../utils/auth/authRefreshToken";
 import { authUpdateUserInfo } from "../../utils/auth/authUpdateUserInfo";
-import { TUser, AppDispath } from "../../types/types";
+import { TUser } from "../../types/types";
+import { AppDispath } from "../store";
 
 export const REG_REQUEST_SUBMIT: 'REG_REQUEST' = 'REG_REQUEST';
 export const REG_REQUEST_SUCCESS: 'REG_REQUEST_SUCCESS' = 'REG_REQUEST_SUCCESS';
@@ -94,7 +95,9 @@ export type TAuthActions =
   | IUpdateUserInfoAction
   | ILogoutSubmitAction;
 
-type TRegData = TUser & {
+type TRegData = {
+  name: string,
+  email: string,
   password: string;
 }
 

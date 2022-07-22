@@ -1,15 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Button, EmailInput, Input } from '@ya.praktikum/react-developer-burger-ui-components'
+import { Button, EmailInput, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { FormEvent } from 'react';
-import { SyntheticEvent, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { SyntheticEvent, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useSelector } from '../../redux/store';
 import { AnyAction } from 'redux';
 import { updateUserInfo } from '../../redux/actions/authActions';
-import styles from './Profile.module.css'
+import styles from './Profile.module.css';
 
 export function Profile() {
   const dispatch = useDispatch();
-  const { name: currentName, email: currentEmail } = useSelector((store: any) => store.auth.user);
+  const { name: currentName, email: currentEmail } = useSelector((store) => store.auth.user);
   const [newName, setNewName] = useState('');
   const [newEmail, setNewEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -17,8 +18,12 @@ export function Profile() {
   const showButtons = currentName !== newName || currentEmail !== newEmail || newPassword !== ''
 
   useEffect(() => {
-    setNewName(currentName);
-    setNewEmail(currentEmail);
+    if (currentName !== undefined) {
+      setNewName(currentName);
+    }
+    if (currentEmail !== undefined) {
+      setNewEmail(currentEmail);
+    }
   }, [])
 
   const handleNameChange = (e: FormEvent<HTMLInputElement>) => {
@@ -53,8 +58,12 @@ export function Profile() {
 
   const onCancelClick = (e: SyntheticEvent) => {
     e.preventDefault();
-    setNewName(currentName);
-    setNewEmail(currentEmail);
+     if (currentName !== undefined) {
+      setNewName(currentName);
+    }
+    if (currentEmail !== undefined) {
+      setNewEmail(currentEmail);
+    }
   }
 
   return (

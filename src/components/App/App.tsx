@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useSelector } from '../../redux/store';
 import { Routes, Route, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -30,7 +31,7 @@ function App() {
   let navigate = useNavigate();
   let location = useLocation();
   let state = location.state as { backgroundLocation?: Location };
-  const { isError, errorMessage, isSuccess } = useSelector((store: any) => store.ingredients);
+  const { isError, errorMessage, isSuccess } = useSelector((store) => store.ingredients);
 
   useEffect(() => {
     dispatch(checkAuthorization() as unknown as AnyAction)

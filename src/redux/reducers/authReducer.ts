@@ -1,3 +1,4 @@
+import { TUser } from "../../types/types";
 import {
   REG_REQUEST_ERROR,
   REG_REQUEST_SUBMIT,
@@ -15,16 +16,30 @@ import {
 } from "../actions/authActions";
 import { TAuthActions } from "../actions/authActions";
 
-const initialState = {
-  regRequest: false,
-  isRegError: false,
-  loginReguest: false,
-  isLoggedIn: false,
-  loginRejectionMessage: null,
-  user: {},
+type TAuthInitState = {
+  regRequest: boolean,
+  isRegError: boolean,
+  regErrorMessage: string | undefined,
+  loginRequest: boolean,
+  isLoggedIn: boolean,
+  loginRejectionMessage: string | undefined,
+  user: TUser,
 }
 
-export const authReducer = (state = initialState, action: TAuthActions) => {
+const initialState: TAuthInitState = {
+  regRequest: false,
+  isRegError: false,
+  regErrorMessage: '',
+  loginRequest: false,
+  isLoggedIn: false,
+  loginRejectionMessage: '',
+  user: {
+    name: undefined,
+    email: undefined,
+  }
+}
+
+export const authReducer = (state = initialState, action: TAuthActions): TAuthInitState => {
   switch (action.type) {
     case REG_REQUEST_SUBMIT: {
       return ({
@@ -61,14 +76,14 @@ export const authReducer = (state = initialState, action: TAuthActions) => {
     case LOGIN_REQUEST_SUBMIT: {
       return ({
         ...state,
-        loginReguest: true,
+        loginRequest: true,
       })
     }
 
     case LOGIN_REQUEST_SUCCESS: {
       return ({
         ...state,
-        loginReguest: false,
+        loginRequest: false,
         isLoggedIn: true,
         user: action.user,
       })
@@ -84,7 +99,7 @@ export const authReducer = (state = initialState, action: TAuthActions) => {
     case LOGIN_REQUEST_REJECTED: {
       return ({
         ...state,
-        loginReguest: false,
+        loginRequest: false,
         loginRejectionMessage: action.payload,
       })
     }
@@ -92,7 +107,7 @@ export const authReducer = (state = initialState, action: TAuthActions) => {
     case LOGIN_REJECTION_RESET: {
       return ({
         ...state,
-        loginRejectionMessage: null,
+        loginRejectionMessage: '',
       })
     }
 
@@ -100,7 +115,10 @@ export const authReducer = (state = initialState, action: TAuthActions) => {
       return ({
         ...state,
         isLoggedIn: false,
-        user: {},
+        user: {
+          name: undefined,
+          email: undefined
+        },
       })
     }
 
@@ -130,7 +148,10 @@ export const authReducer = (state = initialState, action: TAuthActions) => {
       return ({
         ...state,
         isLoggedIn: false,
-        user: {},
+        user: {
+          name: undefined,
+          email: undefined
+        },
       })
 
     }

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../redux/store';
 import { categories } from '../../settings/categories';
 import styles from './BurgerIngredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -8,7 +8,7 @@ import { IngredientsCategory } from '../IngredientsCategory/IngredientsCategory'
 import { TCategory, TIngredient } from '../../types/types';
 
 export function BurgerIngredients() {
-  const { ingredients } = useSelector((store: any) => store.ingredients);
+  const { ingredients } = useSelector((store) => store.ingredients);
   const [current, setCurrent] = useState<string>('bun');
   const tabs = useRef<HTMLDivElement>(null!);
 

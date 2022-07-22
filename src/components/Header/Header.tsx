@@ -2,7 +2,7 @@ import { useState } from "react";
 import styles from './Header.module.css'
 import { BurgerIcon, ListIcon, Logo, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { HeaderItem } from "../HeaderItem/HeaderItem";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../redux/store";
 import { Link } from "react-router-dom";
 
 
@@ -19,7 +19,7 @@ export function Header() {
     cabinet: false,
   })
 
-  const userName = useSelector((store: any) => store.auth.user?.name)
+  const userName = useSelector((store) => store.auth.user?.name)
 
   const handleLinkClick = (key: string) => {
     const state = { ...isActive }

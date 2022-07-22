@@ -1,10 +1,10 @@
 import styles from './OrderDetails.module.css'
 import accepted from '../../images/accepted.gif'
-import { useSelector } from 'react-redux'
+import { useSelector } from '../../redux/store'
 
 export function OrderDetails() {
-  const { number } = useSelector((store: any) => store.burger.orderData.order);
-  const { success: isOrderAccepted } = useSelector((store: any) => store.burger.orderData);
+  const { number } = useSelector((store) => store.burger.orderData.order);
+  const { success: isOrderAccepted } = useSelector((store) => store.burger.orderData);
 
   return (
     <>

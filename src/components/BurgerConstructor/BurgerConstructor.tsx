@@ -1,4 +1,5 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useSelector } from '../../redux/store';
 import { useDrop } from 'react-dnd';
 import {
   Button,
@@ -20,11 +21,11 @@ import { AnyAction } from 'redux';
 export const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isRequest, success: isOrderAccepted } = useSelector((store: any) => store.burger.orderData)
-  const { isError, errorMessage } = useSelector((store: any) => store.burger.orderData.error)
-  const { bun, fillings, burgerCost, ingredientIds } = useSelector((store: any) => store.burger);
-  const { ingredients } = useSelector((store: any) => store.ingredients);
-  const { isLoggedIn } = useSelector((store: any) => store.auth);
+  const { isRequest, success: isOrderAccepted } = useSelector((store) => store.burger.orderData)
+  const { isError, errorMessage } = useSelector((store) => store.burger.orderData.error)
+  const { bun, fillings, burgerCost, ingredientIds } = useSelector((store) => store.burger);
+  const { ingredients } = useSelector((store) => store.ingredients);
+  const { isLoggedIn } = useSelector((store) => store.auth);
 
   const isBunBibb = bun.length === 0;
   const isFillingBibb = fillings.length === 0;
@@ -34,7 +35,7 @@ export const BurgerConstructor = () => {
     accept: 'ingredient',
     drop(itemId: { id: string }) {
       const item = ingredients.find((ingredient: TIngredient) => ingredient._id === itemId.id)
-      dispatch(addIngredient(item))
+      dispatch(addIngredient(item as TIngredient))
     }
   })
 
@@ -66,7 +67,7 @@ export const BurgerConstructor = () => {
               isLocked={true}
               text={bun[0].name + ` (верх)`}
               price={bun[0].price}
-              thumbnail={bun[0].image ? bun[0].image : null}
+              thumbnail={bun[0].image ? bun[0].image : ''}
               key={'top'}
             />
           </div>}

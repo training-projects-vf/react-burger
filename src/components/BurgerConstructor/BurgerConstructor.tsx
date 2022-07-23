@@ -1,5 +1,4 @@
-import { useDispatch } from 'react-redux';
-import { useSelector } from '../../redux/store';
+import { useSelector, useDispatch } from '../../redux/store';
 import { useDrop } from 'react-dnd';
 import {
   Button,
@@ -16,7 +15,6 @@ import { Filling } from '../Filling/Filling';
 import { Preloader } from '../Preloader/Preloader';
 import { useNavigate } from 'react-router-dom';
 import { TFilling, TIngredient } from '../../types/types';
-import { AnyAction } from 'redux';
 
 export const BurgerConstructor = () => {
   const dispatch = useDispatch();
@@ -43,7 +41,7 @@ export const BurgerConstructor = () => {
     if (!isLoggedIn) {
       return navigate('/login')
     }
-    dispatch(placeOrder(ingredientIds) as unknown as AnyAction)
+    dispatch(placeOrder(ingredientIds))
   }
 
   function onCloseModal() {

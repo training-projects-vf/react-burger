@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from '../../redux/store';
+import { useSelector, useDispatch } from '../../redux/store';
 import { Routes, Route, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -24,7 +23,6 @@ import { Orders } from '../Orders/Orders';
 import { ProfileMenu } from '../ProfileMenu/ProfileMenu';
 import styles from './App.module.css'
 import { Location } from 'history'
-import { AnyAction } from 'redux';
 
 function App() {
   const dispatch = useDispatch();
@@ -34,8 +32,8 @@ function App() {
   const { isError, errorMessage, isSuccess } = useSelector((store) => store.ingredients);
 
   useEffect(() => {
-    dispatch(checkAuthorization() as unknown as AnyAction)
-    dispatch(getIngredients() as unknown as AnyAction)
+    dispatch(checkAuthorization())
+    dispatch(getIngredients())
   }, [])
 
   return (

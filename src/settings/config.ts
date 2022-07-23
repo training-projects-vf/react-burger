@@ -1,4 +1,6 @@
 export const baseURL = 'https://norma.nomoreparties.space';
+export const wssAllOrdersURL = 'wss://norma.nomoreparties.space/orders/all';
+export const wssUserOrdersURL = 'wss://norma.nomoreparties.space/orders';
 export const pathIngredients = '/api/ingredients';
 export const pathOrder = '/api/orders';
 export const pathAuthLogin = '/api/auth/login';

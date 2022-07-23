@@ -2,9 +2,9 @@ import { getIngredientsApi } from "../../utils/getIngredientsApi";
 import { TIngredient } from "../../types/types";
 import { AppDispath } from "../store";
 
-export const INGREDIENTS_REQUEST: 'INGREDIENTS_REQUEST' = 'INGREDIENTS_REQUEST';
-export const INGREDIENTS_REQUEST_SUCCESS: 'INGREDIENTS_REQUEST_SUCCESS' = 'INGREDIENTS_REQUEST_SUCCESS';
-export const INGREDIENTS_REQUEST_FAILED: 'INGREDIENTS_REQUEST_FAILED' = 'INGREDIENTS_REQUEST_FAILED';
+export const INGREDIENTS_REQUEST = 'INGREDIENTS_REQUEST';
+export const INGREDIENTS_REQUEST_SUCCESS = 'INGREDIENTS_REQUEST_SUCCESS';
+export const INGREDIENTS_REQUEST_FAILED = 'INGREDIENTS_REQUEST_FAILED';
 
 export interface IIngredientRequestAction {
   readonly type: typeof INGREDIENTS_REQUEST;

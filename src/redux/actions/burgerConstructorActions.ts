@@ -3,14 +3,14 @@ import { postOrderApi } from '../../utils/postOrderApi';
 import { TIngredient, TShortIngredient } from '../../types/types';
 import { AppDispath } from '../store';
 
-export const ADD_INGREDIENT: 'ADD_INGREDIENT' = 'ADD_INGREDIENT';
-export const REMOVE_INGREDIENT: 'REMOVE_INGREDIENT' = 'REMOVE_INGREDIENT';
-export const RESET_BURGER: 'RESET_BURGER' = 'RESET_BURGER';
-export const PLACE_ORDER_REQUEST: 'PLACE_ORDER_REQUEST' = 'PLACE_ORDER_REQUEST';
-export const PLACE_ORDER_SUCCESS: 'PLACE_ORDER_SUCCESS' = 'PLACE_ORDER_SUCCESS';
-export const PLACE_ORDER_FAILED: 'PLACE_ORDER_FAILED' = 'PLACE_ORDER_FAILED';
-export const RESET_ORDER_DATA: 'RESET_ORDER_DATA' = 'RESET_ORDER_DATA';
-export const MOVE_FILLINGS: 'MOVE_CARDS' = 'MOVE_CARDS';
+export const ADD_INGREDIENT = 'ADD_INGREDIENT';
+export const REMOVE_INGREDIENT = 'REMOVE_INGREDIENT';
+export const RESET_BURGER = 'RESET_BURGER';
+export const PLACE_ORDER_REQUEST = 'PLACE_ORDER_REQUEST';
+export const PLACE_ORDER_SUCCESS = 'PLACE_ORDER_SUCCESS';
+export const PLACE_ORDER_FAILED = 'PLACE_ORDER_FAILED';
+export const RESET_ORDER_DATA = 'RESET_ORDER_DATA';
+export const MOVE_FILLINGS = 'MOVE_CARDS';
 
 export interface IAddIngredientAction {
   readonly type: typeof ADD_INGREDIENT;
@@ -18,7 +18,7 @@ export interface IAddIngredientAction {
 }
 
 export interface IRemoveIngredientAction {
-  readonly type: typeof REMOVE_INGREDIENT;
+  readonly type: typeof REMOVE_INGREDIENT,
   readonly index: number;
 }
 
@@ -58,7 +58,7 @@ export type TBurgerConstructorActions =
   | IResetOrderDataAction
   | IMoveFillingAction;
 
-export function addIngredient(ingredient: TIngredient) {
+export function addIngredient(ingredient: TIngredient): IAddIngredientAction {
   const { _id, type, name, price, image } = ingredient;
   const uuid = uuidv4();
   const payload = { uuid, _id, type, name, price, image }
@@ -66,8 +66,8 @@ export function addIngredient(ingredient: TIngredient) {
   return ({ type: ADD_INGREDIENT, payload })
 }
 
-export function removeIngredient(index: number) {
-  return ({ type: REMOVE_INGREDIENT, index })
+export function removeIngredient(index: number): IRemoveIngredientAction {
+  return ({ type: REMOVE_INGREDIENT, index: index })
 }
 
 export function placeOrder(ingredientIds: Array<string>) {

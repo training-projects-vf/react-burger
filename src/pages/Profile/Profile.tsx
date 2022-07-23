@@ -2,9 +2,7 @@
 import { Button, EmailInput, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { FormEvent } from 'react';
 import { SyntheticEvent, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from '../../redux/store';
-import { AnyAction } from 'redux';
+import { useSelector, useDispatch } from '../../redux/store';
 import { updateUserInfo } from '../../redux/actions/authActions';
 import styles from './Profile.module.css';
 
@@ -53,7 +51,7 @@ export function Profile() {
       email: newEmail,
       'newPassword': newPassword === '' ? null : newPassword,
     }
-    dispatch(updateUserInfo(userInfo) as unknown as AnyAction)
+    dispatch(updateUserInfo(userInfo))
   }
 
   const onCancelClick = (e: SyntheticEvent) => {

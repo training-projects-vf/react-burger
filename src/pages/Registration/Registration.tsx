@@ -1,14 +1,12 @@
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
 import { FormEvent, SyntheticEvent, useState } from 'react'
-import { useDispatch } from 'react-redux';
-import { useSelector } from '../../redux/store';
+import { useSelector, useDispatch } from '../../redux/store';
 import { Link } from 'react-router-dom'
 import { register } from '../../redux/actions/authActions';
 import { Error } from '../../components/Error/Error';
 import { Modal } from '../../components/Modal/Modal';
 import styles from './Registration.module.css'
 import { REG_ERROR_RESET } from '../../redux/actions/authActions';
-import { AnyAction } from 'redux';
 
 export function Registration() {
   const [name, setName] = useState('');
@@ -31,7 +29,7 @@ export function Registration() {
 
   const onSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
-    dispatch(register({ name, email, password }) as unknown as AnyAction)
+    dispatch(register({ name, email, password }))
   }
 
   const onModalClose = () => {

@@ -1,14 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { useSelector } from '../../redux/store'
+import { useSelector, useDispatch } from '../../redux/store'
 import { Link, Location, useLocation, useNavigate } from 'react-router-dom'
 import { login, LOGIN_REJECTION_RESET } from '../../redux/actions/authActions'
 import { Modal } from '../../components/Modal/Modal'
 import { Error } from '../../components/Error/Error'
 import styles from './Login.module.css'
-import { AnyAction } from 'redux'
 import { FormEvent } from 'react'
 
 export function Login() {
@@ -44,7 +42,7 @@ export function Login() {
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    dispatch(login({ email, password }) as unknown as AnyAction)
+    dispatch(login({ email, password }))
   }
 
   function onClose() {

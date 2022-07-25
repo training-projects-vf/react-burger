@@ -23,6 +23,7 @@ import { Orders } from '../Orders/Orders';
 import { ProfileMenu } from '../ProfileMenu/ProfileMenu';
 import styles from './App.module.css'
 import { Location } from 'history'
+import { OrdersFeed } from '../OrdersFeed/OrdersFeed';
 
 function App() {
   const dispatch = useDispatch();
@@ -68,6 +69,7 @@ function App() {
             </>
           } />
 
+          <Route path='feed' element={<OrdersFeed />} />
           <Route path='login' element={<Login />} />
           <Route path='forgot-password' element={<ForgotPassword />} />
           <Route path='reset-password' element={<ResetPassword />} />

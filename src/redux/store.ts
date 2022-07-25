@@ -10,10 +10,14 @@ import { TBurgerConstructorActions } from '../redux/actions/burgerConstructorAct
 import { TIngredientsActions } from '../redux/actions/ingredientsActions';
 import { configureStore } from "@reduxjs/toolkit";
 import type { } from "redux-thunk/extend-redux"
-import { TFeedActions } from "./actions/orderFeedActions";
+import { feedActions, TFeedActions } from "./actions/orderFeedActions";
+import { socketMiddleware } from "./middlewares/socketMiddleware";
 
 export const store = configureStore({
-  reducer: RootReducer
+  reducer: RootReducer,
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware().concat(socketMiddleware(feedActions))
+  },
 })
 
 export type RootState = ReturnType<typeof RootReducer>;

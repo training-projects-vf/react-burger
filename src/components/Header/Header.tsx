@@ -45,7 +45,7 @@ export function Header() {
           />
           <HeaderItem
             icon={<ListIcon type={isActive.list ? 'primary' : 'secondary'} />}
-            link='/profile/orders'
+            link='/feed'
             caption='Лента заказов'
             isActive={isActive.list}
             onClick={() => handleLinkClick('list')}

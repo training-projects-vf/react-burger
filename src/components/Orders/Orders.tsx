@@ -1,3 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect } from 'react';
+import { connect, disconnect } from '../../redux/actions/orderFeedActions';
 import { useDispatch, useSelector } from '../../redux/store'
 import { wssAllOrdersURL } from '../../settings/config';
 import styles from './Orders.module.css'
@@ -6,11 +9,20 @@ export function Orders() {
   const dispatch = useDispatch();
   const { status } = useSelector((store) => store.feed);
 
-  if (status === 'OFFLINE') {
-    dispatch({ type: 'FEED_CONNECT', payload: wssAllOrdersURL })
-  }
+  useEffect(() => {
+    if (status === 'OFFLINE') {
+      dispatch(connect(wssAllOrdersURL))
+    }
+
+    return () => {
+      dispatch(disconnect())
+    }
+  }, [])
+
 
   return (
-    <h1>Orders</h1>
+    <div className={styles.ordersFeed}>
+      <h1>Orders</h1>
+    </div>
   )
 }

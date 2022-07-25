@@ -17,28 +17,41 @@ export const socketMiddleware = (wsActions: TwsActionsTypes): Middleware<{}, Roo
     let socket: WebSocket | null;
 
     return next => action => {
-      const { dispatch, getState } = store;
-      const { type } = action;
-      const { connect, disconnect, wsConnecting, wsOpen, wsClose, wsMessage, wsError } = wsActions;
+      // console.log('action in the middleware', action)
+      const { dispatch } = store;
+      const { connect, disconnect,
+        // wsConnecting,
+        wsOpen, wsClose, wsMessage, wsError } = wsActions;
 
       if (connect.match(action)) {
-        const { payload } = action;
-        socket = new WebSocket(payload)
+        const { payload: wssUrl } = action;
+        socket = new WebSocket(wssUrl)
       }
 
       if (socket) {
         socket.onopen = () => {
-          dispatch({ type: wsOpen })
+          dispatch(wsOpen())
         }
 
-        socket.onmessage = event => {
-          dispatch({ type: wsMessage, payload: event })
+        if (disconnect.match(action)) {
+          socket.close()
         }
 
         socket.onclose = () => {
-          dispatch({ type: wsClose })
+          dispatch(wsClose())
         }
+
+        socket.onmessage = event => {
+          dispatch(wsMessage(event.data))
+        }
+
+        socket.onerror = event => {
+          console.log('onerror', event)
+          dispatch(wsError('Websocket error'))
+        }
+
       }
+      next(action)
     }
   }
 

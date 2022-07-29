@@ -121,7 +121,6 @@ export const burgerConstructorReducer = (state = initialState, action: TBurgerCo
         counter,
         burgerCost,
       }
-
     }
 
     case REMOVE_INGREDIENT: {

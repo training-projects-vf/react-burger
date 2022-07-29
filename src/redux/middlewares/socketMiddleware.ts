@@ -17,18 +17,21 @@ export const socketMiddleware = (wsActions: TwsActionsTypes): Middleware<{}, Roo
     let socket: WebSocket | null;
 
     return next => action => {
-      // console.log('action in the middleware', action)
       const { dispatch } = store;
-      const { connect, disconnect,
-        // wsConnecting,
-        wsOpen, wsClose, wsMessage, wsError } = wsActions;
+      const { connect, disconnect, wsConnecting, wsOpen, wsClose, wsMessage, wsError } = wsActions;
 
       if (connect.match(action)) {
         const { payload: wssUrl } = action;
+        //добавлено по причине двойного рендеринга React 18
+        //в режиме отладки
+        if (socket) { socket.close() }
         socket = new WebSocket(wssUrl)
+        dispatch(wsConnecting())
       }
 
       if (socket) {
+        // console.log('socket', socket)
+
         socket.onopen = () => {
           dispatch(wsOpen())
         }
@@ -46,7 +49,6 @@ export const socketMiddleware = (wsActions: TwsActionsTypes): Middleware<{}, Roo
         }
 
         socket.onerror = event => {
-          console.log('onerror', event)
           dispatch(wsError('Websocket error'))
         }
 

@@ -1,0 +1,14 @@
+.feed {
+  display: flex;
+  flex-direction: column;
+  max-width: 50%;
+  overflow: hidden;
+}
+
+.orders {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}

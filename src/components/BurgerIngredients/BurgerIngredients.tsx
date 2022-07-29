@@ -5,14 +5,13 @@ import { categories } from '../../settings/categories';
 import styles from './BurgerIngredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientsCategory } from '../IngredientsCategory/IngredientsCategory';
-import { TCategory, TIngredient } from '../../types/types';
+import { TCategory } from '../../types/types';
 
 export function BurgerIngredients() {
   const { ingredients } = useSelector((store) => store.ingredients);
   const [current, setCurrent] = useState<string>('bun');
   const tabs = useRef<HTMLDivElement>(null!);
 
-  // type TCategoryRef = HTMLParagraphElement;
   const categoryRefs = useRef<Array<any>>([]);
 
   useEffect(() => {
@@ -83,9 +82,8 @@ export function BurgerIngredients() {
           {
             categories.map((category, index) => {
               const categoryIngredients = ingredients
-              .filter((ingredient: TIngredient) => ingredient.type === category.categoryMarker)
+              .filter((ingredient) => ingredient.type === category.categoryMarker)
               return <IngredientsCategory
-                // id={category}
                 key={index}
                 ref={(el) => categoryRefs.current[index] = el}
                 category={category}

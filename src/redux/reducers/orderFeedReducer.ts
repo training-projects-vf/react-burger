@@ -1,4 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit"
+import { TOrder } from "../../types/types"
 import {
   // connect,
   disconnect,
@@ -10,7 +11,7 @@ import {
 } from '../actions/orderFeedActions'
 
 enum WebsocketStatus {
-  CONNECTING = 'CONNECTING...',
+  CONNECTING = 'CONNECTING',
   ONLINE = 'ONLINE',
   OFFLINE = 'OFFLINE'
 }
@@ -19,14 +20,24 @@ type TFeedStore = {
   status: WebsocketStatus,
   disconnectRequested: boolean,
   connectingError: string | null,
-  data: any
+  data: {
+    success: boolean,
+    orders: TOrder[],
+    total: number,
+    totalToday: number
+  }
 }
 
 const initFeedState: TFeedStore = {
   status: WebsocketStatus.OFFLINE,
   disconnectRequested: false,
   connectingError: null,
-  data: []
+  data: {
+    success: false,
+    orders: [],
+    total: 0,
+    totalToday: 0
+  }
 }
 
 export const orderFeedReducer = createReducer(initFeedState, (builder) => {
@@ -39,14 +50,14 @@ export const orderFeedReducer = createReducer(initFeedState, (builder) => {
       state.connectingError = null;
       state.disconnectRequested = false;
     })
-    .addCase(wsClose, (state) => {
-      state.status = WebsocketStatus.OFFLINE;
+    .addCase(wsMessage, (state, action) => {
+      state.data = JSON.parse(action.payload);
     })
     .addCase(wsError, (state, action) => {
       state.connectingError = action.payload;
     })
-    .addCase(wsMessage, (state, action) => {
-      state.data = JSON.parse(action.payload);
+    .addCase(wsClose, (state) => {
+      state.status = WebsocketStatus.OFFLINE;
     })
     .addCase(disconnect, (state) => {
       state.disconnectRequested = true;

@@ -19,11 +19,12 @@ import { IngredientDetails } from '../IngredientDetails/IndgredientDetails';
 import { Registration } from '../../pages/Registration/Registration';
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
 import { checkAuthorization } from '../../redux/actions/authActions';
-import { Orders } from '../Orders/Orders';
+import { Orders } from '../UserOrders/UserOrders';
 import { ProfileMenu } from '../ProfileMenu/ProfileMenu';
 import styles from './App.module.css'
 import { Location } from 'history'
 import { Dashboard } from '../../pages/Dashboard/Dashboard';
+import { Order } from '../Order/Order';
 
 function App() {
   const dispatch = useDispatch();
@@ -69,7 +70,9 @@ function App() {
             </>
           } />
 
-          <Route path='feed' element={<Dashboard />} />
+          <Route path='feed' element={<Dashboard />} >
+          </Route>
+          <Route path='feed/:id' element={<Order />} />
           <Route path='login' element={<Login />} />
           <Route path='forgot-password' element={<ForgotPassword />} />
           <Route path='reset-password' element={<ResetPassword />} />

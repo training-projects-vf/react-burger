@@ -1,6 +1,9 @@
 /* eslint-disable array-callback-return */
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Link } from 'react-router-dom';
 import { useSelector } from '../../redux/store';
+import { TIngredient } from '../../types/types';
+import { calcPrice } from '../../utils/calcPrice';
 import { getDayTimeString } from '../../utils/getDayTimeString';
 import styles from './OrderCard.module.css'
 
@@ -11,31 +14,31 @@ type TProps = {
   createdAt: string;
 }
 
+type TComponentImage = {
+  _id: string,
+  name: string,
+  image_mobile: string,
+  opacity: boolean;
+}
+
 export const OrderCard = (props: TProps) => {
   const { number, name, components, createdAt } = props;
   const { ingredients: allIngredients } = useSelector((store) => store.ingredients);
 
-  const burgerComponents = allIngredients.filter((item) => components.find((id) => id === item._id))
-  const burgerPrice = burgerComponents.reduce((burgerPrice, component) => {
-    let { type, price } = component;
-    if (type === 'bun') {
-      price = price * 2;
-    }
-    return burgerPrice += price;
-  }, 0)
+  // const burgerComponents = allIngredients.filter((item) => components.find((id) => id === item._id));
+  const burgerComponents = components.map((component) => allIngredients
+    .find((ingredient) => ingredient._id === component)) as TIngredient[]
+  const burgerPrice = calcPrice(burgerComponents);
+  const uniqueComponents = Array.from(new Set(burgerComponents))
+  const bun = uniqueComponents.find((component) => component.type === 'bun') as TIngredient
+  const bunIndex = uniqueComponents.findIndex((component) => component.type === 'bun')
 
-  // burgerComponents.reverse();
-
-  type TComponentImage = {
-    _id: string,
-    name: string,
-    image_mobile: string,
-    opacity: boolean;
-  }
+  uniqueComponents.splice(bunIndex, 1);
+  uniqueComponents.unshift(bun);
 
   let componentsImages: TComponentImage[] = [];
 
-  componentsImages = burgerComponents.map((item) => {
+  componentsImages = uniqueComponents.map((item) => {
     return {
       _id: item._id,
       name: '',
@@ -52,48 +55,53 @@ export const OrderCard = (props: TProps) => {
     }
     componentsImages = componentsImages.slice(0, 6)
   }
-
   componentsImages.reverse()
 
   return (
-    <div className={styles.card}>
-      <section className={styles.number_time_box}>
-        <span className="text text_type_main-default">#{number}</span>
-        <span className={`text text_type_main-small ${styles.time}`}>{getDayTimeString(createdAt)}</span>
-      </section>
+    <Link
+      to={`/feed/${number}`}
+      style={{ textDecoration: 'none', color: 'white' }}
+    >
+      <div
+        className={styles.card}>
+        <section className={styles.number_time_box}>
+          <span className="text text_type_main-default">#{number}</span>
+          <span className={`text text_type_main-small ${styles.time}`}>{getDayTimeString(createdAt)}</span>
+        </section>
 
-      <div className={styles.name_div}>
-        <p className="text text_type_main-medium">{name}</p>
+        <div className={styles.name_div}>
+          <p className={`text text_type_main-medium`}>{name}</p>
+        </div>
+
+        <section className={styles.components_price_box}>
+          <div className={styles.images_div}>
+            {
+              componentsImages.map((item, index) => {
+                return (
+                  <div className={styles.image_box}
+                    key={index}
+                  >
+                    <img
+                      src={item.image_mobile}
+                      alt='ingredient'
+                      className={`${item.opacity ? styles.image_opacity : ''}`}
+                    />
+                    <span className={`text text_type_main-default ${styles.qty}`}>{item.name}</span>
+                  </div>
+                )
+              })
+            }
+          </div>
+
+          <div className={styles.price}>
+            <span className={"text text_type_digits-default"}>
+              {`${burgerPrice}  `}
+            </span>
+            <CurrencyIcon type="primary" />
+          </div>
+
+        </section>
       </div>
-
-      <section className={styles.components_price_box}>
-        <div className={styles.images_div}>
-          {
-            componentsImages.map((item) => {
-              return (
-                <div className={styles.image_box}
-                  key={item._id}
-                >
-                  <img
-                    src={item.image_mobile}
-                    alt='ingredient'
-                    className={`${item.opacity ? styles.image_opacity : ''}`}
-                  />
-                  <span className={`text text_type_main-default ${styles.qty}`}>{item.name}</span>
-                </div>
-              )
-            })
-          }
-        </div>
-
-        <div className={styles.price}>
-          <span className={"text text_type_digits-default"}>
-            {`${burgerPrice}  `}
-          </span>
-          <CurrencyIcon type="primary" />
-        </div>
-
-      </section>
-    </div>
+    </Link>
   )
 }

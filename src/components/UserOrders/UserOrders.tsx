@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { connect, disconnect } from '../../redux/actions/orderFeedActions';
 import { useDispatch, useSelector } from '../../redux/store'
 import { wssAllOrdersURL } from '../../settings/config';
-import styles from './Orders.module.css'
+import styles from './UserOrders.module.css'
 
 export function Orders() {
   const dispatch = useDispatch();

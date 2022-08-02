@@ -1,8 +1,0 @@
-import styles from './Orders.module.css'
-
-export function Orders() {
-
-  return (
-    <h1>Orders</h1>
-  )
-}

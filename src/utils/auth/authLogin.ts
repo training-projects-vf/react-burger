@@ -1,5 +1,6 @@
 import { pathAuthLogin, baseURL } from "../../settings/config";
 import { checkReponse } from "../checkResponse";
+import { TLoginResponse } from "../../redux/actions/authActions";
 
 export function authLogin({ email, password }: { email: string; password: string; }) {
   const url = new URL(pathAuthLogin, baseURL).toString();
@@ -16,16 +17,10 @@ export function authLogin({ email, password }: { email: string; password: string
     body,
   }
 
-    type TLoginRes = {
-      success: Boolean;
-      accessToken: string;
-  }
-
   return fetch(url, options)
-    .then((res) => checkReponse<TLoginRes>(res))
+    .then((res) => checkReponse<TLoginResponse>(res))
     .then((data) => {
       if (data?.success) return data;
       return Promise.reject(data);
     });
-
 }

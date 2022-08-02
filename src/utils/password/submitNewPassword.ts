@@ -26,7 +26,6 @@ export function submitNewPassword(password: string) {
   return fetch(url, options)
     .then((res) => checkReponse<TResponse>(res))
     .then((data) => {
-      console.log('submitNewPassword', data);
       if (data?.success) return data;
       return Promise.reject(data);
     });

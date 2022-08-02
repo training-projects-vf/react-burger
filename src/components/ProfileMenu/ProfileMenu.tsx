@@ -1,7 +1,6 @@
 import { MouseEvent, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../redux/store';
 import { Link, Outlet, useLocation } from 'react-router-dom'
-import { AnyAction } from 'redux';
 import { logout } from '../../redux/actions/authActions';
 import styles from './ProfileMenu.module.css'
 
@@ -14,7 +13,7 @@ export function ProfileMenu() {
   const onExitClick = (e: MouseEvent) => {
     e.preventDefault()
     setIsExitClicked(true);
-    dispatch(logout() as unknown as AnyAction);
+    dispatch(logout());
   }
 
   return (

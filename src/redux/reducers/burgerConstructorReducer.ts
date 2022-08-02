@@ -1,4 +1,5 @@
 /* eslint-disable default-case */
+import { TShortIngredient } from '../../types/types';
 import {
   ADD_INGREDIENT,
   REMOVE_INGREDIENT,
@@ -9,30 +10,57 @@ import {
   MOVE_FILLINGS,
   PLACE_ORDER_REQUEST,
 } from '../actions/burgerConstructorActions';
+import { TBurgerConstructorActions } from '../actions/burgerConstructorActions';
 
-const initialState = {
+type TCounter = {
+  _id: string;
+  qty: number;
+}
+
+type TBurgerState = {
+  bun: TShortIngredient[],
+  fillings: TShortIngredient[],
+  burgerCost: number,
+  counter: TCounter[],
+  ingredientIds: string[],
+  orderData: {
+    isRequest: boolean,
+    success: boolean,
+    error: {
+      isError: boolean,
+      errorMessage?: string,
+    },
+    order: {
+      number: number | null,
+    }
+  }
+}
+
+const initialState: TBurgerState = {
   bun: [],
   fillings: [],
   burgerCost: 0,
   counter: [],
+  ingredientIds: [],
   orderData: {
-    success: null,
+    isRequest: false,
+    success: false,
     error: {
-      isError: null,
+      isError: false,
     },
     order: {
       number: null,
-    }
+    },
   }
 };
 
-export const burgerConstructorReducer = (state = initialState, action) => {
+export const burgerConstructorReducer = (state = initialState, action: TBurgerConstructorActions): TBurgerState => {
 
   const countIngredients = () => {
     const { ingredientIds } = state;
     const uniqueIds = Array.from(new Set(ingredientIds));
     const ingredientsCounter = uniqueIds.map((uniqueId) => {
-      const qty = ingredientIds.reduce((previousQty, ingredientId) => {
+      const qty = ingredientIds.reduce((previousQty: number, ingredientId: string) => {
         if (uniqueId === ingredientId) {
           return previousQty + 1
         }
@@ -93,7 +121,6 @@ export const burgerConstructorReducer = (state = initialState, action) => {
         counter,
         burgerCost,
       }
-
     }
 
     case REMOVE_INGREDIENT: {
@@ -128,9 +155,9 @@ export const burgerConstructorReducer = (state = initialState, action) => {
         ...state,
         orderData: {
           ...state.orderData,
-          success: null,
+          success: false,
           error: {
-            isError: null,
+            isError: false,
           }
         }
       }
@@ -151,8 +178,8 @@ export const burgerConstructorReducer = (state = initialState, action) => {
         ...state,
         orderData: {
           ...action.payload,
+          isRequest: false,
           error: {
-            isRequest: false,
             isError: false,
           }
         }
@@ -163,8 +190,9 @@ export const burgerConstructorReducer = (state = initialState, action) => {
       return {
         ...state,
         orderData: {
+          ...state.orderData,
+          isRequest: false,
           error: {
-            isRequest: false,
             isError: true,
             errorMessage: 'У нас с сервером что-то плохое случилось...'
           }

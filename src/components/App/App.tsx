@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../redux/store';
 import { Routes, Route, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -19,22 +19,24 @@ import { IngredientDetails } from '../IngredientDetails/IndgredientDetails';
 import { Registration } from '../../pages/Registration/Registration';
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
 import { checkAuthorization } from '../../redux/actions/authActions';
-import { Orders } from '../Orders/Orders';
+import { Orders } from '../UserOrders/UserOrders';
 import { ProfileMenu } from '../ProfileMenu/ProfileMenu';
 import styles from './App.module.css'
 import { Location } from 'history'
-import { AnyAction } from 'redux';
+import { Dashboard } from '../../pages/Dashboard/Dashboard';
+import { Order } from '../Order/Order';
 
 function App() {
   const dispatch = useDispatch();
   let navigate = useNavigate();
   let location = useLocation();
   let state = location.state as { backgroundLocation?: Location };
-  const { isError, errorMessage, isSuccess } = useSelector((store: any) => store.ingredients);
+  const { isError, errorMessage, isSuccess: isIngredients } = useSelector((store) => store.ingredients);
+  const { name } = useSelector((store) => store.auth.user);
 
   useEffect(() => {
-    dispatch(checkAuthorization() as unknown as AnyAction)
-    dispatch(getIngredients() as unknown as AnyAction)
+    dispatch(checkAuthorization())
+    dispatch(getIngredients())
   }, [])
 
   return (
@@ -58,7 +60,7 @@ function App() {
 
           <Route index element={
             <>
-              {isSuccess &&
+              {isIngredients &&
                 <DndProvider backend={HTML5Backend} >
                   <section className={styles.section_content}>
                     <BurgerIngredients />
@@ -69,10 +71,12 @@ function App() {
             </>
           } />
 
+          <Route path='feed' element={<Dashboard />} />
+          <Route path='feed/:id' element={<Order />} />
           <Route path='login' element={<Login />} />
           <Route path='forgot-password' element={<ForgotPassword />} />
           <Route path='reset-password' element={<ResetPassword />} />
-          <Route path='ingredients/:id' element={isSuccess && <IngredientDetails />} />
+          <Route path='ingredients/:id' element={isIngredients && <IngredientDetails />} />
           <Route path='registration' element={<Registration />} />
 
           <Route path='profile/*'
@@ -98,6 +102,13 @@ function App() {
             />
           </Route>
 
+          <Route path='profile/orders/:id'
+            element={
+              <ProtectedRoute>
+                <Order />
+              </ProtectedRoute>
+            } />
+
           <Route path='*' element={<NotFound404 />} />
         </Route>
       </Routes>
@@ -107,7 +118,7 @@ function App() {
           <Routes>
             <Route path='/*' element={<Header />} />
 
-            {isSuccess && (
+            {isIngredients && (
               <Route
                 path='ingredients/:id'
                 element={
@@ -120,6 +131,38 @@ function App() {
                       <IngredientDetails />
                     </Modal>
                   </>
+                } />
+            )}
+
+            {isIngredients && (
+              <Route
+                path='feed/:id'
+                element={
+                  <>
+                    <Modal
+                      title=''
+                      onClose={() => navigate(-1)}
+                      closeIcon={true}
+                    >
+                      <Order />
+                    </Modal>
+                  </>
+                } />
+            )}
+
+            {isIngredients && (
+              <Route
+                path='profile/orders/:id'
+                element={
+                  <ProtectedRoute>
+                    <Modal
+                      title={`Заказ пользователя ${name}`}
+                      onClose={() => navigate(-1)}
+                      closeIcon={true}
+                    >
+                      <Order />
+                    </Modal>
+                  </ProtectedRoute>
                 } />
             )}
 

@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from '../../redux/store';
 import { useDrop } from 'react-dnd';
 import {
   Button,
@@ -15,16 +15,16 @@ import { Filling } from '../Filling/Filling';
 import { Preloader } from '../Preloader/Preloader';
 import { useNavigate } from 'react-router-dom';
 import { TFilling, TIngredient } from '../../types/types';
-import { AnyAction } from 'redux';
+import { checkAuthorization } from '../../redux/actions/authActions';
 
 export const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isRequest, success: isOrderAccepted } = useSelector((store: any) => store.burger.orderData)
-  const { isError, errorMessage } = useSelector((store: any) => store.burger.orderData.error)
-  const { bun, fillings, burgerCost, ingredientIds } = useSelector((store: any) => store.burger);
-  const { ingredients } = useSelector((store: any) => store.ingredients);
-  const { isLoggedIn } = useSelector((store: any) => store.auth);
+  const { isRequest, success: isOrderAccepted } = useSelector((store) => store.burger.orderData)
+  const { isError, errorMessage } = useSelector((store) => store.burger.orderData.error)
+  const { bun, fillings, burgerCost, ingredientIds } = useSelector((store) => store.burger);
+  const { ingredients } = useSelector((store) => store.ingredients);
+  const { isLoggedIn } = useSelector((store) => store.auth);
 
   const isBunBibb = bun.length === 0;
   const isFillingBibb = fillings.length === 0;
@@ -34,7 +34,7 @@ export const BurgerConstructor = () => {
     accept: 'ingredient',
     drop(itemId: { id: string }) {
       const item = ingredients.find((ingredient: TIngredient) => ingredient._id === itemId.id)
-      dispatch(addIngredient(item))
+      dispatch(addIngredient(item as TIngredient))
     }
   })
 
@@ -42,7 +42,8 @@ export const BurgerConstructor = () => {
     if (!isLoggedIn) {
       return navigate('/login')
     }
-    dispatch(placeOrder(ingredientIds) as unknown as AnyAction)
+    dispatch(checkAuthorization())
+    dispatch(placeOrder(ingredientIds))
   }
 
   function onCloseModal() {
@@ -66,7 +67,7 @@ export const BurgerConstructor = () => {
               isLocked={true}
               text={bun[0].name + ` (верх)`}
               price={bun[0].price}
-              thumbnail={bun[0].image ? bun[0].image : null}
+              thumbnail={bun[0].image ? bun[0].image : ''}
               key={'top'}
             />
           </div>}
@@ -108,15 +109,19 @@ export const BurgerConstructor = () => {
         }
 
         <div className={styles.container_price}>
-          <p className="text text_type_digits-medium">
-            {burgerCost}
-            <CurrencyIcon type="primary" />
-          </p>
+          <div className={styles.container_misc}>
+            <p className="text text_type_digits-medium">
+              {burgerCost}
+              <CurrencyIcon type="primary" />
+            </p>
+          </div>
           <Button
             type="primary"
             size="large"
             disabled={!allowOrder}
-            onClick={handleButtonClick}>
+            onClick={handleButtonClick}
+          // className={styles.button}
+          >
             Оформить заказ
           </Button>
         </div>

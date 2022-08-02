@@ -42,5 +42,16 @@ export type TOrder = {
   name: string,
   createdAt: string,
   updatedAt: string,
-  number: number
+  number: number,
+  owner?: string,
+  __v?: number
+}
+
+export type TOrdersRes = {
+  success: boolean;
+  orders: TOrder[];
+}
+
+export type TComponent = TIngredient & {
+  qty: number;
 }

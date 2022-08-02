@@ -1,13 +1,10 @@
-import { TIngredient } from "../types/types";
+import { TComponent } from "../types/types";
 
-export const calcPrice = (components: TIngredient[]) => {
+export const calcPrice = (components: TComponent[]) => {
 
   const price = components.reduce((burgerPrice, component) => {
-    let { type, price } = component;
-    // if (type === 'bun') {
-    //   price = price * 2;
-    // }
-    return burgerPrice += price;
+    let { price, qty } = component;
+    return burgerPrice += qty * price;
   }, 0)
 
   return price;

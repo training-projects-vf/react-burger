@@ -12,6 +12,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import type { } from "redux-thunk/extend-redux"
 import { feedActions, TFeedActions } from "./actions/orderFeedActions";
 import { socketMiddleware } from "./middlewares/socketMiddleware";
+import { THistoryActions } from "./actions/historyActions";
 
 export const store = configureStore({
   reducer: RootReducer,
@@ -21,7 +22,7 @@ export const store = configureStore({
 })
 
 export type RootState = ReturnType<typeof RootReducer>;
-export type TAppActions = TAuthActions | TBurgerConstructorActions | TIngredientsActions | TFeedActions;
+export type TAppActions = TAuthActions | TBurgerConstructorActions | TIngredientsActions | TFeedActions | THistoryActions;
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,

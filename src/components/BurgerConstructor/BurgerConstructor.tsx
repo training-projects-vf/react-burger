@@ -15,6 +15,7 @@ import { Filling } from '../Filling/Filling';
 import { Preloader } from '../Preloader/Preloader';
 import { useNavigate } from 'react-router-dom';
 import { TFilling, TIngredient } from '../../types/types';
+import { checkAuthorization } from '../../redux/actions/authActions';
 
 export const BurgerConstructor = () => {
   const dispatch = useDispatch();
@@ -41,6 +42,7 @@ export const BurgerConstructor = () => {
     if (!isLoggedIn) {
       return navigate('/login')
     }
+    dispatch(checkAuthorization())
     dispatch(placeOrder(ingredientIds))
   }
 
@@ -108,17 +110,17 @@ export const BurgerConstructor = () => {
 
         <div className={styles.container_price}>
           <div className={styles.container_misc}>
-          <p className="text text_type_digits-medium">
-            {burgerCost}
-            <CurrencyIcon type="primary" />
-          </p>
+            <p className="text text_type_digits-medium">
+              {burgerCost}
+              <CurrencyIcon type="primary" />
+            </p>
           </div>
           <Button
             type="primary"
             size="large"
             disabled={!allowOrder}
             onClick={handleButtonClick}
-            // className={styles.button}
+          // className={styles.button}
           >
             Оформить заказ
           </Button>

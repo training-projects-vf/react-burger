@@ -1,9 +1,11 @@
 import { useSelector } from "../../redux/store";
 import { OrderCard } from "../OrderCard/OrderCard";
+import { Link, useLocation } from "react-router-dom";
 import styles from './OrdersFeed.module.css'
 
 export const OrdersFeed = () => {
-  let { orders } = useSelector((store) => store.feed.data)
+  const { orders } = useSelector((store) => store.feed.data)
+  const location = useLocation()
 
   if (!orders) { return null }
 
@@ -15,13 +17,19 @@ export const OrdersFeed = () => {
           orders.map((order) => {
             const { _id, number, name, ingredients, createdAt } = order
             return (
-              <OrderCard
+              <Link
                 key={_id}
-                number={number}
-                name={name}
-                components={ingredients}
-                createdAt={createdAt}
-              />
+                to={`/feed/${number}`}
+                style={{ textDecoration: 'none', color: 'white' }}
+                state={{ backgroundLocation: location }}
+              >
+                <OrderCard
+                  number={number}
+                  name={name}
+                  components={ingredients}
+                  createdAt={createdAt}
+                />
+              </Link>
             )
           })
         }

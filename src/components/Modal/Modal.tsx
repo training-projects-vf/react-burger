@@ -41,7 +41,7 @@ export function Modal(props: IProps) {
     }
   }
 
-  const handleKeydown = (e: KeyboardEvent ) => {
+  const handleKeydown = (e: KeyboardEvent) => {
     if (!!onClose && e.key === 'Escape') {
       onClose()
     };
@@ -63,12 +63,10 @@ export function Modal(props: IProps) {
                 type="primary"
                 onClick={handleIconClick}
               />
-              )}
+            )}
           </div>
 
-          <div>
-            {children}
-          </div>
+          {children}
 
         </div>
       </div>

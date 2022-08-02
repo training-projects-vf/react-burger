@@ -30,8 +30,6 @@ export const socketMiddleware = (wsActions: TwsActionsTypes): Middleware<{}, Roo
       }
 
       if (socket) {
-        // console.log('socket', socket)
-
         socket.onopen = () => {
           dispatch(wsOpen())
         }
@@ -48,7 +46,7 @@ export const socketMiddleware = (wsActions: TwsActionsTypes): Middleware<{}, Roo
           dispatch(wsMessage(event.data))
         }
 
-        socket.onerror = event => {
+        socket.onerror = () => {
           dispatch(wsError('Websocket error'))
         }
 

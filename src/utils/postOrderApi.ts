@@ -1,9 +1,9 @@
-import { baseURL, pathOrder } from "../settings/config";
+import { baseURL, pathOrders } from "../settings/config";
 import { checkReponse } from "./checkResponse";
 import { getCookie } from "./getCookie";
 
 export function postOrderApi(ingredientsIds: string[]) {
-  const url: string = new URL(pathOrder, baseURL).toString();
+  const url: string = new URL(pathOrders, baseURL).toString();
   const token = getCookie('accessToken');
   const headers = new Headers();
   headers.append('Content-Type', 'application/json');
@@ -22,7 +22,6 @@ export function postOrderApi(ingredientsIds: string[]) {
   return fetch(url, options)
     .then(checkReponse)
     .then((data: any) => {
-      console.log('data', data)
       if (data?.success) return data;
       return Promise.reject(data);
     });

@@ -82,13 +82,15 @@ export function BurgerIngredients() {
           {
             categories.map((category, index) => {
               const categoryIngredients = ingredients
-              .filter((ingredient) => ingredient.type === category.categoryMarker)
-              return <IngredientsCategory
-                key={index}
-                ref={(el) => categoryRefs.current[index] = el}
-                category={category}
-                categoryIngredients={categoryIngredients}
-              />
+                .filter((ingredient) => ingredient.type === category.categoryMarker)
+              return (
+                <IngredientsCategory
+                  key={index}
+                  ref={(el) => categoryRefs.current[index] = el}
+                  category={category}
+                  categoryIngredients={categoryIngredients}
+                />
+              )
             })
           }
         </section>

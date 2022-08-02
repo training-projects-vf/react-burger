@@ -19,6 +19,11 @@ export const Order = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
 
+  useEffect(() => {
+    dispatch(getOrderById(id as string))
+    dispatch(getIngredients())
+  }, [])
+
   const order = useSelector((store) => store.history.order);
   const { number, name, ingredients: components, status, createdAt } = order;
   const {
@@ -29,10 +34,9 @@ export const Order = () => {
   } = useSelector((store) => store.ingredients);
   const { requestStatus } = useSelector((store) => store.history)
 
-  useEffect(() => {
-    dispatch(getOrderById(id as string))
-    dispatch(getIngredients())
-  }, [])
+  if (requestStatus === ERequestStatus.IDLE || isIngredientsSuccess === false) {
+    return null
+  }
 
   const ruStatus = status === 'done'
     ? 'Готов'
@@ -45,9 +49,6 @@ export const Order = () => {
   console.log('components, allIngredients', components, allIngredients)
   const adaptedComponents = adaptComponents(components, allIngredients)
 
-  if (requestStatus === ERequestStatus.IDLE || isIngredientsSuccess === false) {
-    return null
-  }
 
   if (requestStatus === ERequestStatus.PENDING || ingredientsRequest) {
     return (

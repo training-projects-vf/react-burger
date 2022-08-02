@@ -5,7 +5,7 @@ export const getDayTimeString = (dateString: string) => {
   let hh: number | string = orderDate.getHours();
   if (hh < 10) { hh = `0${hh}` }
   let mm: number | string = orderDate.getMinutes();
-  if (mm < 10) { mm = `0${hh}` }
+  if (mm < 10) { mm = `0${mm}` }
 
   let timeOffset = orderDate.getTimezoneOffset() / 60 * (-1)
 
@@ -13,7 +13,7 @@ export const getDayTimeString = (dateString: string) => {
     return Math.ceil(timeStamp / 1000 / 60 / 60 / 24)
   }
 
-  const diffInDaysNumber = dayNumber((new Date()).getUTCMilliseconds()) - dayNumber(orderDate.getUTCMilliseconds());
+  const diffInDaysNumber = dayNumber((new Date()).getTime()) - dayNumber(orderDate.getTime());
   let diffDaysInWords = '';
   switch (diffInDaysNumber) {
     case 0: {

@@ -46,7 +46,6 @@ export const Order = () => {
         ? 'Создан'
         : 'Не определен...'
 
-  console.log('components, allIngredients', components, allIngredients)
   const adaptedComponents = adaptComponents(components, allIngredients)
 
 
@@ -91,7 +90,7 @@ export const Order = () => {
                   <p className="text text_type_main-default">{component.name}</p>
                 </div>
                 <div className={styles.price_div}>
-                  <span className="text text_type_main-default">{component.qty} x {component.price}</span>
+                  <span className="text text_type_digits-default">{component.qty} x {component.price}</span>
                   <CurrencyIcon type='primary' />
                 </div>
               </div>
@@ -101,10 +100,10 @@ export const Order = () => {
       </section>
 
       <section className={styles.time_price_container}>
-        <span className={`text text_type_main-default ${styles.time_color}`}>{getDayTimeString(createdAt)}</span>
+        <span className={`text text_type_-default ${styles.time_color}`}>{getDayTimeString(createdAt)}</span>
 
         <div className={styles.price_div}>
-          <span>{calcPrice(adaptedComponents)}</span>
+          <span className="text text_type_digits-default">{calcPrice(adaptedComponents)}</span>
           <CurrencyIcon type="primary" />
         </div>
       </section>

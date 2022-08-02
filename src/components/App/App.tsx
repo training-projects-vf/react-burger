@@ -36,7 +36,6 @@ function App() {
 
   useEffect(() => {
     dispatch(checkAuthorization())
-    console.log('App runs getIngredients()')
     dispatch(getIngredients())
   }, [])
 

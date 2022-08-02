@@ -1,4 +1,5 @@
 import { baseURL, pathOrders } from "../settings/config";
+import { TOrdersRes } from "../types/types";
 import { checkReponse } from "./checkResponse";
 import { getCookie } from "./getCookie";
 
@@ -20,8 +21,8 @@ export function postOrderApi(ingredientsIds: string[]) {
   }
 
   return fetch(url, options)
-    .then(checkReponse)
-    .then((data: any) => {
+    .then((data) => checkReponse<TOrdersRes>(data))
+    .then((data) => {
       if (data?.success) return data;
       return Promise.reject(data);
     });

@@ -12,7 +12,6 @@ export function ProtectedRoute(props: IProps) {
   const { isLoggedIn } = useSelector((store) => store.auth);
 
   if (!isLoggedIn) {
-    // console.log('location in ProtectedRoute', location)
     return <Navigate to="/login" state={{ from: location }} />
   }
 

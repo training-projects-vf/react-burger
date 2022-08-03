@@ -120,7 +120,6 @@ export const BurgerConstructor = () => {
             size="large"
             disabled={!allowOrder}
             onClick={handleButtonClick}
-          // className={styles.button}
           >
             Оформить заказ
           </Button>
@@ -129,7 +128,7 @@ export const BurgerConstructor = () => {
 
       {isRequest &&
         <Modal title="" closeIcon={false}>
-          <Preloader message="PROCESSING YOU ORDER..." />
+          <Preloader message="PROCESSING YOUR ORDER..." />
         </Modal>}
 
       {isOrderAccepted &&

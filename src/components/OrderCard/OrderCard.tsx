@@ -24,7 +24,9 @@ export const OrderCard = (props: TProps) => {
   const { number, name, components, createdAt } = props;
   const { ingredients: allIngredients } = useSelector((store) => store.ingredients);
 
+  console.log('передаю number', number, components)
   const adaptedComponents = adaptComponents(components, allIngredients)
+  console.log('number, adaptedComponents', number, adaptedComponents)
 
   let componentsImages: TComponentImage[] = [];
 

@@ -9,7 +9,7 @@ import { Preloader } from '../Preloader/Preloader';
 import { OrderCard } from '../OrderCard/OrderCard';
 import { Link, useLocation } from 'react-router-dom';
 
-export function Orders() {
+export function UserOrders() {
   const dispatch = useDispatch();
   const { status } = useSelector((store) => store.feed);
   const accessToken = getCookie('accessToken');

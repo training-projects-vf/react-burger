@@ -28,7 +28,7 @@ type TFeedStore = {
   }
 }
 
-const initFeedState: TFeedStore = {
+export const initFeedState: TFeedStore = {
   status: WebsocketStatus.OFFLINE,
   disconnectRequested: false,
   connectingError: null,

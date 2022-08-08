@@ -28,7 +28,7 @@ export function getIngredients() {
   return function (dispatch: AppDispath) {
     dispatch({ type: INGREDIENTS_REQUEST })
 
-    getIngredientsApi()
+    return getIngredientsApi()
       .then((data) => {
         dispatch({
           type: INGREDIENTS_REQUEST_SUCCESS,

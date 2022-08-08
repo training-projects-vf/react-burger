@@ -1,8 +1,9 @@
 import { ingredientsReducer } from "./ingredientsReducer";
 import * as types from '../actions/ingredientsActions';
 
-describe('auth reducer', () => {
-  it('should return the initial state', () => {
+describe('ingredients reducer', () => {
+
+  test('should return the initial state', () => {
     expect(ingredientsReducer(undefined, {})).toEqual(
       {
         ingredientsRequest: false,
@@ -16,7 +17,7 @@ describe('auth reducer', () => {
   })
 })
 
-it('should handle INGREDIENTS_REQUEST', () => {
+test('should handle INGREDIENTS_REQUEST', () => {
   expect(
     ingredientsReducer([], {
       type: types.INGREDIENTS_REQUEST,

@@ -17,17 +17,13 @@ export const adaptComponents = (components: string[], allIngredients: TIngredien
   const bun = uniqueComponents.find((component) => component.type === 'bun') as TIngredient
   const bunIndex = uniqueComponents.findIndex((component) => component.type === 'bun')
 
-  console.log('unique.length', uniqueComponents.length)
-
-  if (uniqueComponents.length !== 1) {
+  if (uniqueComponents.length > 1) {
     uniqueComponents.splice(bunIndex, 1);
     uniqueComponents.unshift(bun);
   }
 
   const uniqueCompsWithQty: TComponent[] = uniqueComponents.map((component) => {
-    // console.log('component', component)
     const qty = burgerComponents.reduce((sum, item) => {
-      // console.log('item', item)
       if (component._id === item._id) {
         return sum + 1
       } else {

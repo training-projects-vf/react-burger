@@ -19,16 +19,16 @@ test('should handle ADD_INGREDIENT', () => {
 
   expect(burgerConstructorReducer(constructorInitialState, action))
     .toEqual(
-      expect.objectContaining(
-
-        {
-          ...constructorInitialState,
-          ingredientIds: [undefined, undefined],
-          bun: [{ undefined }],
-          counter: [undefined],
-          burgerCost: undefined
-        }
-      )
+      {
+        ...constructorInitialState,
+        ingredientIds: [undefined, undefined],
+        bun: [{ type: 'bun' }],
+        counter: [{
+          _id: undefined,
+          qty: 2,
+        }],
+        burgerCost: NaN
+      }
     );
 
 })

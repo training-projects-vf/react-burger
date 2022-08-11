@@ -59,10 +59,13 @@ export function Modal(props: IProps) {
           <div className={styles.title_container} >
             <p className="text text_type_main-large">{title}</p>
             {closeIcon && (
-              <CloseIcon
-                type="primary"
-                onClick={handleIconClick}
-              />
+              //to be able to select the CloseIcon in Cypress
+              <div id='closeIcon'>
+                <CloseIcon
+                  type="primary"
+                  onClick={handleIconClick}
+                />
+              </div>
             )}
           </div>
 

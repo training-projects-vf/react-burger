@@ -5,7 +5,7 @@ import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-c
 import { TIngredient } from "../../types/types";
 
 interface IProps {
-item: TIngredient;
+  item: TIngredient;
 }
 
 interface ICounter {
@@ -27,6 +27,7 @@ export const Ingredient = (props: IProps) => {
 
   return (
     <div
+      id='ingredient_div' //in order to make possible to select the element in Cypress-tests
       className={styles.container_ingredient}
       ref={draggableIngredientRef}
     >

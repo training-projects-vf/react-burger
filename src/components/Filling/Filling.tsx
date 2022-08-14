@@ -23,7 +23,7 @@ export const Filling = (props: IProps) => {
     index: number;
   }
 
-  const [, drop] = useDrop<TItem>({
+  const [, drop] = useDrop<TItem, unknown, unknown>({
     accept: 'filling',
     hover(item, monitor) {
       if (!ref.current) {
@@ -86,11 +86,16 @@ export const Filling = (props: IProps) => {
 
   return (
     <div
+      data-cy='fillingInConstructor'
       ref={ref}
       className={styles.container}
       style={{ opacity }}
     >
-      <DragIcon type='primary' />
+
+      <div data-cy='dragIcon'>
+        <DragIcon type='primary' />
+      </div>
+
       <ConstructorElement
         text={name}
         price={price}

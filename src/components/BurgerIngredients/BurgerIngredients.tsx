@@ -77,6 +77,7 @@ export function BurgerIngredients() {
         <section
           onScroll={handleScroll}
           className={`custom-scroll ${styles.section_ingredients}`}
+          data-cy="ingredients"
         >
 
           {

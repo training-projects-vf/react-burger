@@ -1,4 +1,5 @@
 import styles from "./Preloader.module.css";
+import { Logo } from "@ya.praktikum/react-developer-burger-ui-components";
 
 export const Preloader = ({ message }: { message: string }) => {
   return (
@@ -7,6 +8,7 @@ export const Preloader = ({ message }: { message: string }) => {
       <p className="text text_type_main-medium mb-15"></p>
       <div className={styles.preloader}>
         <div className={styles.preloader_circle}></div>
+        {/* <Logo /> */}
       </div>
       <p className="text text_type_main-default mt-15 mb-2">ожидайте...</p>
       <p className="text text_type_main-default text_color_inactive mb-15"></p>

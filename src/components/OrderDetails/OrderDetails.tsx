@@ -9,7 +9,7 @@ export function OrderDetails() {
   return (
     <>
       {isOrderAccepted &&
-        <div className={styles.section}>
+        <div className={styles.section} data-cy='orderDetails'>
           <p className={`text text_type_digits-large ${styles.number_glow} mb-8`}>{number}</p>
           <p className="text text_type_main-medium mb-15">идентификатор заказа</p>
           <div>

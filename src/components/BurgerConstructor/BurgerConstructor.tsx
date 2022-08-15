@@ -116,14 +116,18 @@ export const BurgerConstructor = () => {
               <CurrencyIcon type="primary" />
             </p>
           </div>
-          <Button
-            type="primary"
-            size="large"
-            disabled={!allowOrder}
-            onClick={handleButtonClick}
-          >
-            Оформить заказ
-          </Button>
+
+          <div data-cy='orderButton'>
+            <Button
+              type="primary"
+              size="large"
+              disabled={!allowOrder}
+              onClick={handleButtonClick}
+            >
+              Оформить заказ
+            </Button>
+          </div>
+
         </div>
       </section>
 

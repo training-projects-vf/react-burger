@@ -72,10 +72,10 @@ export function removeIngredient(index: number): IRemoveIngredientAction {
 
 export function placeOrder(ingredientIds: Array<string>) {
   return function (dispatch: AppDispath) {
-    dispatch({ type: RESET_ORDER_DATA })
     dispatch({ type: PLACE_ORDER_REQUEST })
     postOrderApi(ingredientIds)
       .then((data) => {
+        dispatch({ type: RESET_ORDER_DATA })
         dispatch({ type: PLACE_ORDER_SUCCESS, payload: data })
       })
       .catch(() => dispatch({ type: PLACE_ORDER_FAILED }));

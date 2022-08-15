@@ -34,6 +34,10 @@
   animation: spin 0.75s infinite linear;
 }
 
+/* .preloader_burger {
+  animation: spin 0.75s infinite linear;
+} */
+
 @keyframes spin {
   100% {
     transform: rotate(360deg);

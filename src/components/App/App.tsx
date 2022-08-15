@@ -19,11 +19,11 @@ import { IngredientDetails } from '../IngredientDetails/IndgredientDetails';
 import { Registration } from '../../pages/Registration/Registration';
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
 import { checkAuthorization } from '../../redux/actions/authActions';
-import { Orders } from '../UserOrders/UserOrders';
+import { UserOrders } from '../UserOrders/UserOrders'
 import { ProfileMenu } from '../ProfileMenu/ProfileMenu';
 import styles from './App.module.css'
 import { Location } from 'history'
-import { Dashboard } from '../../pages/Dashboard/Dashboard';
+import { Dashboard } from '../../pages/Dashboard/Dashboard'
 import { Order } from '../Order/Order';
 
 function App() {
@@ -96,7 +96,7 @@ function App() {
             <Route path='orders'
               element={
                 <ProtectedRoute>
-                  <Orders />
+                  <UserOrders />
                 </ProtectedRoute>
               }
             />

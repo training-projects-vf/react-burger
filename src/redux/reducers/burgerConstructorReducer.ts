@@ -4,11 +4,11 @@ import {
   ADD_INGREDIENT,
   REMOVE_INGREDIENT,
   RESET_BURGER,
+  PLACE_ORDER_REQUEST,
   PLACE_ORDER_SUCCESS,
   PLACE_ORDER_FAILED,
   RESET_ORDER_DATA,
   MOVE_FILLINGS,
-  PLACE_ORDER_REQUEST,
 } from '../actions/burgerConstructorActions';
 import { TBurgerConstructorActions } from '../actions/burgerConstructorActions';
 
@@ -36,7 +36,7 @@ type TBurgerState = {
   }
 }
 
-const initialState: TBurgerState = {
+export const constructorInitialState: TBurgerState = {
   bun: [],
   fillings: [],
   burgerCost: 0,
@@ -54,7 +54,7 @@ const initialState: TBurgerState = {
   }
 };
 
-export const burgerConstructorReducer = (state = initialState, action: TBurgerConstructorActions): TBurgerState => {
+export const burgerConstructorReducer = (state = constructorInitialState, action: TBurgerConstructorActions): TBurgerState => {
 
   const countIngredients = () => {
     const { ingredientIds } = state;
@@ -146,7 +146,7 @@ export const burgerConstructorReducer = (state = initialState, action: TBurgerCo
 
     case RESET_BURGER: {
       return {
-        ...initialState,
+        ...constructorInitialState,
       }
     }
 

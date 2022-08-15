@@ -4,10 +4,10 @@ import { Link, useLocation } from "react-router-dom";
 import styles from './OrdersFeed.module.css'
 
 export const OrdersFeed = () => {
-  const { orders } = useSelector((store) => store.feed.data)
+  const { orders, success } = useSelector((store) => store.feed.data)
   const location = useLocation()
 
-  if (!orders) { return null }
+  if (!success) { return null }
 
   return (
     <section className={styles.feed}>

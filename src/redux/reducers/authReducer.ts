@@ -1,8 +1,8 @@
 import { TUser } from "../../types/types";
 import {
-  REG_REQUEST_ERROR,
   REG_REQUEST_SUBMIT,
   REG_REQUEST_SUCCESS,
+  REG_REQUEST_ERROR,
   REG_ERROR_RESET,
   LOGIN_REQUEST_SUBMIT,
   LOGIN_REQUEST_SUCCESS,
@@ -10,9 +10,9 @@ import {
   LOGIN_REJECTION_RESET,
   LOGOUT_SUBMIT,
   GET_USER_INFO,
-  RESET_USER_INFO,
   SET_LOGGEDIN,
   UPDATE_USER_INFO,
+  RESET_USER_INFO,
 } from "../actions/authActions";
 import { TAuthActions } from "../actions/authActions";
 

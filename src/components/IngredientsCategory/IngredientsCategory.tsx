@@ -1,7 +1,6 @@
 import { forwardRef } from "react";
 import styles from './IngredientsCategory.module.css';
 import { Ingredient } from "../Ingredient/Ingredient";
-import { Link, useLocation } from "react-router-dom";
 import { TIngredient, TCategory } from "../../types/types";
 
 interface IProps {
@@ -12,7 +11,6 @@ interface IProps {
 export const IngredientsCategory = forwardRef<HTMLParagraphElement, IProps>((props, ref) => {
   const { categoryIngredients } = props;
   const { ruCategoryName } = props.category;
-  const location = useLocation();
 
   return (
     <>
@@ -27,20 +25,12 @@ export const IngredientsCategory = forwardRef<HTMLParagraphElement, IProps>((pro
         </p>
         <div className={styles.container_ingredients}>
           {
-            categoryIngredients.map((ingredient) => {
-              const { _id: id } = ingredient;
+            categoryIngredients.map((ingredient, index) => {
               return (
-                <Link
-                  key={id}
-                  className={styles.link}
-                  to={`/ingredients/${id}`}
-                  state={{ backgroundLocation: location }}
-                >
-
-                  <Ingredient
-                    item={ingredient}
-                  />
-                </Link>
+                <Ingredient
+                  key={index}
+                  item={ingredient}
+                />
               )
             })
           }

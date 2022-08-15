@@ -10,14 +10,14 @@ import {
   wsError,
 } from '../actions/orderFeedActions'
 
-enum WebsocketStatus {
+export enum EWebsocketStatus {
   CONNECTING = 'CONNECTING',
   ONLINE = 'ONLINE',
   OFFLINE = 'OFFLINE'
 }
 
 type TFeedStore = {
-  status: WebsocketStatus,
+  status: EWebsocketStatus,
   disconnectRequested: boolean,
   connectingError: string | null,
   data: {
@@ -28,8 +28,8 @@ type TFeedStore = {
   }
 }
 
-const initFeedState: TFeedStore = {
-  status: WebsocketStatus.OFFLINE,
+export const initFeedState: TFeedStore = {
+  status: EWebsocketStatus.OFFLINE,
   disconnectRequested: false,
   connectingError: null,
   data: {
@@ -43,10 +43,10 @@ const initFeedState: TFeedStore = {
 export const orderFeedReducer = createReducer(initFeedState, (builder) => {
   builder
     .addCase(wsConnecting, (state) => {
-      state.status = WebsocketStatus.CONNECTING;
+      state.status = EWebsocketStatus.CONNECTING;
     })
     .addCase(wsOpen, (state) => {
-      state.status = WebsocketStatus.ONLINE;
+      state.status = EWebsocketStatus.ONLINE;
       state.connectingError = null;
       state.disconnectRequested = false;
     })
@@ -57,7 +57,7 @@ export const orderFeedReducer = createReducer(initFeedState, (builder) => {
       state.connectingError = action.payload;
     })
     .addCase(wsClose, (state) => {
-      state.status = WebsocketStatus.OFFLINE;
+      state.status = EWebsocketStatus.OFFLINE;
     })
     .addCase(disconnect, (state) => {
       state.disconnectRequested = true;

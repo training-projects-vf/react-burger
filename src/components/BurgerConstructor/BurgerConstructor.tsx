@@ -57,12 +57,12 @@ export const BurgerConstructor = () => {
 
   return (
     <>
-      <section ref={dropTarget} className={styles.section}>
+      <section ref={dropTarget} data-cy='constructor' className={styles.section}>
         {isBunBibb
           ?
           <TopBunBibb />
           :
-          <div className={styles.container_bun}>
+          <div data-cy='constructor-bun-1' className={styles.container_bun}>
             <ConstructorElement type="top"
               isLocked={true}
               text={bun[0].name + ` (верх)`}
@@ -78,6 +78,7 @@ export const BurgerConstructor = () => {
           :
           <div
             className={`${styles.section_list} custom-scroll`}
+            data-cy='constructor-ingredients'
           >
             {fillings.map((filling: TFilling, index: number) => {
               return (
@@ -97,7 +98,7 @@ export const BurgerConstructor = () => {
           ?
           <BottomBunBibb />
           :
-          <div className={styles.container_bun}>
+          <div className={styles.container_bun} data-cy="constructor-bun-2">
             <ConstructorElement
               type="bottom"
               isLocked={true}
@@ -115,21 +116,24 @@ export const BurgerConstructor = () => {
               <CurrencyIcon type="primary" />
             </p>
           </div>
-          <Button
-            type="primary"
-            size="large"
-            disabled={!allowOrder}
-            onClick={handleButtonClick}
-          // className={styles.button}
-          >
-            Оформить заказ
-          </Button>
+
+          <div data-cy='orderButton'>
+            <Button
+              type="primary"
+              size="large"
+              disabled={!allowOrder}
+              onClick={handleButtonClick}
+            >
+              Оформить заказ
+            </Button>
+          </div>
+
         </div>
       </section>
 
       {isRequest &&
         <Modal title="" closeIcon={false}>
-          <Preloader message="PROCESSING YOU ORDER..." />
+          <Preloader message="PROCESSING YOUR ORDER..." />
         </Modal>}
 
       {isOrderAccepted &&

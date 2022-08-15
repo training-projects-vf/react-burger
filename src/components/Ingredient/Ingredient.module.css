@@ -17,3 +17,8 @@
 .name {
   text-align: center;
 }
+
+.link {
+  text-decoration: none;
+  color: var(--text-primary-color);
+}

@@ -66,16 +66,6 @@ describe("app handles burger constructing and order placing", () => {
       .contains("Ингредиент 8")
       .should("exist");
 
-    // cy.get("[data-cy='dragIcon']").first().as('dragIcon')
-    // cy.get('@dragIcon')
-    //   .trigger('dragstart')
-    // cy.get("[data-cy='orderButton']").as('orderButton')
-    // cy.get('@orderButton')
-    //   .trigger('drop')
-    // cy.get("[data-cy=fillingInConstructor]")
-    //   .last()
-    //   .should('contain', 'Ингредиент 8')
-
     cy.get('[data-cy="orderButton"]')
       .click()
     cy.get('[data-cy="orderDetails"]')

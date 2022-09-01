@@ -14,7 +14,8 @@ export const OrdersFeed = () => {
       <p className="text text_type_main-large mt-10 mb-5">Лента заказов</p>
       <div className={`custom-scroll ${styles.orders}`}>
         {
-          orders.map((order) => {
+          orders.map((order, index) => {
+            // console.log('order in OrdersFeed', index, order)
             const { _id, number, name, ingredients, createdAt } = order
             return (
               <Link

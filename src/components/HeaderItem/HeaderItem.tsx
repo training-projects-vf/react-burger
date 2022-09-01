@@ -8,23 +8,22 @@ interface IProps {
   caption: string;
   icon: TIconProps;
   isActive: boolean;
-  onClick: () => void;
 }
 
 export const HeaderItem: FC<IProps> = (props) => {
-  const { link, caption, icon, isActive, onClick } = props;
+  const { link, caption, icon, isActive } = props;
 
   return (
     <NavLink to={link} className={styles.navlink} >
-      <div className={styles.container} onClick={onClick}>
-<>
-        {icon}
-        <p
-          className={`text text_type_main-default ${styles.caption} ${isActive ? styles.caption_active : 'text_color_inactive'}`}
+      <div className={styles.container} >
+        <>
+          {icon}
+          <p
+            className={`text text_type_main-default ${styles.caption} ${isActive ? styles.caption_active : 'text_color_inactive'}`}
           >
-          {caption}
-        </p>
-          </>
+            {caption}
+          </p>
+        </>
       </div>
     </NavLink>
   )

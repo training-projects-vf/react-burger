@@ -13,7 +13,7 @@ export function UserOrders() {
   const dispatch = useDispatch();
   const { status } = useSelector((store) => store.feed);
   const accessToken = getCookie('accessToken');
-  const { orders } = useSelector((store) => store.feed.data)
+  let { orders } = useSelector((store) => store.feed.data)
   const location = useLocation();
 
   useEffect(() => {
@@ -26,7 +26,8 @@ export function UserOrders() {
     }
   }, [])
 
-  if (status !== 'ONLINE') {
+
+  if (status !== 'ONLINE' || !orders) {
     return (
       <div className={styles.preloader_div}>
         <Preloader
@@ -36,10 +37,12 @@ export function UserOrders() {
     )
   }
 
+  const reversedOrders = [...orders].reverse();
+
   return (
     <section className={`custom-scroll ${styles.userOrdersFeed_section}`}>
       {
-        orders.map((order) => {
+        reversedOrders.map((order) => {
           const { _id, number, name, ingredients, createdAt } = order
           return (
             <Link

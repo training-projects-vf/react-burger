@@ -23,7 +23,15 @@ export const adaptComponents = (components: string[], allIngredients: TIngredien
   }
 
   const uniqueCompsWithQty: TComponent[] = uniqueComponents.map((component) => {
+    // console.log('component', component)
+    if (component._id === undefined) {
+      console.log('flawed component', component)
+    }
+
     const qty = burgerComponents.reduce((sum, item) => {
+      if (!item._id) {
+        console.log('flawed item', item)
+      }
       if (component._id === item._id) {
         return sum + 1
       } else {

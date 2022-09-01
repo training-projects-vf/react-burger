@@ -1,54 +1,31 @@
-import { useState } from "react";
 import styles from './Header.module.css'
 import { BurgerIcon, ListIcon, Logo, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { HeaderItem } from "../HeaderItem/HeaderItem";
 import { useSelector } from "../../redux/store";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 
 export function Header() {
-  interface IActive {
-    constructor: boolean;
-    list: boolean;
-    cabinet: boolean;
-  }
-
-  const [isActive, setIsActive] = useState<IActive>({
-    constructor: true,
-    list: false,
-    cabinet: false,
-  })
+  const location = useLocation();
+  const { pathname } = location;
 
   const userName = useSelector((store) => store.auth.user?.name)
-
-  const handleLinkClick = (key: string) => {
-    const state = { ...isActive }
-
-    for (let element in state) {
-      // ниже 2 способа решения проблемы "Element implicitly has an 'any' type because expression of type 'string' can't be used to index"
-      element === key ? state[element as keyof IActive] = true : state[element as keyof typeof state] = false;
-    }
-
-    setIsActive({ ...state })
-  }
 
   return (
     <header className={styles.header}>
       <nav className={styles.navpanel}>
         <div className={styles.container_left}>
           <HeaderItem
-            icon={<BurgerIcon type={isActive.constructor ? 'primary' : 'secondary'} />}
+            icon={<BurgerIcon type={pathname === '/' ? 'primary' : 'secondary'} />}
             link='/'
             caption='Конструктор'
-            isActive={isActive.constructor}
-            onClick={() => handleLinkClick('constructor')}
+            isActive={pathname === '/'}
           />
           <HeaderItem
-            icon={<ListIcon type={isActive.list ? 'primary' : 'secondary'} />}
+            icon={<ListIcon type={pathname === '/feed' ? 'primary' : 'secondary'} />}
             link='/feed'
             caption='Лента заказов'
-            isActive={isActive.list}
-            onClick={() => handleLinkClick('list')}
+            isActive={pathname === '/feed'}
           />
         </div>
 
@@ -58,11 +35,10 @@ export function Header() {
 
         <div className={styles.container_right}>
           <HeaderItem
-            icon={<ProfileIcon type={isActive.cabinet ? 'primary' : 'secondary'} />}
+            icon={<ProfileIcon type={pathname === '/profile' || pathname === '/profile/orders' ? 'primary' : 'secondary'} />}
             link='/profile'
             caption={userName ? userName : 'Личный кабинет'}
-            isActive={isActive.cabinet}
-            onClick={() => handleLinkClick('cabinet')}
+            isActive={pathname === '/profile' || pathname === '/profile/orders'}
           />
         </div>
       </nav>

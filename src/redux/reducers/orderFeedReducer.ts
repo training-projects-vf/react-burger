@@ -51,7 +51,8 @@ export const orderFeedReducer = createReducer(initFeedState, (builder) => {
       state.disconnectRequested = false;
     })
     .addCase(wsMessage, (state, action) => {
-      state.data = JSON.parse(action.payload);
+      // state.data = JSON.parse(action.payload);
+      state.data = action.payload;
     })
     .addCase(wsError, (state, action) => {
       state.connectingError = action.payload;

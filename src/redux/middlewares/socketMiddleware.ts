@@ -1,5 +1,6 @@
 import { ActionCreatorWithoutPayload, ActionCreatorWithPayload } from "@reduxjs/toolkit";
 import { Middleware } from 'redux';
+import { inspectOrders } from "../../utils/inspectOrders";
 import { RootState } from "../store";
 
 export type TwsActionsTypes = {
@@ -19,6 +20,7 @@ export const socketMiddleware = (wsActions: TwsActionsTypes): Middleware<{}, Roo
     return next => action => {
       const { dispatch } = store;
       const { connect, disconnect, wsConnecting, wsOpen, wsClose, wsMessage, wsError } = wsActions;
+      let { ingredients } = store.getState().ingredients
 
       if (connect.match(action)) {
         const { payload: wssUrl } = action;
@@ -43,7 +45,14 @@ export const socketMiddleware = (wsActions: TwsActionsTypes): Middleware<{}, Roo
         }
 
         socket.onmessage = event => {
-          dispatch(wsMessage(event.data))
+          let data = JSON.parse(event.data)
+          let { orders } = data;
+          orders = inspectOrders(orders, ingredients)
+          data = {
+            ...data,
+            orders
+          }
+          dispatch(wsMessage(data))
         }
 
         socket.onerror = () => {

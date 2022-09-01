@@ -68,17 +68,3 @@ export const historyReducer = (state = initState, action: THistoryActions): THis
     }
   }
 }
-
-// export const historyReducer = createReducer(initState, (builder) => {
-//   builder
-//     .addCase(REQUEST_ORDER, (state) => {
-//       state.requestStatus = RequestStatus.PENDING;
-//     })
-//     .addCase(REQUEST_SUCCESS, (state, action) => {
-//       state.requestStatus = RequestStatus.SUCCEEDED;
-//       state.order = action;
-//     })
-//     .addCase(REQUEST_ERROR, (state) => {
-//       state.requestStatus = RequestStatus.FAILED;
-//     })
-// })
